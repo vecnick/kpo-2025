@@ -1,5 +1,7 @@
 package studying;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +11,7 @@ public class CarService implements ICarProvider{
 
     private final List<Car> cars = new ArrayList<>();
 
-    public int carNumberCounter = 0;
+    private int carNumberCounter = 0;
 
     @Override
     public Car takeCar(Customer customer) {
