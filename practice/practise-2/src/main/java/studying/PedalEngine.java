@@ -11,7 +11,7 @@ public class PedalEngine implements IEngine{
 
     @Override
     public boolean isCompatible(Customer customer) {
-        return customer.legPower > 5;
+        return customer.getLegPower() > 5;
     }
 
     public PedalEngine(int size) {

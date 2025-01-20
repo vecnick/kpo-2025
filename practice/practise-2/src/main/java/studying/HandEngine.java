@@ -6,6 +6,6 @@ import lombok.ToString;
 public class HandEngine implements IEngine{
     @Override
     public boolean isCompatible(Customer customer) {
-        return customer.handPower > 5;
+        return customer.getHandPower() > 5;
     }
 }

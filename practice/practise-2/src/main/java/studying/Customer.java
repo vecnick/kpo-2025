@@ -10,9 +10,9 @@ import lombok.ToString;
 public class Customer {
     private final String name;
 
-    public int legPower;
+    private final int legPower;
 
-    public int handPower;
+    private final int handPower;
 
     @Setter
     private Car car;
