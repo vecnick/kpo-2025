@@ -1,4 +1,6 @@
-package studying;
+package studying.interfaces;
+
+import studying.domains.Customer;
 
 import java.util.List;
 

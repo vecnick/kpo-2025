@@ -1,11 +1,12 @@
-package studying;
+package studying.services;
 
-import lombok.Getter;
+import studying.domains.Customer;
+import studying.interfaces.ICustomerProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerStorage implements ICustomerProvider{
+public class CustomerStorage implements ICustomerProvider {
     private List<Customer> customers = new ArrayList<>();
 
     @Override

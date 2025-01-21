@@ -1,13 +1,14 @@
-package studying;
+package studying.services;
 
-import lombok.Getter;
+import studying.domains.Car;
+import studying.domains.Customer;
+import studying.interfaces.ICarFactory;
+import studying.interfaces.ICarProvider;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
-public class CarService implements ICarProvider{
+public class CarService implements ICarProvider {
 
     private final List<Car> cars = new ArrayList<>();
 

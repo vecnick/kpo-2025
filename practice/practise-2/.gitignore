@@ -1,5 +1,5 @@
-practise-2/.gradle
-practise-2/build/
+*/.gradle
+*/build/
 !practise-2/gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/

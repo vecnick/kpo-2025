@@ -1,4 +1,7 @@
-package studying;
+package studying.services;
+
+import studying.interfaces.ICarProvider;
+import studying.interfaces.ICustomerProvider;
 
 import java.util.Objects;
 

@@ -1,7 +1,8 @@
-package studying;
+package studying.domains;
 
 import lombok.Getter;
 import lombok.ToString;
+import studying.interfaces.IEngine;
 
 @ToString
 public class Car {
