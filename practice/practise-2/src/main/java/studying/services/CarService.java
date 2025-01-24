@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarService implements ICarProvider {
-
     private final List<Car> cars = new ArrayList<>();
 
     private int carNumberCounter = 0;

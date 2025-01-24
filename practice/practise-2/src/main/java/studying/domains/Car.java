@@ -6,7 +6,6 @@ import studying.interfaces.IEngine;
 
 @ToString
 public class Car {
-
     private IEngine engine;
 
     @Getter

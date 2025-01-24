@@ -6,7 +6,6 @@ import studying.interfaces.ICustomerProvider;
 import java.util.Objects;
 
 public class HseCarService {
-
     private final ICarProvider carProvider;
 
     private final ICustomerProvider customerProvider;
