@@ -1,12 +1,10 @@
-package studying.services;
-
-import studying.domains.Car;
-import studying.domains.Customer;
-import studying.interfaces.ICarFactory;
-import studying.interfaces.ICarProvider;
+package studying;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CarService implements ICarProvider {
 
@@ -19,11 +17,15 @@ public class CarService implements ICarProvider {
 
         var filteredCars = cars.stream().filter(car -> car.isCompatible(customer)).toList();
 
-        var firstCar = filteredCars.stream().findFirst();
+        if (filteredCars.isEmpty()) {
+            return null;
+        }
 
-        firstCar.ifPresent(cars::remove);
+        var firstCar = filteredCars.stream().findFirst().get();
 
-        return firstCar.orElse(null);
+        cars.remove(firstCar);
+
+        return firstCar;
     }
 
     public <TParams> void addCar(ICarFactory<TParams> carFactory, TParams carParams)

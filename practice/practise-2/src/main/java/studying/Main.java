@@ -13,31 +13,54 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("HSE");
 
+        // 1
         var carService = new CarService();
 
+        // 2
         var customerStorage = new CustomerStorage();
 
+        // 3
         var hseCarService = new HseCarService(carService, customerStorage);
 
+        // 4
         var pedalCarFactory = new PedalCarFactory();
 
+        // 5
         var handCarFactory = new HandCarFactory();
 
-        customerStorage.addCustomer(new Customer("Ivan1",6,4));
-        customerStorage.addCustomer(new Customer("Maksim",4,6));
-        customerStorage.addCustomer(new Customer("Petya",6,6));
-        customerStorage.addCustomer(new Customer("Nikita",4,4));
+        // 6
 
-        carService.addCar(pedalCarFactory, new PedalEngineParams(6));
-        carService.addCar(pedalCarFactory, new PedalEngineParams(6));
+        customerStorage.addCustomer(new Customer("Вася", 6, 4));
+        customerStorage.addCustomer(new Customer("Вова", 4, 6));
+        customerStorage.addCustomer(new Customer("Света", 6, 6));
+        customerStorage.addCustomer(new Customer("Петя", 4, 4));
+
+        // 7
+
+        carService.addCar(pedalCarFactory, new PedalEngineParams(2));
+        carService.addCar(pedalCarFactory, new PedalEngineParams(2));
 
         carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
-        carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
+        carService.addCar(handCarFactory, new EmptyEngineParams());
 
-        customerStorage.getCustomers().stream().map(Customer::toString).forEach(System.out::println);
+        // 8
+
+        for (var customer : customerStorage.getCustomers()) {
+            System.out.println("Customer: " + customer.getName() + ", car: " + (customer.getCar() != null ? customer.getCar().toString() : "null"));
+        }
+
+        // 9
 
         hseCarService.sellCars();
 
-        customerStorage.getCustomers().stream().map(Customer::toString).forEach(System.out::println);
+        // 10
+
+        System.out.println("------------------------------------");
+
+        for (var customer : customerStorage.getCustomers()) {
+            var car = customer.getCar();
+            System.out.println("Customer: " + customer.getName() + ", car: " + (car != null ? car.toString() : "null"));
+        }
+
     }
 }
