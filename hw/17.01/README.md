@@ -9,7 +9,10 @@ class Phone { // Убрали private
 
 public class MobilePhone extends Phone {
     public void charge() {}
-}бласти видимости данных, сокрытие реализации
+}
+```
+
+- Инкапсуляция - ограничение области видимости данных, сокрытие реализации
 
 ```
 public class File {
@@ -104,3 +107,4 @@ class University {
     }
 }
 ```
+

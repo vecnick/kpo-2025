@@ -6,5 +6,8 @@
 
 - [`/practice`](./practice) - материалы по практическим занятиям
 
+```
 git fetch upstream
 git merge upstream/main
+```
+
