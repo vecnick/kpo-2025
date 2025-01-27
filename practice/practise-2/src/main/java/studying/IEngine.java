@@ -1,5 +1,8 @@
 package studying;
 
+/**
+ * Интерфейс двигателя
+ */
 public interface IEngine {
 
     /**

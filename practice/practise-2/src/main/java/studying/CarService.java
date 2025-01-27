@@ -8,10 +8,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class CarService implements ICarProvider{
-
     private final List<Car> cars = new ArrayList<>();
 
     private int carNumberCounter = 0;
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
 
     @Override
     public Car takeCar(Customer customer) {
