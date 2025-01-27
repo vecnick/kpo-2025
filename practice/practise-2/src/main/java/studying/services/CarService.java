@@ -1,10 +1,12 @@
-package studying;
+package studying.services;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+
+import studying.domains.Car;
+import studying.domains.Customer;
+import studying.interfaces.ICarFactory;
+import studying.interfaces.ICarProvider;
 
 public class CarService implements ICarProvider {
 
