@@ -17,6 +17,16 @@ public class HseCarService {
         this.customerProvider = customersProvider;
     }
 
+    /**
+     * Метод для продажи всех автомобилей всем покупателям.
+     * 
+     * Пробегаемся по всем покупателям, которые не имеют автомобиля.
+     * 
+     * Если у покупателя нет автомобиля, продаем ему подходящий.
+     * 
+     * @see ICarProvider
+     * @see ICustomerProvider
+     */
     public void sellCars()
     {
         // получаем список покупателей
