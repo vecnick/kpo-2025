@@ -34,5 +34,6 @@ maxErrors = 0
 </details>
 <details> 
 <summary>Ссылки</summary>
-1. https://habr.com/ru/companies/itelma/articles/546372/
+1. https://topjava.ru/blog/back-to-basics-dependency-injection
+2. https://start.spring.io/
 </details>
