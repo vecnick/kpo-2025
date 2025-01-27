@@ -3,6 +3,7 @@ package studying;
 import studying.domains.Customer;
 import studying.factories.HandCarFactory;
 import studying.factories.PedalCarFactory;
+import studying.factories.FlyingCarFactory;
 import studying.params.EmptyEngineParams;
 import studying.params.PedalEngineParams;
 import studying.services.CarService;
@@ -35,6 +36,9 @@ public class Main {
         customerStorage.addCustomer(new Customer("Света", 6, 6));
         customerStorage.addCustomer(new Customer("Петя", 4, 4));
 
+        var flyingCarFactory = new FlyingCarFactory();
+        customerStorage.addCustomer(new Customer("Smart", 1, 1, 301));
+
         // 7
 
         carService.addCar(pedalCarFactory, new PedalEngineParams(2));
@@ -42,6 +46,8 @@ public class Main {
 
         carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
         carService.addCar(handCarFactory, new EmptyEngineParams());
+
+        carService.addCar(flyingCarFactory, EmptyEngineParams.DEFAULT);
 
         // 8
 
