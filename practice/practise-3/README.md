@@ -9,7 +9,7 @@
 4. Поставить плагин checkstyle и исправить все несоответствия стилю кода.
 
 ## Тестирование
-1. Запустить main в окружении springBoot без DI. ()
+1. Запустить main в окружении springBoot без DI.
    - Приложение запускается и выводит тот же ответ.
 2. Запустить unit тест с помощью внедрения бинов.
    - Тест запускается и выводит тот же ответ.
@@ -17,6 +17,9 @@
 ## Задание на доработку
 1. Написать unit-тесты на все public методы
 ## Пояснения к реализации
+Чтобы сделать сервис видимым контексту spring, нужно добавить аннотацию @Component, которая создает его бин.
+Для внедрения бина нужно написать конструктор | аннотацию над классом @RequiredArgsConstructor
+| аннотацию над полем @Autowired
 Для внедрения плагина checkstyle необходимо добавить идентификатор с его конфигурацией в build gradle:
 <details>
 <summary>Checkstyle</summary>
@@ -36,4 +39,5 @@ maxErrors = 0
 <summary>Ссылки</summary>
 1. https://topjava.ru/blog/back-to-basics-dependency-injection
 2. https://start.spring.io/
+3. https://checkstyle.sourceforge.io/
 </details>
