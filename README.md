@@ -8,6 +8,6 @@
 
 ```
 git fetch upstream
-git merge upstream/main
+git merge -X ours upstream/main
 ```
 
