@@ -33,7 +33,7 @@ public class HseCarService {
         // получаем список покупателей
         var customers = customerProvider.getCustomers();
         // пробегаемся по полученному списку
-        customers.stream().filter(customer -> Objects.isNull(customer.getCar()))
+        customers.stream().filter(customer -> Objects.isNull(customer.getCar())) // Пример использования Stream API
                 .forEach(customer -> {
                     var car = carProvider.takeCar(customer);
                     if (Objects.nonNull(car)) {

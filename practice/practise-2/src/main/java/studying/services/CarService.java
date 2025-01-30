@@ -40,7 +40,7 @@ public class CarService implements ICarProvider {
      * @param carFactory фабрика машин
      * @param carParams параметры машин
      */
-    public <TParams> void addCar(ICarFactory<TParams> carFactory, TParams carParams)
+    public <TParams> void addCar(ICarFactory<TParams> carFactory, TParams carParams) // Пример использования подстановки Лисков
     {
         // создаем автомобиль из переданной фабрики
         var car = carFactory.createCar(
