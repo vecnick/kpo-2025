@@ -2,12 +2,14 @@ package hse.kpo.services;
 
 import hse.kpo.interfaces.ICarProvider;
 import hse.kpo.interfaces.ICustomerProvider;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 /**
  * Продаёт машины из carProvider покупателям из customerProvider
  */
+@Component
 public class HseCarService {
     private final ICarProvider carProvider;
 
