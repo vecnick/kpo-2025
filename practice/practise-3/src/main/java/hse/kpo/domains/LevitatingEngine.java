@@ -4,10 +4,10 @@ import lombok.ToString;
 import hse.kpo.interfaces.IEngine;
 
 /**
- * Ручной двигатель
+ * Левитирующий двигатель
  */
 @ToString
-public class HandEngine implements IEngine {
+public class LevitatingEngine implements IEngine {
     /**
      * Проверяет на совместимость покупателя с двигателем
      *
@@ -15,7 +15,5 @@ public class HandEngine implements IEngine {
      * @return совместимость с машиной в виде булевого значения
      */
     @Override
-    public boolean isCompatible(Customer customer) {
-        return customer.getHandPower() > 5;
-    }
+    public boolean isCompatible(Customer customer) { return customer.getIQ() > 300; }
 }
