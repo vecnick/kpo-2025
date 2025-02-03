@@ -32,6 +32,7 @@ tasks.jacocoTestReport {
 }
 ```
 </details>
+Для его запуска нужно пройти в gradle.Tasks.verification.jacocoTestReport.
 <details> 
 <summary>Ссылки</summary>
 1. https://docs.gradle.org/current/userguide/jacoco_plugin.html#sec:configuring_the_jacoco_plugin
