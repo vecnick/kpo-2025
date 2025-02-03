@@ -1,9 +1,14 @@
-package studying.interfaces;
-
-import studying.domains.Customer;
+package studying;
 
 import java.util.List;
 
+/**
+ * Интерфейс класса, передающего покупателей
+ */
 public interface ICustomerProvider {
+    /**
+     * Метод, позволяющий получить список клиентов
+     * @return - список клиентов;
+     */
     List<Customer> getCustomers(); // метод возвращает коллекцию только для чтения, так как мы не хотим давать вызывающему коду возможность изменять список
 }

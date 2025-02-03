@@ -2,18 +2,26 @@ package hse.kpo.services;
 
 import hse.kpo.interfaces.ICarProvider;
 import hse.kpo.interfaces.ICustomerProvider;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 @Component
-@RequiredArgsConstructor
 public class HseCarService {
 
+    @Autowired
     private final ICarProvider carProvider;
 
+    @Autowired
     private final ICustomerProvider customerProvider;
+
+    public HseCarService(ICarProvider carProvider, ICustomerProvider customersProvider)
+    {
+        this.carProvider = carProvider;
+        this.customerProvider = customersProvider;
+    }
 
     public void sellCars()
     {

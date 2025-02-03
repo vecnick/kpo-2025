@@ -1,7 +1,8 @@
-package studying.interfaces;
+package studying;
 
-import studying.domains.Customer;
-
+/**
+ * Интерфейс двигателя
+ */
 public interface IEngine {
 
     /**

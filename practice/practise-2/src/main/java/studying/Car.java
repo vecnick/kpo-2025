@@ -1,6 +1,5 @@
-package hse.kpo.domains;
+package studying;
 
-import hse.kpo.interfaces.IEngine;
 import lombok.Getter;
 import lombok.ToString;
 

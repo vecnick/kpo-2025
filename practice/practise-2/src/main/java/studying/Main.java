@@ -1,43 +1,48 @@
 package studying;
 
-import studying.domains.Customer;
-import studying.factories.HandCarFactory;
-import studying.factories.PedalCarFactory;
-import studying.params.EmptyEngineParams;
-import studying.params.PedalEngineParams;
-import studying.services.CarService;
-import studying.services.CustomerStorage;
-import studying.services.HseCarService;
-
+/**
+ * Точка входа в программу
+ */
 public class Main {
+    /**
+     * Запуск программы
+     * @param args - аргументы командной строки
+     */
     public static void main(String[] args) {
         System.out.println("HSE");
 
-        var carService = new CarService();
+        var cs = new CarService();
+        var custStorage = new CustomerStorage();
+        var hseCarService = new HseCarService(cs, custStorage);
+        var pedalCarFact = new PedalCarFactory();
+        var handCarFact = new HandCarFactory();
+        var levitatingCarFact = new LevitatingCarFactory();
 
-        var customerStorage = new CustomerStorage();
+        custStorage.addCustomer(new Customer("Alisa", 6, 4, 98));
+        custStorage.addCustomer(new Customer("Bob", 4, 6, 102));
+        custStorage.addCustomer(new Customer("Chris", 6, 6, 200));
+        custStorage.addCustomer(new Customer("Daemon", 4, 4, 340));
+        custStorage.addCustomer(new Customer("Eva", 1, 2, 500));
 
-        var hseCarService = new HseCarService(carService, customerStorage);
+        cs.addCar(pedalCarFact, new PedalEngineParams(10));
+        cs.addCar(pedalCarFact, new PedalEngineParams(100));
+        cs.addCar(handCarFact, new EmptyEngineParams());
+        cs.addCar(handCarFact, new EmptyEngineParams());
+        cs.addCar(levitatingCarFact, new EmptyEngineParams());
+        cs.addCar(levitatingCarFact, new EmptyEngineParams());
 
-        var pedalCarFactory = new PedalCarFactory();
-
-        var handCarFactory = new HandCarFactory();
-
-        customerStorage.addCustomer(new Customer("Ivan1",6,4));
-        customerStorage.addCustomer(new Customer("Maksim",4,6));
-        customerStorage.addCustomer(new Customer("Petya",6,6));
-        customerStorage.addCustomer(new Customer("Nikita",4,4));
-
-        carService.addCar(pedalCarFactory, new PedalEngineParams(6));
-        carService.addCar(pedalCarFactory, new PedalEngineParams(6));
-
-        carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
-        carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
-
-        customerStorage.getCustomers().stream().map(Customer::toString).forEach(System.out::println);
+        System.out.println("Customers: ");
+        for (Customer customer : custStorage.getCustomers()) {
+            System.out.print(customer + " ");
+        }
+        System.out.println();
 
         hseCarService.sellCars();
 
-        customerStorage.getCustomers().stream().map(Customer::toString).forEach(System.out::println);
+        System.out.println("Customers: ");
+        for (Customer customer : custStorage.getCustomers()) {
+            System.out.print(customer + " ");
+        }
+        System.out.println();
     }
 }
