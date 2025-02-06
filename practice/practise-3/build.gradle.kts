@@ -13,6 +13,7 @@ checkstyle {
 	isIgnoreFailures = false
 	maxWarnings = 0
 	maxErrors = 0
+	configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
 }
 
 java {
@@ -42,4 +43,11 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.withType<Checkstyle>().configureEach {
+    reports {
+        xml.required.set(false)
+        html.required.set(true)
+    }
 }

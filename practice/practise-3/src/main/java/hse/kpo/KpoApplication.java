@@ -2,6 +2,7 @@ package hse.kpo;
 
 import hse.kpo.domains.Customer;
 import hse.kpo.factories.HandCarFactory;
+import hse.kpo.factories.LevitatingCarFactory;
 import hse.kpo.factories.PedalCarFactory;
 import hse.kpo.params.EmptyEngineParams;
 import hse.kpo.params.PedalEngineParams;
@@ -18,30 +19,31 @@ public class KpoApplication {
 		SpringApplication.run(KpoApplication.class, args);
 
 		var carService = new CarService();
-
 		var customerStorage = new CustomerStorage();
-
 		var hseCarService = new HseCarService(carService, customerStorage);
 
 		var pedalCarFactory = new PedalCarFactory();
-
 		var handCarFactory = new HandCarFactory();
+		var levitatingCarFactory = new LevitatingCarFactory();
 
-		customerStorage.addCustomer(new Customer("Ivan1",6,4));
-		customerStorage.addCustomer(new Customer("Maksim",4,6));
-		customerStorage.addCustomer(new Customer("Petya",6,6));
-		customerStorage.addCustomer(new Customer("Nikita",4,4));
+		customerStorage.addCustomer(new Customer("Ivan1",6,4, 200));
+		customerStorage.addCustomer(new Customer("Maksim",4,6, 250));
+		customerStorage.addCustomer(new Customer("Petya",6,6, 300));
+		customerStorage.addCustomer(new Customer("Nikita",4,4, 350));
+		customerStorage.addCustomer(new Customer("Boris",4,4, 100));
 
 		carService.addCar(pedalCarFactory, new PedalEngineParams(6));
 		carService.addCar(pedalCarFactory, new PedalEngineParams(6));
-
 		carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
-		carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
+		carService.addCar(levitatingCarFactory, EmptyEngineParams.DEFAULT);
+		carService.addCar(levitatingCarFactory, EmptyEngineParams.DEFAULT);
 
+		System.out.println("До продажи:");
 		customerStorage.getCustomers().stream().map(Customer::toString).forEach(System.out::println);
 
 		hseCarService.sellCars();
 
+		System.out.println("\nПосле продажи:");
 		customerStorage.getCustomers().stream().map(Customer::toString).forEach(System.out::println);
 	}
 }

@@ -37,5 +37,4 @@ public class Customer {
         this.handPower = handPower;
         this.IQ = IQ;
     }
-
 }
