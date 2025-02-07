@@ -1,11 +1,11 @@
 package hse.kpo.domains;
 
+import hse.kpo.interfaces.IEngine;
 import lombok.Getter;
 import lombok.ToString;
-import hse.kpo.interfaces.IEngine;
 
 /**
- * Педальный двигатель
+ * Педальный двигатель.
  */
 @ToString
 @Getter
@@ -13,7 +13,7 @@ public class PedalEngine implements IEngine {
     private final int size;
 
     /**
-     * Проверяет на совместимость покупателя с двигателем
+     * Проверяет на совместимость покупателя с двигателем.
      *
      * @param customer покупатель
      * @return совместимость с машиной в виде булевого значения
@@ -24,7 +24,7 @@ public class PedalEngine implements IEngine {
     }
 
     /**
-     * Конструктор
+     * Конструктор.
      *
      * @param size размер педалей
      */

@@ -5,7 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Покупатель
+ * Покупатель.
  */
 @Getter
 @ToString
@@ -16,23 +16,23 @@ public class Customer {
 
     private final int handPower;
 
-    private final int IQ;
+    private final int iq;
 
     @Setter
     private Car car;
 
     /**
-     * Конструктор
+     * Конструктор.
      *
      * @param name имя
      * @param legPower сила ног
      * @param handPower сила рук
-     * @param IQ интеллект
+     * @param iq интеллект
      */
-    public Customer(String name, int legPower, int handPower, int IQ) {
+    public Customer(String name, int legPower, int handPower, int iq) {
         this.name = name;
         this.legPower = legPower;
         this.handPower = handPower;
-        this.IQ = IQ;
+        this.iq = iq;
     }
 }

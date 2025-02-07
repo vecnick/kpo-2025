@@ -1,7 +1,6 @@
 package hse.kpo;
 
 import hse.kpo.domains.Customer;
-import hse.kpo.domains.PedalEngine;
 import hse.kpo.factories.HandCarFactory;
 import hse.kpo.factories.LevitatingCarFactory;
 import hse.kpo.factories.PedalCarFactory;
@@ -14,10 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.awt.event.PaintEvent;
 
 @SpringBootTest
 class KpoApplicationTests {

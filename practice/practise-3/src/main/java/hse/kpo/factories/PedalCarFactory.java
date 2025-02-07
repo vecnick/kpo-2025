@@ -7,12 +7,12 @@ import hse.kpo.params.PedalEngineParams;
 import org.springframework.stereotype.Component;
 
 /**
- * Фабрика машин с педальным двигателем
+ * Фабрика машин с педальным двигателем.
  */
 @Component
 public class PedalCarFactory implements ICarFactory<PedalEngineParams> {
     /**
-     * Создаёт объект Car с педальным двигателем
+     * Создаёт объект Car с педальным двигателем.
      *
      * @param carParams параметры машины
      * @param carNumber номер машины
@@ -22,6 +22,7 @@ public class PedalCarFactory implements ICarFactory<PedalEngineParams> {
     public Car createCar(PedalEngineParams carParams, int carNumber) {
         var engine = new PedalEngine(carParams.pedalSize()); // создаем двигатель на основе переданных параметров
 
-        return new Car(carNumber, engine); // возвращаем собранный автомобиль с установленным двигателем и определенным номером
+        return new Car(carNumber, engine); // возвращаем собранный автомобиль с
+        // установленным двигателем и определенным номером
     }
 }

@@ -1,15 +1,15 @@
 package hse.kpo.domains;
 
-import lombok.ToString;
 import hse.kpo.interfaces.IEngine;
+import lombok.ToString;
 
 /**
- * Ручной двигатель
+ * Ручной двигатель.
  */
 @ToString
 public class HandEngine implements IEngine {
     /**
-     * Проверяет на совместимость покупателя с двигателем
+     * Проверяет на совместимость покупателя с двигателем.
      *
      * @param customer покупатель
      * @return совместимость с машиной в виде булевого значения

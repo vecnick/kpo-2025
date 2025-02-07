@@ -4,13 +4,12 @@ import hse.kpo.domains.Car;
 import hse.kpo.domains.Customer;
 import hse.kpo.interfaces.ICarFactory;
 import hse.kpo.interfaces.ICarProvider;
-import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
- * Автосервис
+ * Автосервис.
  */
 @Component
 public class CarService implements ICarProvider {
@@ -19,7 +18,7 @@ public class CarService implements ICarProvider {
     private int carNumberCounter = 0;
 
     /**
-     * Выдаёт покупателю машину
+     * Выдаёт покупателю машину.
      *
      * @param customer покупатель
      * @return машина
@@ -37,13 +36,13 @@ public class CarService implements ICarProvider {
     }
 
     /**
-     * Добавляет машину в сервис
+     * Добавляет машину в сервис.
      *
      * @param carFactory фабрика машин
      * @param carParams параметры машин
      */
-    public <TParams> void addCar(ICarFactory<TParams> carFactory, TParams carParams) // Пример использования подстановки Лисков
-    {
+    public <TParams> void addCar(ICarFactory<TParams> carFactory, TParams carParams) { // Пример использования
+        // подстановки Лисков
         // создаем автомобиль из переданной фабрики
         var car = carFactory.createCar(
                 carParams, // передаем параметры

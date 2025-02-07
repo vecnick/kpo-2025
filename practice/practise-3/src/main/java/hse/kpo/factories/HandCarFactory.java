@@ -7,12 +7,12 @@ import hse.kpo.params.EmptyEngineParams;
 import org.springframework.stereotype.Component;
 
 /**
- * Фарбрика машин с ручным двигателем
+ * Фарбрика машин с ручным двигателем.
  */
 @Component
 public class HandCarFactory implements ICarFactory<EmptyEngineParams> {
     /**
-     * Создаёт объект Car с ручным двигателем
+     * Создаёт объект Car с ручным двигателем.
      *
      * @param carParams параметры машины
      * @param carNumber номер машины
