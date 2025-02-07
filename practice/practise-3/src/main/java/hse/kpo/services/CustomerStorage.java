@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Component // Чтобы сделать сервис видимым контексту spring, нужно добавить аннотацию Component
 public class CustomerStorage implements ICustomerProvider {
-    private List<Customer> customers = new ArrayList<>();
+    private final List<Customer> customers = new ArrayList<>();
 
     /**
      * Получить список покупателей из коллекции класса
