@@ -1,12 +1,12 @@
 package hse.kpo;
 
 import hse.kpo.domains.Customer;
-import hse.kpo.factories.HandCarFactory;
-import hse.kpo.factories.LevitatingCarFactory;
-import hse.kpo.factories.PedalCarFactory;
+import hse.kpo.factories.HandCarFactoryI;
+import hse.kpo.factories.LevitatingCarFactoryI;
+import hse.kpo.factories.PedalCarFactoryI;
 import hse.kpo.params.EmptyEngineParams;
-import hse.kpo.services.CarService;
-import hse.kpo.services.CustomerStorage;
+import hse.kpo.services.CarServiceI;
+import hse.kpo.services.CustomerStorageI;
 import hse.kpo.services.HseCarService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,17 +16,17 @@ import hse.kpo.params.PedalEngineParams;
 
 @SpringBootTest
 class KpoApplicationTests {
-	@Autowired private CarService carService;
+	@Autowired private CarServiceI carService;
 
-	@Autowired private CustomerStorage customerStorage;
+	@Autowired private CustomerStorageI customerStorage;
 
 	@Autowired private HseCarService hseCarService;
 
-	@Autowired private PedalCarFactory pedalCarFactory;
+	@Autowired private PedalCarFactoryI pedalCarFactory;
 
-	@Autowired private HandCarFactory handCarFactory;
+	@Autowired private HandCarFactoryI handCarFactory;
 
-	@Autowired private LevitatingCarFactory levitatingCarFactory;
+	@Autowired private LevitatingCarFactoryI levitatingCarFactory;
 
 	@Test
 	@DisplayName("Тест загрузки контекста")
@@ -47,7 +47,6 @@ class KpoApplicationTests {
 		customerStorage.getCustomers().stream().map(Customer::toString).forEach(System.out::println);
 		hseCarService.sellCars();
 		System.out.println("Sold out");
-
 		customerStorage.getCustomers().stream().map(Customer::toString).forEach(System.out::println);
 		assert true;
 	}

@@ -1,39 +1,47 @@
 package hse.kpo.services;
 
-import hse.kpo.interfaces.ICarProvider;
-import hse.kpo.interfaces.ICustomerProvider;
+import hse.kpo.interfaces.CarProviderI;
+import hse.kpo.interfaces.CustomerProviderI;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 
+/**
+ * Класс, продающий автомобили.
+ */
 @Component
 public class HseCarService {
 
     @Autowired
-    private final ICarProvider carProvider;
+    private final CarProviderI carProvider;
 
     @Autowired
-    private final ICustomerProvider customerProvider;
+    private final CustomerProviderI customerProvider;
 
-    public HseCarService(ICarProvider carProvider, ICustomerProvider customersProvider)
-    {
+    /**
+     * Конструктор класса HseCarService.
+     *
+     * @param carProvider       - класс, предоставляющий машины
+     * @param customersProvider - класс, предоставляющий покупателей
+     */
+    public HseCarService(CarProviderI carProvider, CustomerProviderI customersProvider) {
         this.carProvider = carProvider;
         this.customerProvider = customersProvider;
     }
 
-    public void sellCars()
-    {
+    /**
+     * Метод, назначающий покупателям подходящие им машины.
+     */
+    public void sellCars() {
         // получаем список покупателей
         var customers = customerProvider.getCustomers();
         // пробегаемся по полученному списку
-        customers.stream().filter(customer -> Objects.isNull(customer.getCar()))
-                .forEach(customer -> {
-                    var car = carProvider.takeCar(customer);
-                    if (Objects.nonNull(car)) {
-                        customer.setCar(car);
-                    }
-                });
+        customers.stream().filter(customer -> Objects.isNull(customer.getCar())).forEach(customer -> {
+            var car = carProvider.takeCar(customer);
+            if (Objects.nonNull(car)) {
+                customer.setCar(car);
+            }
+        });
     }
 }

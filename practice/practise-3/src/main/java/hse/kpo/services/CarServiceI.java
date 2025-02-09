@@ -2,22 +2,30 @@ package hse.kpo.services;
 
 import hse.kpo.domains.Car;
 import hse.kpo.domains.Customer;
-import hse.kpo.interfaces.ICarFactory;
-import hse.kpo.interfaces.ICarProvider;
+import hse.kpo.interfaces.CarFactoryI;
+import hse.kpo.interfaces.CarProviderI;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Класс поставщика машин.
+ */
 @Component
 @RequiredArgsConstructor
-public class CarService implements ICarProvider {
+public class CarServiceI implements CarProviderI {
 
     private final List<Car> cars = new ArrayList<>();
 
     private int carNumberCounter = 0;
 
+    /**
+     * Функция дающая машину покупателю.
+     *
+     * @param customer - покупатель, для которого ищем машину
+     * @return машину или null.
+     */
     @Override
     public Car takeCar(Customer customer) {
 
@@ -30,8 +38,14 @@ public class CarService implements ICarProvider {
         return firstCar.orElse(null);
     }
 
-    public <TParams> void addCar(ICarFactory<TParams> carFactory, TParams carParams)
-    {
+    /**
+     * Добавить машину.
+     *
+     * @param carFactory - фабрика поставщик
+     * @param carParams - параметры новой машины
+     * @param <T> - тип параметров машины
+     */
+    public <T> void addCar(CarFactoryI<T> carFactory, T carParams) {
         // создаем автомобиль из переданной фабрики
         var car = carFactory.createCar(
                 carParams, // передаем параметры
