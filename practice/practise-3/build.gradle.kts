@@ -12,13 +12,6 @@ version = "0.0.1-SNAPSHOT"
 checkstyle {
 	toolVersion = "10.13.0"
 	isIgnoreFailures = false
-	maxWarnings = 0
-	maxErrors = 0
-}
-
-checkstyle {
-	toolVersion = "10.13.0"
-	isIgnoreFailures = false
 	maxWarnings = 1000
 	maxErrors = 0
 }

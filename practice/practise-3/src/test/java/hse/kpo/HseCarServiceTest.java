@@ -1,21 +1,21 @@
 package hse.kpo;
 
-import hse.kpo.domains.Car;
 import hse.kpo.domains.Customer;
-import hse.kpo.domains.PedalEngineI;
-import hse.kpo.params.EmptyEngineParams;
 import hse.kpo.services.CarServiceI;
 import hse.kpo.services.CustomerStorageI;
 import hse.kpo.services.HseCarService;
-import org.junit.jupiter.api.Assertions;
+import java.util.ArrayList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.ArrayList;
-
-
-public class HSECarServiceTest {
+/**
+ * Класс, тестирующий класс HseCarService.
+ */
+public class HseCarServiceTest {
+    /**
+     * Метод, тестирующий метод sellCars класса HseCarService.
+     */
     @Test
     @DisplayName("HSE Car service test getCustomersTest")
     public void getCustomersTest() {
@@ -32,6 +32,9 @@ public class HSECarServiceTest {
 
     }
 
+    /**
+     * Метод, тестирующий метод sellCars класса HseCarService.
+     */
     @Test
     @DisplayName("HSE Car service test getCustomersTest2")
     public void getCustomersTest2() {
