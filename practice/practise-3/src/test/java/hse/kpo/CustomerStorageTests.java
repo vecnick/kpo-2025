@@ -9,8 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 
+/**
+ * Класс, тестирующий класс CustomerStorage.
+ */
 public class CustomerStorageTests {
-
+    /**
+     * Метод, тестирующий метод addCustomer класса CustomerStorage.
+     */
     @Test
     @DisplayName("Customer Storage Tests getCustomersTest")
     public void getCustomersTest() {
@@ -19,6 +24,6 @@ public class CustomerStorageTests {
 
         custService.addCustomer(customer);
 
-        Assertions.assertEquals(1, custService.getCustomers().size() );
+        Assertions.assertEquals(1, custService.getCustomers().size());
     }
 }

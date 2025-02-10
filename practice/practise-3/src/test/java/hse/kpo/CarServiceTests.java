@@ -1,20 +1,19 @@
 package hse.kpo;
 
-import hse.kpo.domains.Car;
 import hse.kpo.domains.Customer;
-import hse.kpo.factories.HandCarFactoryI;
-import hse.kpo.params.EmptyEngineParams;
 import hse.kpo.services.CarServiceI;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
+/**
+ * Класс, тестирующий класс CarService.
+ */
 public class CarServiceTests {
+    /**
+     * Метод, тестирующий метод takeCar класса CarService.
+     */
     @Test
     @DisplayName("Test of Car Service Class takeCarTest")
     public void takeCarTest() {

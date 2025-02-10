@@ -8,9 +8,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
+/**
+ * Класс, тестирующий класс HandCarFactory.
+ */
 public class HandCarFactoryTests {
-
+    /**
+     * Метод, тестирующий метод createCar класса HandCarFactory.
+     */
     @Test
     @DisplayName("Test of Hand Factory Class testCreateHandCar")
     public void testCreateHandCar() {
