@@ -15,10 +15,72 @@
 ## Задание на доработку
 - Добавьте в `ReportBuilder` возможность вывода текущего содержимого склада автомобилей.
 ## Пояснения к реализации
+Для начала заведем класс `Report`, который будет представлять собой отчет о работе нашей системы.
+```
+public record Report(String title, String content) {
+    @Override
+    public String toString() {
+        return String.format("%s\n\n%s", title, content);
+    }
+}
+```
+В качестве заголовка отчета мы будем использовать слово "Отчет" и текущую дату, а в качестве содержания - содержимое хранилища покупателей и список проделанных операций.
+Также перегрузим метод `ToString` для вывода отчета в консоль.
+Для построения отчета мы будем использовать паттерн `Builder`. Для его реализации создадим класс `ReportBuilder`.
+```
+public class ReportBuilder
+{
+}
+```
+Добавим в класс `ReportBuilder` поле для хранения содержимого отчета. Для этого заведем поле `content` типа `StringBuilder` и проинициализируем его.
 
+Класс `StringBuilder` представляет собой реализацию паттерна `Builder` для строк.
+Добавим в наш класс метод `addCustomers`, который будет добавлять в отчет содержимое хранилища покупателей.
+```
+    public ReportBuilder addCustomers(List<Customer> customers)
+    {
+        content.append("Покупатели:");
+        customers.forEach(customer -> content.append(String.format(" - %s", customer)));
+        content.append("\n");
+
+        return this;
+    }
+```
+Обратите внимание, что метод `addCustomers` возвращает `this`, что позволяет использовать цепочечные вызовы методов, что характерно для паттерна `Builder`.
+Теперь добавим метод `addOperation`, который будет добавлять в отчет проделанную операцию.
+```
+    public ReportBuilder addOperation(String operation)
+    {
+        content.append(String.format("Операция: %s", operation));
+        content.append(System.lineSeparator());
+        return this;
+    }
+```
+Теперь добавим метод `build`, который будет возвращать построенный отчет.
+```
+    public Report build()
+    {
+        return new Report(String.format("Отчет за %s", ZonedDateTime.now().format(DATE_TIME_FORMATTER)),
+                content.toString());
+    }
+```
+Теперь мы можем использовать класс `ReportBuilder` для построения отчета.
+```
+		var reportBuilder = new ReportBuilder()
+				.addOperation("Инициализация системы")
+				.addCustomers(customerStorage.getCustomers());
+
+		hseCarService.sellCars();
+
+		var report = reportBuilder
+				.addOperation("Продажа автомобилей")
+				.addCustomers(customerStorage.getCustomers())
+				.build();
+
+		System.out.println(report.toString());
+```
+Как мы видим, код стал проще и понятнее.
 <details> 
 <summary>Ссылки</summary>
-1. https://docs.gradle.org/current/userguide/jacoco_plugin.html#sec:configuring_the_jacoco_plugin
-2. https://javarush.com/groups/posts/2590-top-50-java-core-voprosov-i-otvetov-na-sobesedovanii-chastjh-1 
-3. https://javarush.com/groups/posts/2592-top-50-java-core-voprosov-iotvetov-na-sobesedovanii-chastjh-2
+1. 
 </details>
