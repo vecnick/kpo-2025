@@ -12,6 +12,7 @@
 1. Реализовать катамараны с помощью интерфейсов и дженериков аналогично с машинам.
 2. Отчет должен составляться с помощью паттерна билдера
 3. Реализовать проверку типа совместимости силы с помощью enum.
+4. Добавить пробросы ошибок + логирование (минимум в 3 местах)
 ## Тестирование
 ## Задание на доработку
 - Добавьте в `ReportBuilder` возможность вывода текущего содержимого склада автомобилей и кораблей.
@@ -96,8 +97,12 @@ public boolean isCompatible(Customer customer, ProductionTypes type) {
     return switch (type) {
         case ProductionTypes.CAR -> customer.getHandPower() > 5;
         case ProductionTypes.CATAMARAN -> customer.getHandPower() > 2;
+        case null, default -> throw new RuntimeException("This type of production doesn't exist");
 };
 ```
+
+Для логирования добавляем аннотацию @Slf4j из семейства ломбок и пишем в коде 
+log.<уровень логов - warn,error,debug>("log text");
 <details> 
 <summary>Ссылки</summary>
 1. 
