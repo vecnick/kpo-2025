@@ -1,6 +1,7 @@
 package hse.kpo.interfaces;
 
 
+import hse.kpo.Enums.Types;
 import hse.kpo.domains.Customer;
 
 /**
@@ -14,5 +15,5 @@ public interface EngineI {
      * @param customer - покупатель, с которым мы сравниваем двигатель
      * @return true, если двигатель подходит покупателю
      */
-    boolean isCompatible(Customer customer);
+    boolean isCompatible(Customer customer, Types type);
 }

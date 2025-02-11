@@ -1,14 +1,14 @@
 package hse.kpo;
 
+import hse.kpo.Report.ReportBuilder;
 import hse.kpo.domains.Customer;
 import hse.kpo.factories.HandCarFactoryI;
 import hse.kpo.factories.LevitatingCarFactoryI;
 import hse.kpo.factories.PedalCarFactoryI;
+import hse.kpo.factories.ShipFactory;
 import hse.kpo.params.EmptyEngineParams;
 import hse.kpo.params.PedalEngineParams;
-import hse.kpo.services.CarServiceI;
-import hse.kpo.services.CustomerStorageI;
-import hse.kpo.services.HseCarService;
+import hse.kpo.services.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -38,6 +38,11 @@ public class KpoApplication {
         carService.addCar(pedalCarFactory, new PedalEngineParams(6));
         carService.addCar(pedalCarFactory, new PedalEngineParams(6));
 
+        var shipService = new ShipService();
+        var shipFactory = new ShipFactory();
+        shipService.addCar(shipFactory, new EmptyEngineParams());
+        shipService.addCar(shipFactory, new EmptyEngineParams());
+
         var handCarFactory = new HandCarFactoryI();
         carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
         carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
@@ -50,9 +55,36 @@ public class KpoApplication {
 
         var hseCarService = new HseCarService(carService, customerStorage);
 
+        var reportBuilder = new ReportBuilder()
+                .addOperation("Инициализация системы")
+                .addCustomers(customerStorage.getCustomers());
+
         hseCarService.sellCars();
+
+        var report = reportBuilder
+                .addOperation("Продажа автомобилей")
+                .addCustomers(customerStorage.getCustomers())
+                .build();
+
+        System.out.println(report.toString());
+
         System.out.println("Sold out");
 
         customerStorage.getCustomers().stream().map(Customer::toString).forEach(System.out::println);
+
+        var hseShipService = new HseShipService(shipService, customerStorage);
+
+        reportBuilder = new ReportBuilder()
+                .addOperation("Инициализация системы")
+                .addCustomers(customerStorage.getCustomers());
+
+        hseShipService.sellCars();
+
+        report = reportBuilder
+                .addOperation("Продажа катамаранов")
+                .addCustomers(customerStorage.getCustomers())
+                .build();
+
+        System.out.println(report.toString());
     }
 }

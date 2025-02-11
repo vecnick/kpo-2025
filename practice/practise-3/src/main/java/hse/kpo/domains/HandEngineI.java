@@ -1,5 +1,6 @@
 package hse.kpo.domains;
 
+import hse.kpo.Enums.Types;
 import hse.kpo.interfaces.EngineI;
 import lombok.ToString;
 
@@ -15,8 +16,13 @@ public class HandEngineI implements EngineI {
      * @return - true если двигатель подходит для покупателя
      */
     @Override
-    public boolean isCompatible(Customer customer) {
-        return customer.getHandPower() > 5;
+    public boolean isCompatible(Customer customer, Types type) {
+        switch (type) {
+            case CAR: return customer.getHandPower() > 5;
+            case SHIP: return customer.getHandPower() > 2;
+            case null, default: throw new RuntimeException("This type of production doesn't exist");
+        }
+
     }
 }
 

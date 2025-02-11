@@ -1,5 +1,6 @@
 package hse.kpo.domains;
 
+import hse.kpo.Enums.Types;
 import hse.kpo.interfaces.EngineI;
 import lombok.ToString;
 
@@ -15,7 +16,7 @@ public class LevitatingEngineI implements EngineI {
      * @return true если двигатель подходит покупателю
      */
     @Override
-    public boolean isCompatible(Customer customer) {
+    public boolean isCompatible(Customer customer, Types type) {
         return customer.getIq() > 300;
     }
 }

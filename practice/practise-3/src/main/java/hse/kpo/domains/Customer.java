@@ -21,6 +21,9 @@ public class Customer {
     @Setter
     private Car car;
 
+    @Setter
+    private Ship ship;
+
     /**
      * Конструктор.
      *

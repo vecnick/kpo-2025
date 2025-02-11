@@ -1,5 +1,6 @@
 package hse.kpo.domains;
 
+import hse.kpo.Enums.Types;
 import hse.kpo.interfaces.EngineI;
 import lombok.Getter;
 import lombok.ToString;
@@ -19,7 +20,7 @@ public class PedalEngineI implements EngineI {
      * @return true, если педальный двигатель подходит покупателю
      */
     @Override
-    public boolean isCompatible(Customer customer) {
+    public boolean isCompatible(Customer customer, Types type) {
         return customer.getLegPower() > 5;
     }
 

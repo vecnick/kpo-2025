@@ -6,10 +6,10 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
- * Класс машины.
+ * Класс катамарана.
  */
 @ToString
-public class Car {
+public class Ship {
 
     private EngineI engine;
 
@@ -22,7 +22,7 @@ public class Car {
      * @param vin    - номер новой машины
      * @param engine - двигатель новой машины
      */
-    public Car(int vin, EngineI engine) {
+    public Ship(int vin, EngineI engine) {
         this.vin = vin;
         this.engine = engine;
     }
@@ -34,7 +34,6 @@ public class Car {
      * @return true, если машина совместима с пользователем
      */
     public boolean isCompatible(Customer customer) {
-        return this.engine.isCompatible(customer, Types.CAR); // внутри метода просто вызываем соответствующий метод двигателя
+        return this.engine.isCompatible(customer, Types.SHIP); // внутри метода просто вызываем соответствующий метод двигателя
     }
 }
-
