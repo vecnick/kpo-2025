@@ -1,7 +1,7 @@
 package hse.studying.zoo.domains;
 
-import hse.studying.zoo.interfaces.IAlive;
-import hse.studying.zoo.interfaces.IInventory;
+import hse.studying.zoo.interfaces.AliveInterface;
+import hse.studying.zoo.interfaces.InventoryInterface;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -13,7 +13,7 @@ import lombok.ToString;
  */
 @ToString
 @RequiredArgsConstructor
-public abstract class Animal implements IAlive, IInventory {
+public abstract class Animal implements AliveInterface, InventoryInterface {
     private final int foodConsumption;
 
     @Getter

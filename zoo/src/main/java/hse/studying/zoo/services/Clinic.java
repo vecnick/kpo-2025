@@ -11,6 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class Clinic {
     public boolean isHealthy(Animal animal) {
-        return animal.getFoodConsumption() >= animal.getWeight() * 0.1;
+        return animal.getWeight() > 0 && animal.getFoodConsumption() >= animal.getWeight() * 0.1;
     }
 }

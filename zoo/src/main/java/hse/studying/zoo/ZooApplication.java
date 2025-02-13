@@ -4,26 +4,27 @@ import hse.studying.zoo.services.ConsoleMenu;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 
+/**
+ * This is a main class for the zoo application.
+ * It provides a console menu where the user can interact with the application.
+ * The application is a Spring Boot application.
+ */
 @SpringBootApplication
-public class ZooApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(ZooApplication.class, args);
-    }
-}
+public class ZooApplication implements CommandLineRunner {
 
-@Component
-class ConsoleRunner implements CommandLineRunner {
     private final ConsoleMenu consoleMenu;
 
-    public ConsoleRunner(ConsoleMenu consoleMenu) {
+    public ZooApplication(ConsoleMenu consoleMenu) {
         this.consoleMenu = consoleMenu;
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(ZooApplication.class, args);
     }
 
     @Override
     public void run(String... args) {
-        consoleMenu.start(); // Запускаем консольное меню после старта Spring Boot
+        consoleMenu.start();
     }
 }

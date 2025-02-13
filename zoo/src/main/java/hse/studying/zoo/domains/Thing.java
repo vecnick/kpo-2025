@@ -1,6 +1,6 @@
 package hse.studying.zoo.domains;
 
-import hse.studying.zoo.interfaces.IInventory;
+import hse.studying.zoo.interfaces.InventoryInterface;
 import hse.studying.zoo.params.ThingParams;
 import lombok.ToString;
 
@@ -9,7 +9,7 @@ import lombok.ToString;
  * Things have inventory number.
  */
 @ToString
-public abstract class Thing implements IInventory {
+public abstract class Thing implements InventoryInterface {
     private final int inventoryNumber;
 
     public Thing(ThingParams params) {

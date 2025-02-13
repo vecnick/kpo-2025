@@ -7,13 +7,19 @@ import lombok.ToString;
 /**
  * Abstract class for herbivores.
  * Herbivores have a 'kindness' parameter in addition to food consumption, weight, and inventory number.
+ *
  * @see Animal
  */
+@Getter
 @ToString(callSuper = true)
 public abstract class Herbo extends Animal {
-    @Getter
     private final int kindness;
 
+    /**
+     * Constructor for herbivores.
+     *
+     * @param params parameters for the herbivore
+     */
     public Herbo(HerbivoreParams params) {
         super(params.foodConsumption(), params.weight(), params.inventoryNumber());
         if (params.kindness() < 0 || params.kindness() > 10) {
