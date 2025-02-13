@@ -1,10 +1,11 @@
 package hse.studying.zoo.domains;
 
+import hse.studying.zoo.params.ThingParams;
 import lombok.ToString;
 
 @ToString(callSuper = true)
 public class Table extends Thing {
-    public Table(int inventoryNumber) {
-        super(inventoryNumber);
+    public Table(ThingParams params) {
+        super(params);
     }
 }
