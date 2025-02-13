@@ -44,6 +44,6 @@ public class KpoApplication {
 		hseCarService.sellCars();
 
 		System.out.println("\nПосле продажи:");
-		customerStorage.getCustomers().stream().map(Customer::toString).forEach(System.out::println);
+				customerStorage.getCustomers().stream().map(Customer::toString).forEach(System.out::println);
 	}
 }

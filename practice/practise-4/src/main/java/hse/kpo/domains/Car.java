@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
  */
 @ToString
 public class Car {
-
     private IEngine engine;
 
     @Getter

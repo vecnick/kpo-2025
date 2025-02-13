@@ -11,6 +11,8 @@ import hse.kpo.factories.PedalCarFactory;
 import hse.kpo.services.CustomerStorage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,7 +27,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-@ContextConfiguration(classes = KpoApplication.class) // главный класс приложения
 @SpringBootTest
 class KpoApplicationTests {
 
@@ -43,9 +44,9 @@ class KpoApplicationTests {
 	@Autowired
 	private PedalCarFactory pedalCarFactory;
 
-	@MockBean
+	@Mock
 	private HandCarFactory mockHandCarFactory;
-	@SpyBean
+	@Spy
 	private CustomerStorage spyCustomerStorage;
 
 	@Test
@@ -67,12 +68,12 @@ class KpoApplicationTests {
 	void test2() {
 		Customer customer1 = new Customer("Ivan",6,4, 200);
 		Customer customer2 = new Customer("Boris",15,20, 1000);
-			List<Customer> customers = List.of(customer1, customer2);
+		List<Customer> customers = List.of(customer1, customer2);
 
 		spyCustomerStorage.addCustomer(customer1);
 		spyCustomerStorage.addCustomer(customer2);
 
-		verify(spyCustomerStorage, times(2)).addCustomer(any(Customer.class)); // проверяем, что метод addCustomer() был вызван дважды
+		verify(spyCustomerStorage, times(2)).addCustomer(any(Customer.class)); // проверяем что метод addCustomer() был вызван дважды
 		assertEquals(spyCustomerStorage.getCustomers(), customers);
 	}
 
@@ -110,7 +111,7 @@ class KpoApplicationTests {
 		int carNumber = 5;
 		LevitatingEngine engine = new LevitatingEngine();
 
-		int car1_VIN = (new Car(carNumber, engine)).getVIN();
+		int car1_VIN = (new Car(10000000000000000000, engine)).getVIN();
 		int car2_VIN = levitatingCarFactory.createCar(EmptyEngineParams.DEFAULT, carNumber).getVIN();
 		assertEquals(car1_VIN, car2_VIN);
 		assertEquals(car1_VIN, carNumber);
@@ -140,7 +141,7 @@ class KpoApplicationTests {
 	@DisplayName("test_failed2")
 	void test_failed2() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			new PedalEngine(6); // 👈 Бросаем другое исключение
+			new PedalEngine(); // 👈 Бросаем другое исключение
 		});
 	}
 }
