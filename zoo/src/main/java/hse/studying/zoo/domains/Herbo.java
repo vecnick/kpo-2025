@@ -2,7 +2,7 @@ package hse.studying.zoo.domains;
 
 import lombok.ToString;
 
-@ToString
+@ToString(callSuper = true)
 public abstract class Herbo extends Animal {
     private final int kindness;
 
@@ -11,5 +11,8 @@ public abstract class Herbo extends Animal {
         this.kindness = kindness;
     }
 
+    public boolean isInteractable() {
+        return kindness > 5;
+    }
 
 }
