@@ -4,19 +4,26 @@
 ## Требования к реализации
 1. Изменить составление отчета с помощью паттерна Наблюдатель.
 ## Тестирование
+1. Все действия о продажах машин и катамаранов записываются в отчет.
 ## Задание на доработку
 - 
 ## Пояснения к реализации
-Для создания наблюдателей добавьте private список 
+Для создания наблюдателей добавьте список в класс, который будем мониторить 
+```
+
+```
 final List<SalesObserver> observers = new ArrayList<>();
+
 Для добавление наблюдателя поставьте метод
 public void addObserver(SalesObserver observer) {
 observers.add(observer);
 }
+
 Для реализации оповещений используйте
-    private void notifyObserversForSale(Customer customer, ProductionTypes productType, int vin) {
-        observers.forEach(obs -> obs.onSale(customer, productType, vin));
-    }
+private void notifyObserversForSale(Customer customer, ProductionTypes productType, int vin) {
+    observers.forEach(obs -> obs.onSale(customer, productType, vin));
+}
+
 Добавьте метод оповещения в продажу машин
 notifyObserversForSale(customer, ProductionTypes.CAR, car.getVin());
 
@@ -48,8 +55,36 @@ public @interface Sales {
 String value() default "";
 }
 
+@Component
+@RequiredArgsConstructor
+public class ReportSalesObserver implements SalesObserver {
+private final CustomerStorage customerStorage;
+
+    private final ReportBuilder reportBuilder = new ReportBuilder();
+
+    public Report buildReport() {
+        return reportBuilder.build();
+    }
+
+    public void checkCustomers() {
+        reportBuilder.addCustomers(customerStorage.getCustomers());
+    }
+
+    @Override
+    public void onSale(Customer customer, ProductionTypes productType, int vin) {
+        String message = String.format(
+                "Продажа: %s VIN-%d клиенту %s (Сила рук: %d, Сила ног: %d, IQ: %d)",
+                productType, vin, customer.getName(),
+                customer.getHandPower(), customer.getLegPower(), customer.getIq()
+        );
+        reportBuilder.addOperation(message);
+    }
+}
+
 В Gradle добавьте поддержку работы аннотаций
 implementation("org.springframework.boot:spring-boot-starter-aop")
+
+
 <details> 
 <summary>Ссылки</summary>
 1. 
