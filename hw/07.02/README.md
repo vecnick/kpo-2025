@@ -50,7 +50,7 @@ build/reports/jacoco/test/html/index.html
 ```
 
 
-- Checkstyle
+- Checkstyle - инструмент для проверки стиля кода в Java
 
 ```
 // добавить в gradle build
