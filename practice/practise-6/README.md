@@ -47,6 +47,9 @@ private final SalesObserver salesObserver;
 public @interface Sales {
 String value() default "";
 }
+
+В Gradle добавьте поддержку работы аннотаций
+implementation("org.springframework.boot:spring-boot-starter-aop")
 <details> 
 <summary>Ссылки</summary>
 1. 
