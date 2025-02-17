@@ -1,6 +1,8 @@
 package hse.kpo.Report;
 
+import hse.kpo.domains.Car;
 import hse.kpo.domains.Customer;
+import hse.kpo.domains.Ship;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,6 +31,20 @@ public class ReportBuilder {
     {
         content.append(String.format("Операция: %s", operation));
         content.append(System.lineSeparator());
+        return this;
+    }
+
+    public ReportBuilder addCars(List<Car> cars) {
+        content.append("Машины: ");
+        cars.forEach(car -> content.append(String.format(" - %s", car)));
+        content.append("\n");
+        return this;
+    }
+
+    public ReportBuilder addShips(List<Ship> ships) {
+        content.append("Корабли: ");
+        ships.forEach(ship -> content.append(String.format(" - %s", ship)));
+        content.append("\n");
         return this;
     }
 }

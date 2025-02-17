@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hse.kpo.params.EmptyEngineParams;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,8 +21,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ShipService {
-
+    @Getter
     private final List<Ship> ships = new ArrayList<>();
 
     private int carNumberCounter = 0;
@@ -37,6 +41,8 @@ public class ShipService {
         var firstShip = filteredShips.stream().findFirst();
 
         firstShip.ifPresent(ships::remove);
+
+        log.info("found ship {} with customer {}", firstShip, customer);
 
         return firstShip.orElse(null);
     }

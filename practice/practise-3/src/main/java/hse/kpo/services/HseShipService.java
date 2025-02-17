@@ -5,6 +5,8 @@ import hse.kpo.interfaces.CustomerProviderI;
 import java.util.Objects;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 /**
  * Класс, продающий автомобили.
  */
+@Slf4j
 @Component
 public class HseShipService {
 
@@ -39,10 +42,12 @@ public class HseShipService {
         // получаем список покупателей
         var customers = customerProvider.getCustomers();
         // пробегаемся по полученному списку
-        customers.stream().filter(customer -> Objects.isNull(customer.getCar())).forEach(customer -> {
+        customers.stream().filter(customer -> Objects.isNull(customer.getShip())).forEach(customer -> {
             var car = shipProvider.takeShip(customer);
             if (Objects.nonNull(car)) {
                 customer.setShip(car);
+            } else {
+                log.warn("No customer found for ship {}", customer.getShip());
             }
         });
     }

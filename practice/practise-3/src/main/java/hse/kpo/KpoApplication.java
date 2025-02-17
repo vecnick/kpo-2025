@@ -83,6 +83,8 @@ public class KpoApplication {
         report = reportBuilder
                 .addOperation("Продажа катамаранов")
                 .addCustomers(customerStorage.getCustomers())
+                .addCars(carService.getCars())
+                .addShips(shipService.getShips())
                 .build();
 
         System.out.println(report.toString());

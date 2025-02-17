@@ -3,6 +3,8 @@ package hse.kpo.services;
 import hse.kpo.interfaces.CarProviderI;
 import hse.kpo.interfaces.CustomerProviderI;
 import java.util.Objects;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
  * Класс, продающий автомобили.
  */
 @Component
+@Slf4j
 public class HseCarService {
 
     @Autowired
@@ -41,6 +44,7 @@ public class HseCarService {
             var car = carProvider.takeCar(customer);
             if (Objects.nonNull(car)) {
                 customer.setCar(car);
+                log.info("found car {} for customer {}", car, customer);
             }
         });
     }

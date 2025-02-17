@@ -19,7 +19,7 @@ public class HandEngineI implements EngineI {
     public boolean isCompatible(Customer customer, Types type) {
         switch (type) {
             case CAR: return customer.getHandPower() > 5;
-            case SHIP: return customer.getHandPower() > 2;
+            case SHIP: return customer.getHandPower() > 2 && customer.getIq() >= 200;
             case null, default: throw new RuntimeException("This type of production doesn't exist");
         }
 
