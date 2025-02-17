@@ -40,7 +40,7 @@ notifyObserversForSale(customer, ProductionTypes.CAR, car.getVin());
 implementation("org.springframework.boot:spring-boot-starter-aop")
 ```
 
-Создайте аннотацию Sales
+Создайте аннотацию Sales, чтобы можно было не дублировать код в классах
 ```
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
@@ -49,6 +49,7 @@ public @interface Sales {
 }
 ```
 
+Каждая аннотация имеет свою реализацию, для этого существует понятие аспект (реализация аннотации):
 ```
 @Component
 @Aspect
@@ -73,7 +74,7 @@ private final SalesObserver salesObserver;
 }
 ```
 
-
+```
 @Component
 @RequiredArgsConstructor
 public class ReportSalesObserver implements SalesObserver {
@@ -99,6 +100,7 @@ private final CustomerStorage customerStorage;
         reportBuilder.addOperation(message);
     }
 }
+```
 
 
 
