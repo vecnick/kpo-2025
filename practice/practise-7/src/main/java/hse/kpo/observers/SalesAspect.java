@@ -15,7 +15,7 @@ public class SalesAspect {
     private final SalesObserver salesObserver;
 
     @Around("@annotation(sales)")
-    public Object sales(ProceedingJoinPoint pjp) throws Throwable {
+    public Object sales(ProceedingJoinPoint pjp, Sales sales) throws Throwable {
 
         salesObserver.checkCustomers();
 
