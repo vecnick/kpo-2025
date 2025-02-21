@@ -102,9 +102,6 @@ private final CustomerStorage customerStorage;
 }
 ```
 
-
-
-
 <details> 
 <summary>Ссылки</summary>
 1. 
