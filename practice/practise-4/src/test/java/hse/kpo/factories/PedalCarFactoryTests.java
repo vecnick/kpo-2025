@@ -20,7 +20,7 @@ class PedalCarFactoryTests {
 	@DisplayName("PedalCarFactory - тест создания машин на соответствие VIN номера (createCar)")
 	void createdCarVinTest() {
 		int carNumber = 5;
-		HandEngine engine = new HandEngine();
+		PedalEngine engine = new PedalEngine(6);
 
 		int car1_VIN = (new Car(carNumber, engine)).getVIN();
 		int car2_VIN = pedalCarFactory.createCar(new PedalEngineParams(6), carNumber).getVIN();

@@ -6,14 +6,14 @@ import lombok.Getter;
 import lombok.ToString;
 
 @ToString
-public class Ship {
+public class Catamaran {
 
     private IEngine engine;
 
     @Getter
     private int VIN;
 
-    public Ship(int VIN, IEngine engine) {
+    public Catamaran(int VIN, IEngine engine) {
         this.VIN = VIN;
         this.engine = engine;
     }

@@ -1,4 +1,7 @@
 package hse.kpo.interfaces;
 
-public interface ICatamaranFactory {
+import hse.kpo.domains.Catamaran;
+
+public interface ICatamaranFactory<TParams> {
+    Catamaran create(TParams catamaranParams, int carNumber);
 }

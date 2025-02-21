@@ -20,7 +20,7 @@ class LevitatingCarFactoryTests {
 	@DisplayName("LevitatingCarFactory - тест создания машин на соответствие VIN номера (createCar)")
 	void createdCarVinTest() {
 		int carNumber = 5;
-		HandEngine engine = new HandEngine();
+		LevitatingEngine engine = new LevitatingEngine();
 
 		int car1_VIN = (new Car(carNumber, engine)).getVIN();
 		int car2_VIN = levitatingCarFactory.createCar(EmptyEngineParams.DEFAULT, carNumber).getVIN();
