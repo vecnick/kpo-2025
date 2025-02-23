@@ -10,23 +10,47 @@
 ## Пояснения к реализации
 Для создания наблюдателей добавьте список в класс, который будем мониторить 
 ```
-
-```
 final List<SalesObserver> observers = new ArrayList<>();
+```
 
-Для добавление наблюдателя поставьте метод
+Для добавление наблюдателя создайте метод
+```
 public void addObserver(SalesObserver observer) {
-observers.add(observer);
+    observers.add(observer);
 }
+```
 
 Для реализации оповещений используйте
+```
 private void notifyObserversForSale(Customer customer, ProductionTypes productType, int vin) {
     observers.forEach(obs -> obs.onSale(customer, productType, vin));
 }
+```
 
 Добавьте метод оповещения в продажу машин
+```
 notifyObserversForSale(customer, ProductionTypes.CAR, car.getVin());
+```
 
+Теперь можно не добавлять вручную в отчет информацию о пользователях. 
+Но необходимо добавлять и операции. Для этого:
+
+В Gradle добавьте поддержку работы аннотаций
+```
+implementation("org.springframework.boot:spring-boot-starter-aop")
+```
+
+Создайте аннотацию Sales, чтобы можно было не дублировать код в классах
+```
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Sales {
+    String value() default "";
+}
+```
+
+Каждая аннотация имеет свою реализацию, для этого существует понятие аспект (реализация аннотации):
+```
 @Component
 @Aspect
 @RequiredArgsConstructor
@@ -48,13 +72,9 @@ private final SalesObserver salesObserver;
         }
     }
 }
+```
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-public @interface Sales {
-String value() default "";
-}
-
+```
 @Component
 @RequiredArgsConstructor
 public class ReportSalesObserver implements SalesObserver {
@@ -80,10 +100,7 @@ private final CustomerStorage customerStorage;
         reportBuilder.addOperation(message);
     }
 }
-
-В Gradle добавьте поддержку работы аннотаций
-implementation("org.springframework.boot:spring-boot-starter-aop")
-
+```
 
 <details> 
 <summary>Ссылки</summary>
