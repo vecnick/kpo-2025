@@ -1,5 +1,6 @@
 package hse.kpo.services;
 
+import hse.kpo.Enums.Types;
 import hse.kpo.domains.Car;
 import hse.kpo.domains.Customer;
 import hse.kpo.interfaces.CarFactoryI;
@@ -7,6 +8,8 @@ import hse.kpo.interfaces.CarProviderI;
 import java.util.ArrayList;
 import java.util.List;
 
+import hse.kpo.interfaces.CreationObserver;
+import hse.kpo.interfaces.SalesObserver;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,6 +25,16 @@ public class CarServiceI implements CarProviderI {
 
     private int carNumberCounter = 0;
 
+    final List<CreationObserver> observers = new ArrayList<>();
+
+    public void addObserver(CreationObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObserversForSale(Types productType, int vin) {
+        observers.forEach(obs -> obs.onCreation(productType, vin));
+    }
+
     /**
      * Функция дающая машину покупателю.
      *
@@ -30,13 +43,10 @@ public class CarServiceI implements CarProviderI {
      */
     @Override
     public Car takeCar(Customer customer) {
-
         var filteredCars = cars.stream().filter(car -> car.isCompatible(customer)).toList();
-
         var firstCar = filteredCars.stream().findFirst();
 
         firstCar.ifPresent(cars::remove);
-
         return firstCar.orElse(null);
     }
 
@@ -53,7 +63,7 @@ public class CarServiceI implements CarProviderI {
                 carParams, // передаем параметры
                 ++carNumberCounter // передаем номер - номер будет начинаться с 1
         );
-
+        notifyObserversForSale(Types.CAR, car.getVin());
         cars.add(car); // добавляем автомобиль
     }
 }

@@ -1,5 +1,6 @@
 package hse.kpo.services;
 
+import hse.kpo.Enums.Types;
 import hse.kpo.domains.Car;
 import hse.kpo.domains.Customer;
 import hse.kpo.domains.Ship;
@@ -9,6 +10,8 @@ import hse.kpo.interfaces.CarProviderI;
 import java.util.ArrayList;
 import java.util.List;
 
+import hse.kpo.interfaces.CreationObserver;
+import hse.kpo.interfaces.SalesObserver;
 import hse.kpo.params.EmptyEngineParams;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,16 @@ public class ShipService {
 
     private int carNumberCounter = 0;
 
+    final List<CreationObserver> observers = new ArrayList<>();
+
+    public void addObserver(CreationObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObserversForSale(Types productType, int vin) {
+        observers.forEach(obs -> obs.onCreation(productType, vin));
+    }
+
     /**
      * Функция дающая машину покупателю.
      *
@@ -42,7 +55,7 @@ public class ShipService {
 
         firstShip.ifPresent(ships::remove);
 
-        log.info("found ship {} with customer {}", firstShip, customer);
+        log.debug("found ship {} with customer {}", firstShip, customer);
 
         return firstShip.orElse(null);
     }
@@ -53,7 +66,7 @@ public class ShipService {
                 carParams, // передаем параметры
                 ++carNumberCounter // передаем номер - номер будет начинаться с 1
         );
-
+        notifyObserversForSale(Types.SHIP, car.getVin());
         ships.add(car); // добавляем автомобиль
     }
 }
