@@ -1,5 +1,6 @@
 package hse.kpo;
 
+import hse.kpo.builders.ReportBuilder;
 import hse.kpo.domains.Car;
 import hse.kpo.domains.Catamaran;
 import hse.kpo.domains.Customer;
@@ -39,6 +40,7 @@ public class KpoApplication {
 		LevitationCatamaranFactory levitationCatamaranFactory = context.getBean(LevitationCatamaranFactory.class);
 		HseCarService hseCarService = context.getBean(HseCarService.class);
 		HseCatamaranService hseCatamaranService = context.getBean(HseCatamaranService.class);
+		ReportBuilder reportBuilder = context.getBean(ReportBuilder.class);
 
 		Customer customer1 = Customer.builder().name("boris").legPower(6).handPower(6).iq(200).build();
 		Customer customer2 = Customer.builder().name("ivan").legPower(7).handPower(7).iq(300).build();
@@ -57,6 +59,8 @@ public class KpoApplication {
 
 		hseCarService.sellCars();
 		hseCatamaranService.sellCatamarans();
+
+		System.out.println(reportBuilder.build().toString());
 
 	}
 }

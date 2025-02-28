@@ -4,6 +4,7 @@ import hse.kpo.builders.ReportBuilder;
 import hse.kpo.domains.Customer;
 import hse.kpo.factories.cars.HandCarFactory;
 import hse.kpo.factories.cars.PedalCarFactory;
+import hse.kpo.interfaces.SalesObserver;
 import hse.kpo.params.EmptyEngineParams;
 import hse.kpo.params.PedalEngineParams;
 import hse.kpo.storages.CarStorage;
@@ -33,6 +34,9 @@ class KpoApplicationTests {
 	@Autowired
 	private HandCarFactory handCarFactory;
 
+	@Autowired
+	private SalesObserver salesObserver;
+
 	@Test
 	@DisplayName("Тест загрузки контекста")
 	void contextLoads() {
@@ -44,6 +48,8 @@ class KpoApplicationTests {
 	@Test
 	@DisplayName("Тест загрузки контекста")
 	void hseCarServiceTest() {
+
+		hseCarService.addObserver(salesObserver);
 		customerStorage.addCustomer(Customer.builder().name("Ivan1").legPower(6).handPower(4).build());
 		customerStorage.addCustomer(Customer.builder().name("Maksim").legPower(4).handPower(6).build());
 		customerStorage.addCustomer(Customer.builder().name("Petya").legPower(6).handPower(6).build());
