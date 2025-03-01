@@ -3,11 +3,13 @@
 ## Цель занятия
 - Разобраться что такое DDD. Дополнить проект работой с файлами, а в частности формированием отчетов разных форматов.
 ## Требования к реализации
-1.
+1. Разделить сущности по доменам (машины и катамараны)
+2. Добавить возможность экспорта отчетов в формате MARKDOWN и json.
+3. Добавить возможность экспорта транспорта в форматах csv и xml.
 ## Тестирование
-1. .
+1. После выполнения программы у вас формируются отчеты.
 ## Задание на доработку
-- 
+- Добавить возможность добавления транспорта из отчета.
 ## Пояснения к реализации
 Добавьте зависимость Jackson в build.gradle, для включение адаптера обычных классов в json формат:
 ```
@@ -16,13 +18,16 @@ implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
 
 Добавьте перечисление для форматов отчета:
 
+```
 public enum ReportFormat {
 JSON,
 MARKDOWN
 }
+```
 
 Создайте абстрактный класс экспортера:
 
+```
 package hse.kpo.export.reports;
 
 import hse.kpo.domains.Report;
@@ -32,8 +37,10 @@ import java.io.Writer;
 public interface ReportExporter {
 void export(Report report, Writer writer) throws IOException;
 }
+```
 
 Реализуйте экспорт для типов [json](/report.json) и [MARKDOWN](/report.MD):
+```
 package hse.kpo.export.reports.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,7 +58,9 @@ private final ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(writer, report);
     }
 }
+```
 
+```
 package hse.kpo.export.reports.impl;
 
 import hse.kpo.domains.Report;
@@ -68,9 +77,11 @@ writer.write(report.content());
 writer.flush();
 }
 }
+```
 
 Реализуйте фабрику экспортеров:
 
+```
 package hse.kpo.factories;
 
 import hse.kpo.enums.ReportFormat;
@@ -89,9 +100,11 @@ default -> throw new IllegalArgumentException("Unsupported format: " + format);
 };
 }
 }
+```
 
 Интегрируйте экспорт отчетов в класс Hse:
 
+```
 package hse.kpo.facade;
 
 // ... импорты ...
@@ -118,9 +131,11 @@ private final ReportExporterFactory reportExporterFactory;
         return salesObserver.buildReport().toString();
     }
 }
+```
 
 Добавить использование в главный тест/main:
 
+```
 // Экспорт в консоль в формате Markdown
 hse.exportReport(ReportFormat.MARKDOWN, new PrintWriter(System.out));
 // Экспорт в файл в формате MARKDOWN
@@ -132,20 +147,26 @@ hse.exportReport(ReportFormat.MARKDOWN, fileWriter);
 try (FileWriter fileWriter = new FileWriter("report.json")) {
 hse.exportReport(ReportFormat.JSON, fileWriter);
 }
+```
 
 Задание экспорта транспорта:
 Необходимо добавить общий интерфейс для машин и катамаранов и реализовать его методы.
+```
 public interface Transport {
 boolean isCompatible(Customer customer);
 int getVin(); 
 String getEngineType();
 String getTransportType();
 }
+```
 
 Сигнатура транспортых экспортеров:
+```
 public interface TransportExporter {
 void export(List<Transport> transports, Writer writer) throws IOException;
 }
+```
+Пример экспорта для типов [csv](/transports.csv) и [xml](/transports.xml)
 
 <details> 
 <summary>Ссылки</summary>
