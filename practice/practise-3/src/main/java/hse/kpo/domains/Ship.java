@@ -10,7 +10,7 @@ import lombok.ToString;
  */
 @ToString
 public class Ship {
-
+    @Getter
     private EngineI engine;
 
     @Getter
