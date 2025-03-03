@@ -1,0 +1,31 @@
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project*
+.settings
+.springBeans
+.sts4-cache
+bin
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+**/logs/
+
+# Ignore Gradle project-specific cache directory
+.gradle
+!gradle/wrapper/gradle-wrapper.jar
+
+# Ignore Gradle build output directory
+build
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
