@@ -193,10 +193,13 @@ transport.getEngineType()
 )
 ```
 
+Для добавления машин и катамаранов в фасаде можно использовать Stream.concat
+```
 List<Transport> transports = Stream.concat(
 carStorage.getCars().stream(),
 catamaranStorage.getCatamarans().stream())
 .toList();
+```
 
 <details> 
 <summary>Ссылки</summary>
