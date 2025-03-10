@@ -21,6 +21,7 @@
    }
 ```
 
+В папке config внутри hse.kpo создать конфигурацию Swagger
 ```
 @Configuration
 public class SwaggerConfig {
@@ -221,4 +222,6 @@ public class CarController {
 1. https://proglib.io/p/chto-takoe-api-i-crud-prostymi-slovami
 2. https://javarush.com/groups/posts/3160-spring---ehto-ne-strashno-kontroliruem-svoy-rest
 3. https://habr.com/ru/articles/541592/
+4. https://www.postman.com/
+5. http://localhost:8080/swagger-ui/index.html#/
 </details>
