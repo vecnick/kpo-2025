@@ -75,6 +75,17 @@ public class CarController {
     private final HseCarService carService;
     private final Hse hseFacade;
 
+    // GET by VIN
+    @GetMapping("/{vin}")
+    @Operation(summary = "Получить автомобиль по VIN")
+    public ResponseEntity<Car> getCarByVin(@PathVariable int vin) {
+        return carStorage.getCars().stream()
+                .filter(car -> car.getVin() == vin)
+                .findFirst()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     @Operation(summary = "Создать автомобиль",
             description = "Для PEDAL требуется pedalSize (1-15)")
@@ -100,18 +111,56 @@ public class CarController {
             default -> throw new RuntimeException();
         };
 
-        carStorage.addExistingCar(car);
         return ResponseEntity.status(HttpStatus.CREATED).body(car);
     }
 
-    private Object getParams(CarRequest request) {
-        return switch (request.engineType()) {
-            case "PEDAL" -> new PedalEngineParams(
-                    Optional.ofNullable(request.pedalSize())
-                            .orElseThrow(() -> new IllegalArgumentException("pedalSize обязателен для PEDAL"))
-            );
-            default -> EmptyEngineParams.DEFAULT;
-        };
+    @PostMapping("/sell")
+    @Operation(summary = "Продать все доступные автомобили")
+    public ResponseEntity<Void> sellAllCars() {
+        carService.sellCars();
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/sell/{vin}")
+    @Operation(summary = "Продать автомобиль по VIN")
+    public ResponseEntity<Void> sellCar(@PathVariable int vin) {
+        var carOptional = carStorage.getCars().stream()
+                .filter(c -> c.getVin() == vin)
+                .findFirst();
+
+        if (carOptional.isPresent()) {
+            var car = carOptional.get();
+            carStorage.getCars().remove(car);
+            // Логика продажи (упрощенно)
+            hseFacade.sell();
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{vin}")
+    @Operation(summary = "Обновить автомобиль")
+    public ResponseEntity<Car> updateCar(
+            @PathVariable int vin,
+            @Valid @RequestBody CarRequest request) {
+
+        return carStorage.getCars().stream()
+                .filter(car -> car.getVin() == vin)
+                .findFirst()
+                .map(existingCar -> {
+                    var updatedCar = createCarFromRequest(request, vin);
+                    carStorage.getCars().remove(existingCar);
+                    carStorage.addExistingCar(updatedCar);
+                    return ResponseEntity.ok(updatedCar);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{vin}")
+    @Operation(summary = "Удалить автомобиль")
+    public ResponseEntity<Void> deleteCar(@PathVariable int vin) {
+        boolean removed = carStorage.getCars().removeIf(car -> car.getVin() == vin);
+        return removed ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
     @GetMapping
@@ -129,7 +178,15 @@ public class CarController {
                 .filter(car -> minVin == null || car.getVin() >= minVin)
                 .toList();
     }
-}
+
+    private Car createCarFromRequest(CarRequest request, int vin) {
+        Engine engine = switch (EngineTypes.valueOf(request.engineType())) {
+            case PEDAL -> new PedalEngine(request.pedalSize());
+            case HAND -> new HandEngine();
+            case LEVITATION -> new LevitationEngine();
+        };
+        return new Car(vin, engine);
+    }
 ```
 
 ```
