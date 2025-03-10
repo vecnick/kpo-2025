@@ -1,4 +1,4 @@
-package hse.kpo.Report;
+package hse.kpo.domains.Reports;
 
 public record Report(String title, String content) {
     @Override

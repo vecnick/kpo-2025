@@ -1,10 +1,8 @@
-package hse.kpo.factories;
+package hse.kpo.factories.Ships;
 
-import hse.kpo.domains.Car;
-import hse.kpo.domains.HandEngineI;
-import hse.kpo.domains.Ship;
-import hse.kpo.interfaces.CarFactoryI;
-import hse.kpo.params.EmptyEngineParams;
+import hse.kpo.domains.Engines.HandEngineI;
+import hse.kpo.domains.Ships.Ship;
+import hse.kpo.domains.params.EmptyEngineParams;
 import org.springframework.stereotype.Component;
 
 /**

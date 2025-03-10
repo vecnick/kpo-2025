@@ -1,12 +1,10 @@
 package hse.kpo;
 
-import hse.kpo.domains.Customer;
-import hse.kpo.services.CarServiceI;
+import hse.kpo.domains.Customers.Customer;
 import hse.kpo.services.CustomerStorageI;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 
 /**

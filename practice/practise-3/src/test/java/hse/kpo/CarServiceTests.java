@@ -1,6 +1,6 @@
 package hse.kpo;
 
-import hse.kpo.domains.Customer;
+import hse.kpo.domains.Customers.Customer;
 import hse.kpo.services.CarServiceI;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

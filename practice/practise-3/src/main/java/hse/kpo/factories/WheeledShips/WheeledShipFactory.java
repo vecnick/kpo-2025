@@ -1,10 +1,10 @@
-package hse.kpo.factories;
+package hse.kpo.factories.WheeledShips;
 
-import hse.kpo.domains.Car;
-import hse.kpo.domains.HandEngineI;
-import hse.kpo.domains.WheeledShip;
+import hse.kpo.domains.Cars.Car;
+import hse.kpo.domains.WheeledShips.WheeledShip;
+import hse.kpo.factories.Ships.ShipFactory;
 import hse.kpo.interfaces.CarFactoryI;
-import hse.kpo.params.EmptyEngineParams;
+import hse.kpo.domains.params.EmptyEngineParams;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

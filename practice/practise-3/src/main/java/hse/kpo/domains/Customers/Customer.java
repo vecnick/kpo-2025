@@ -1,5 +1,7 @@
-package hse.kpo.domains;
+package hse.kpo.domains.Customers;
 
+import hse.kpo.domains.Cars.Car;
+import hse.kpo.domains.Ships.Ship;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

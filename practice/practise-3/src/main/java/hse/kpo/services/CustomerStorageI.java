@@ -1,6 +1,6 @@
 package hse.kpo.services;
 
-import hse.kpo.domains.Customer;
+import hse.kpo.domains.Customers.Customer;
 import hse.kpo.interfaces.CustomerProviderI;
 import java.util.ArrayList;
 import java.util.List;

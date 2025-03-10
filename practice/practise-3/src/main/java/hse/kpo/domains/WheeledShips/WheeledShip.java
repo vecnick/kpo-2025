@@ -1,7 +1,8 @@
-package hse.kpo.domains;
+package hse.kpo.domains.WheeledShips;
 
-import hse.kpo.interfaces.EngineI;
-import lombok.ToString;
+import hse.kpo.domains.Cars.Car;
+import hse.kpo.domains.Customers.Customer;
+import hse.kpo.domains.Ships.Ship;
 
 public class WheeledShip  extends Car {
     private final Ship ship;

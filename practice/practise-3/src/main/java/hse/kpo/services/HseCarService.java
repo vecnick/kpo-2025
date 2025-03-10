@@ -2,7 +2,7 @@ package hse.kpo.services;
 
 import hse.kpo.Enums.Types;
 import hse.kpo.Observers.Sales;
-import hse.kpo.domains.Customer;
+import hse.kpo.domains.Customers.Customer;
 import hse.kpo.interfaces.CarProviderI;
 import hse.kpo.interfaces.CustomerProviderI;
 

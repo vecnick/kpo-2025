@@ -1,7 +1,7 @@
 package hse.kpo;
 
-import hse.kpo.factories.LevitatingCarFactoryI;
-import hse.kpo.params.EmptyEngineParams;
+import hse.kpo.factories.Cars.LevitatingCarFactoryI;
+import hse.kpo.domains.params.EmptyEngineParams;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package hse.kpo.params;
+package hse.kpo.domains.params;
 
 /**
  * Класс параметров педального двигателя.

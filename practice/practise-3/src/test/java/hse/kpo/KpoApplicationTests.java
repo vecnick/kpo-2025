@@ -1,11 +1,11 @@
 package hse.kpo;
 
-import hse.kpo.domains.Customer;
-import hse.kpo.factories.HandCarFactoryI;
-import hse.kpo.factories.LevitatingCarFactoryI;
-import hse.kpo.factories.PedalCarFactoryI;
-import hse.kpo.params.EmptyEngineParams;
-import hse.kpo.params.PedalEngineParams;
+import hse.kpo.domains.Customers.Customer;
+import hse.kpo.factories.Cars.HandCarFactoryI;
+import hse.kpo.factories.Cars.LevitatingCarFactoryI;
+import hse.kpo.factories.Cars.PedalCarFactoryI;
+import hse.kpo.domains.params.EmptyEngineParams;
+import hse.kpo.domains.params.PedalEngineParams;
 import hse.kpo.services.CarServiceI;
 import hse.kpo.services.CustomerStorageI;
 import hse.kpo.services.HseCarService;

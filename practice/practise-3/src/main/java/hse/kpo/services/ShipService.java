@@ -1,21 +1,17 @@
 package hse.kpo.services;
 
 import hse.kpo.Enums.Types;
-import hse.kpo.domains.Car;
-import hse.kpo.domains.Customer;
-import hse.kpo.domains.Ship;
-import hse.kpo.factories.ShipFactory;
-import hse.kpo.interfaces.CarFactoryI;
-import hse.kpo.interfaces.CarProviderI;
+import hse.kpo.domains.Customers.Customer;
+import hse.kpo.domains.Ships.Ship;
+import hse.kpo.factories.Ships.ShipFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import hse.kpo.interfaces.CreationObserver;
-import hse.kpo.interfaces.SalesObserver;
-import hse.kpo.params.EmptyEngineParams;
+import hse.kpo.domains.params.EmptyEngineParams;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

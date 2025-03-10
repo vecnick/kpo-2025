@@ -1,12 +1,10 @@
 package hse.kpo;
 
-import hse.kpo.factories.HandCarFactoryI;
-import hse.kpo.params.EmptyEngineParams;
-import hse.kpo.params.PedalEngineParams;
+import hse.kpo.factories.Cars.HandCarFactoryI;
+import hse.kpo.domains.params.EmptyEngineParams;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * Класс, тестирующий класс HandCarFactory.

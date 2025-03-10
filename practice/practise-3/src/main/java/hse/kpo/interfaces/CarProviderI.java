@@ -1,7 +1,7 @@
 package hse.kpo.interfaces;
 
-import hse.kpo.domains.Car;
-import hse.kpo.domains.Customer;
+import hse.kpo.domains.Cars.Car;
+import hse.kpo.domains.Customers.Customer;
 
 /**
  * Интерфейс класса, возвращающего список доступных для покупки машин.

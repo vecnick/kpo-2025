@@ -1,14 +1,13 @@
 package hse.kpo.Observers;
 
 import hse.kpo.Enums.Types;
-import hse.kpo.Report.Report;
+import hse.kpo.domains.Reports.Report;
 import hse.kpo.Report.ReportBuilder;
-import hse.kpo.domains.Customer;
+import hse.kpo.domains.Customers.Customer;
 import hse.kpo.interfaces.CreationObserver;
 import hse.kpo.interfaces.SalesObserver;
 import hse.kpo.services.CustomerStorageI;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

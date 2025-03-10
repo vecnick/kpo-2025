@@ -1,6 +1,6 @@
 package hse.kpo.interfaces;
 
-import hse.kpo.domains.Car;
+import hse.kpo.domains.Cars.Car;
 
 /**
  * Интерфейс фабрики машин с определенными параметрами.

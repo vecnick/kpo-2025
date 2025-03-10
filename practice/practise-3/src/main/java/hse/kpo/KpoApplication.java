@@ -1,21 +1,12 @@
 package hse.kpo;
 
+import hse.kpo.Enums.ReportFormat;
+import hse.kpo.Enums.TransportReportFormat;
 import hse.kpo.Facades.Hse;
-import hse.kpo.Observers.ReportSalesObserver;
-import hse.kpo.Observers.Sales;
-import hse.kpo.Report.ReportBuilder;
-import hse.kpo.domains.Customer;
-import hse.kpo.factories.HandCarFactoryI;
-import hse.kpo.factories.LevitatingCarFactoryI;
-import hse.kpo.factories.PedalCarFactoryI;
-import hse.kpo.factories.ShipFactory;
-import hse.kpo.interfaces.SalesObserver;
-import hse.kpo.params.EmptyEngineParams;
-import hse.kpo.params.PedalEngineParams;
-import hse.kpo.services.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.io.*;
 
 /**
  * класс main.
@@ -40,11 +31,42 @@ public class KpoApplication {
         hse.addCustomer("Petya", 6, 6, 250);
         hse.addCustomer("Nikita", 4, 4, 300);
 
-        hse.addPedalCar(6);
-        hse.addWheeledShip();
-        hse.addHandCar();
+        try (BufferedReader reader = new BufferedReader(new FileReader("cars.csv"))) {
+            hse.importTransportFromCSV(reader);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try (FileWriter fileWriter = new FileWriter("report.csv")) {
+            hse.exportTransport(TransportReportFormat.CSV, fileWriter);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
+        try (FileWriter fileWriter = new FileWriter("report.xml")) {
+            hse.exportTransport(TransportReportFormat.XML, fileWriter);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
 
         hse.sell();
+
+
+        hse.exportReport(ReportFormat.MARKDOWN, new PrintWriter(System.out));
+
+        try (FileWriter fileWriter = new FileWriter("report.MD")) {
+            hse.exportReport(ReportFormat.MARKDOWN, fileWriter);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try (FileWriter fileWriter = new FileWriter("report.json")) {
+            hse.exportReport(ReportFormat.JSON, fileWriter);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         System.out.println(hse.generateReport());
     }

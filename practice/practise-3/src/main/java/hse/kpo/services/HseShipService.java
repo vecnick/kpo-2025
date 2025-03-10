@@ -1,8 +1,7 @@
 package hse.kpo.services;
 
 import hse.kpo.Enums.Types;
-import hse.kpo.domains.Customer;
-import hse.kpo.interfaces.CarProviderI;
+import hse.kpo.domains.Customers.Customer;
 import hse.kpo.interfaces.CustomerProviderI;
 
 import java.util.ArrayList;
@@ -10,8 +9,6 @@ import java.util.List;
 import java.util.Objects;
 
 import hse.kpo.interfaces.SalesObserver;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

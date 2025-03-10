@@ -1,8 +1,9 @@
 package hse.kpo.Report;
 
-import hse.kpo.domains.Car;
-import hse.kpo.domains.Customer;
-import hse.kpo.domains.Ship;
+import hse.kpo.domains.Cars.Car;
+import hse.kpo.domains.Customers.Customer;
+import hse.kpo.domains.Reports.Report;
+import hse.kpo.domains.Ships.Ship;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
