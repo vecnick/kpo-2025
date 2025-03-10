@@ -48,6 +48,24 @@ public record CarRequest(
 ```
 
 ```
+public enum EngineTypes {
+HAND ("HAND"),
+PEDAL ("PEDAL"),
+LEVITATION ("LEVITATION");
+
+    private final String name;
+
+    EngineTypes(String name) {
+        this.name = name;
+    }
+
+    public static Optional<EngineTypes> find(String name) {
+        return Arrays.stream(values()).filter(type -> type.name.equals(name)).findFirst();
+    }
+}
+```
+
+```
 @RestController
 @RequestMapping("/api/cars")
 @RequiredArgsConstructor
