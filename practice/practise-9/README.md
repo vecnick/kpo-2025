@@ -9,7 +9,7 @@
 ## Задание на доработку
 - 
 ## Пояснения к реализации
-1. Добавьте зависимости в build.gradle
+Добавьте зависимости в build.gradle
 ```
    dependencies {
    // Spring Web (включает REST и Tomcat)
@@ -216,5 +216,7 @@ public class CarController {
 
 <details> 
 <summary>Ссылки</summary>
-1. 
+1. https://proglib.io/p/chto-takoe-api-i-crud-prostymi-slovami
+2. https://javarush.com/groups/posts/3160-spring---ehto-ne-strashno-kontroliruem-svoy-rest
+3. https://habr.com/ru/articles/541592/
 </details>
