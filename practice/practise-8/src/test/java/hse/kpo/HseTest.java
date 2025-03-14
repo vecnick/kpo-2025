@@ -1,6 +1,7 @@
 package hse.kpo;
 
 import hse.kpo.domains.*;
+import hse.kpo.domains.cars.Car;
 import hse.kpo.enums.ProductionTypes;
 import hse.kpo.facade.Hse;
 import hse.kpo.factories.cars.HandCarFactory;

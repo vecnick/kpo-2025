@@ -1,4 +1,4 @@
-package hse.kpo.services;
+package hse.kpo.services.catamarans;
 
 import hse.kpo.interfaces.CustomerProvider;
 import hse.kpo.interfaces.catamarans.CatamaranProvider;

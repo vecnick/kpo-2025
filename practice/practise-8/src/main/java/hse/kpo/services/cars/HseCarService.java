@@ -1,4 +1,4 @@
-package hse.kpo.services;
+package hse.kpo.services.cars;
 
 import hse.kpo.domains.Customer;
 import hse.kpo.enums.ProductionTypes;

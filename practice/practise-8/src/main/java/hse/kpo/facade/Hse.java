@@ -1,14 +1,18 @@
 package hse.kpo.facade;
 
-import hse.kpo.domains.Catamaran;
-import hse.kpo.domains.CatamaranWithWheels;
+import hse.kpo.domains.Report;
+import hse.kpo.domains.catamaran.Catamaran;
+import hse.kpo.domains.catamaran.CatamaranWithWheels;
 import hse.kpo.domains.Customer;
+import hse.kpo.enums.ReportFormat;
+import hse.kpo.export.ReportExporter;
+import hse.kpo.factories.ReportExporterFactory;
 import hse.kpo.factories.cars.*;
 import hse.kpo.factories.catamarans.*;
 import hse.kpo.params.EmptyEngineParams;
 import hse.kpo.params.PedalEngineParams;
-import hse.kpo.services.HseCarService;
-import hse.kpo.services.HseCatamaranService;
+import hse.kpo.services.cars.HseCarService;
+import hse.kpo.services.catamarans.HseCatamaranService;
 import hse.kpo.storages.CarStorage;
 import hse.kpo.storages.CatamaranStorage;
 import hse.kpo.storages.CustomerStorage;
@@ -16,6 +20,8 @@ import hse.kpo.observers.SalesObserver;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.io.Writer;
 import java.util.Random;
 
 /**
@@ -38,6 +44,7 @@ public class Hse {
     private final PedalCatamaranFactory pedalCatamaranFactory;
     private final HandCatamaranFactory handCatamaranFactory;
     private final LevitationCatamaranFactory levitationCatamaranFactory;
+    private final ReportExporterFactory reportExporterFactory;
 
     @PostConstruct
     private void init() {
@@ -143,5 +150,16 @@ public class Hse {
      */
     public String generateReport() {
         return salesObserver.buildReport().toString();
+    }
+
+    public void exportReport(ReportFormat format, Writer writer) {
+        Report report = salesObserver.buildReport();
+        ReportExporter exporter = reportExporterFactory.create(format);
+
+        try {
+            exporter.export(report, writer);
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
     }
 }
