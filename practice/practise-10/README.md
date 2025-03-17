@@ -69,7 +69,27 @@ public class KpoExceptionHandler {
 5) Отправьте запросы к включенному сервису
 
 ```
+@SpringBootTest
+@AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+class CarControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
 
+    @Test
+    @DisplayName("Создание автомобиля с педальным двигателем и валидными параметрами")
+    void createPedalCar_ValidData_Returns201() throws Exception {
+        CarRequest request = new CarRequest("PEDAL", 10);
+        mockMvc.perform(post("/api/cars")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.vin").isNumber())
+                .andExpect(jsonPath("$.engineType").value("PEDAL"));
+    }
+}
 ```
 <details> 
 <summary>Ссылки</summary>
