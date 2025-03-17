@@ -52,6 +52,23 @@ public class KpoExceptionHandler {
 }
 ```
 
+Откройте Postman и выполните импорт спецификации:
+
+1) Нажмите кнопку file->Import в верхнем левом углу.
+2) Выберите файл swagger.yaml (или openapi.yaml) через вкладку File.
+3) Нажмите Import.
+
+Создайте среду для тестирования:
+
+1) Нажмите Environments в левом меню.
+2) Нажмите Create Environment .
+3) Укажите:
+   - Name : Local 
+   - Variables :
+     * baseUrl: http://localhost:8080
+4) Справа включите использование нужного Environment
+5) Отправьте запросы к включенному сервису
+
 ```
 
 ```
