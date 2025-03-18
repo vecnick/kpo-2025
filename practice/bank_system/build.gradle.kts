@@ -1,20 +1,12 @@
 plugins {
 	java
-	checkstyle
 	jacoco
 	id("org.springframework.boot") version "3.4.2"
 	id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "hse"
-version = "0.0.1-SNAPSHOT"
-
-checkstyle {
-	toolVersion = "10.13.0"
-	isIgnoreFailures = false
-	maxWarnings = 0
-	maxErrors = 0
-}
+group = "bank"
+version = "1.0.0"
 
 java {
 	toolchain {
@@ -30,26 +22,18 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven("https://jitpack.io") // для java-object-diff
 }
 
 dependencies {
-   // Spring Web (включает REST и Tomcat)
-   implementation("org.springframework.boot:spring-boot-starter-web")
-   // Swagger UI и OpenAPI
-   implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
-   
+	implementation("org.apache.commons:commons-lang3:3.12.0")
+	implementation("de.danielbechler:java-object-diff:0.93.1")
 	implementation("org.springframework.boot:spring-boot-starter")
-
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
-
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
-	implementation("org.springframework.boot:spring-boot-starter-aop")
-
-	implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
 }
 
 tasks.withType<Test> {

@@ -2,5 +2,6 @@ package hse.kpo.enums;
 
 public enum ReportFormat {
     JSON,
-    MARKDOWN
+    MARKDOWN,
+    CSV
 }

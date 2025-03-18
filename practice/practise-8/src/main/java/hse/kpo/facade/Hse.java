@@ -1,6 +1,7 @@
 package hse.kpo.facade;
 
 import hse.kpo.domains.Report;
+import hse.kpo.domains.cars.Car;
 import hse.kpo.domains.catamaran.Catamaran;
 import hse.kpo.domains.catamaran.CatamaranWithWheels;
 import hse.kpo.domains.Customer;
@@ -22,7 +23,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.Writer;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * Фасад для работы с системой продажи транспортных средств.
@@ -154,6 +157,19 @@ public class Hse {
 
     public void exportReport(ReportFormat format, Writer writer) {
         Report report = salesObserver.buildReport();
+        ReportExporter exporter = reportExporterFactory.create(format);
+
+        try {
+            exporter.export(report, writer);
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void exportCars(ReportFormat format, Writer writer) {
+        List<Car> cars = carStorage.getCars();
+        String carsString = cars.stream().map(Car::toString).collect(Collectors.joining("\n"));
+        Report report = new Report("Cars", carsString);
         ReportExporter exporter = reportExporterFactory.create(format);
 
         try {

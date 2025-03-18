@@ -46,5 +46,9 @@ public class KpoApplication {
 		try (FileWriter fileWriter = new FileWriter("report.json")) {
 			hse.exportReport(ReportFormat.JSON, fileWriter);
 		}
+
+		try (FileWriter fileWriter = new FileWriter("report_cars.csv")) {
+			hse.exportReport(ReportFormat.CSV, fileWriter);
+		}
     }
 }
