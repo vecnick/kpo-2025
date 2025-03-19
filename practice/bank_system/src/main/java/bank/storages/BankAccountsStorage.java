@@ -22,4 +22,9 @@ public class BankAccountsStorage implements IBankAccountStorage {
     public List<BankAccount> getAccounts() {
         return bankAccounts;
     }
+
+    @Override
+    public void removeAccountById(int id) {
+        bankAccounts.removeIf(ac -> ac.getId() == id);
+    }
 }

@@ -10,4 +10,6 @@ public interface ICategoryStorage {
     void addCategory(ICategoryFactory categoryFactory, OperationType type, String name);
 
     List<Category> getCategories();
+
+    void removeCategoryById(int id);
 }

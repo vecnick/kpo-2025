@@ -25,4 +25,9 @@ public class CategoryStorage implements ICategoryStorage {
     public List<Category> getCategories() {
         return categories;
     }
+
+    @Override
+    public void removeCategoryById(int id) {
+        categories.removeIf(cat -> cat.getId() == id);
+    }
 }

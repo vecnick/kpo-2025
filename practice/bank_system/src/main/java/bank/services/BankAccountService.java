@@ -29,4 +29,8 @@ public class BankAccountService {
                 .filter(ac -> ac.getId() == id) // фильтруем
                 .findFirst(); // берём первый попавшийся
     }
+
+    public void removeAccountById(int id) {
+        bankAccountsStorage.removeAccountById(id);
+    }
 }

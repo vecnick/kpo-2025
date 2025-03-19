@@ -34,6 +34,10 @@ public class CategoryService {
                 .findFirst(); // берём первый попавшийся
     }
 
+    public void removeCategoryById(int id) {
+        categoryStorage.removeCategoryById(id);
+    }
+
     public List<Category> getCategoriesIncome() {
         return getCategories().stream()
                 .filter(cat -> cat.getType() == OperationType.INCOME) // проверка типа

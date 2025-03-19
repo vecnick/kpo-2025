@@ -44,5 +44,7 @@ public class Main {
         categoryService.addCategory(categoryFactory, OperationType.INCOME, "swimming pool");
         categoryService.addCategory(categoryFactory, OperationType.OUTCOME, "supermarket");
 
+        System.out.println(categoryService.getOperationById(1).toString());
+
     }
 }
