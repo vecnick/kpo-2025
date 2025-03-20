@@ -1,0 +1,9 @@
+[ {
+  "Type" : "Expenses",
+  "ID" : 0,
+  "Name" : "food"
+}, {
+  "Type" : "Income",
+  "ID" : 1,
+  "Name" : "job"
+} ]

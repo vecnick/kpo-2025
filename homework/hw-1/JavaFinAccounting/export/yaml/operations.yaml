@@ -1,0 +1,4 @@
+{CategoryID: 0, Type: Expenses, Description: 'Some description idk ', BankAccountID: 0, Amount: 1.0, ID: 0, Date: '2025-03-12'}
+{CategoryID: 1, Type: Income, Description: '', BankAccountID: 0, Amount: 5.0, ID: 1, Date: '2025-03-13'}
+{CategoryID: 1, Type: Income, Description: '', BankAccountID: 0, Amount: 1.0, ID: 2, Date: '2025-03-20'}
+{CategoryID: 0, Type: Expenses, Description: '', BankAccountID: 0, Amount: 3.0, ID: 3, Date: '2025-03-20'}

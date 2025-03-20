@@ -1,0 +1,5 @@
+"ID","Type","Amount","Date","BankAccountID","CategoryID","Description"
+"0","Expenses","1.0","2025-03-12","0","0","Some description idk "
+"1","Income","5.0","2025-03-13","0","1",""
+"2","Income","1.0","2025-03-20","0","1",""
+"3","Expenses","3.0","2025-03-20","0","0",""
