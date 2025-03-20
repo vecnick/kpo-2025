@@ -42,14 +42,4 @@ public class Operation {
         this.description = description;
         this.categoryId = categoryId;
     }
-
-    public Operation(ReportOperation report) {
-        this.id = report.id;
-        this.type = report.type;
-        this.bankAccountId = report.bankAccountId;
-        this.amount = report.amount;
-        this.date = report.date;
-        this.description = report.description;
-        this.categoryId = report.categoryId;
-    }
 }

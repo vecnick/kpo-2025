@@ -15,7 +15,11 @@ import bank.interfaces.ImporterStrategy;
 import bank.report.Report;
 import bank.report.ReportBankAccount;
 import bank.report.ReportOperation;
+import bank.services.BankAccountService;
+import bank.services.CategoryService;
 import bank.services.OperationService;
+import bank.storages.BankAccountStorage;
+import bank.storages.CategoryStorage;
 import bank.storages.OperationStorage;
 import bank.visitors.ExportVisitor;
 
@@ -30,6 +34,10 @@ public class OperationFacade {
     private final ImporterFactory<ReportOperation> importerFactory = new ImporterFactory<>();
     private final ExportVisitor exportVisitor = new ExportVisitor();
     private final ExporterFactory exporterFactory = new ExporterFactory();
+    private final BankAccountStorage bankAccountStorage = new BankAccountStorage();
+    private final BankAccountService bankAccountService = new BankAccountService(bankAccountStorage);
+    private final CategoryStorage categoryStorage = new CategoryStorage();
+    private final CategoryService categoryService = new CategoryService(categoryStorage);
     private final OperationFactory factory = new OperationFactory();
     private final OperationStorage storage = new OperationStorage();
     private final OperationService service = new OperationService(storage);
@@ -89,11 +97,7 @@ public class OperationFacade {
 
         Report<ReportOperation> report = importerContext.parse(ReportOperation.class, filename);
 
-        List<Operation> operations = report.content().stream()
-                .map(Operation::new) // Вызываем конструктор Operation(Report)
-                .collect(Collectors.toList());
-
-        storage.setOperations(operations);
+        service.fillOperationsByReports(report.content(), bankAccountService, categoryService);
     }
 
 }

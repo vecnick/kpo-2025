@@ -26,10 +26,4 @@ public class BankAccount {
         this.name = name;
         this.balance = balance;
     }
-
-    public BankAccount(ReportBankAccount report) {
-        this.id = report.id;
-        this.name = report.name;
-        this.balance = report.balance;
-    }
 }

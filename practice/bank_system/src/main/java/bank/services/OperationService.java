@@ -7,6 +7,8 @@ import bank.enums.OperationType;
 import bank.interfaces.ICategoryFactory;
 import bank.interfaces.IOperationFactory;
 import bank.interfaces.IOperationStorage;
+import bank.report.ReportBankAccount;
+import bank.report.ReportOperation;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +29,22 @@ public class OperationService {
     public void addOperation(IOperationFactory operationFactory, OperationType type, BankAccount bankAccountId, int amount, String description, Category categoryId) {
         LocalDateTime date = LocalDateTime.now();
         operationStorage.addOperation(operationFactory, type, bankAccountId, amount, date, description, categoryId);
+    }
+
+    public void fillOperationsByReports(List<ReportOperation> reports, BankAccountService bankAccountService, CategoryService categoryService) {
+
+        List<Operation> operations = reports.stream()
+                .map(report -> new Operation(
+                        report.id,
+                        report.type,
+                        bankAccountService.getAccountById(report.bankAccountId).orElseThrow(() -> new IllegalArgumentException("bankAccountId отсутствует")),
+                        report.amount,
+                        report.date,
+                        report.description,
+                        categoryService.getCategoryById(report.categoryId).orElseThrow(() -> new IllegalArgumentException("categoryId отсутствует"))
+                )).collect(Collectors.toList());
+
+        operationStorage.setOperations(operations);
     }
 
     public List<Operation> getOperations() {

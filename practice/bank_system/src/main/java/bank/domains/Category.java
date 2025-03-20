@@ -28,10 +28,4 @@ public class Category {
         this.type = type;
         this.name = name;
     }
-
-    public Category(ReportCategory report) {
-        this.id = report.id;
-        this.type = report.type;
-        this.name = report.name;
-    }
 }

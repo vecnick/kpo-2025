@@ -40,8 +40,8 @@ public class CategoryFacade {
         return service.getCategories();
     }
 
-    public Optional<Category> getOperationById(int id) {
-        return service.getOperationById(id);
+    public Optional<Category> getCategoryById(int id) {
+        return service.getCategoryById(id);
     }
 
     public void removeCategoryById(int id) {
@@ -75,10 +75,6 @@ public class CategoryFacade {
 
         Report<ReportCategory> report = importerContext.parse(ReportCategory.class, filename);
 
-        List<Category> categories = report.content().stream()
-                .map(Category::new) // Вызываем конструктор Category(Report)
-                .collect(Collectors.toList());
-
-        storage.setCategories(categories);
+        service.fillCategoriesByReports(report.content());
     }
 }

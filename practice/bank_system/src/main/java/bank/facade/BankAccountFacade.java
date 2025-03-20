@@ -37,8 +37,8 @@ public class BankAccountFacade {
         return service.getAccounts();
     }
 
-    public Optional<BankAccount> getOperationById(int id) {
-        return service.getOperationById(id);
+    public Optional<BankAccount> getAccountById(int id) {
+        return service.getAccountById(id);
     }
 
     public void removeAccountById(int id) {
@@ -64,10 +64,6 @@ public class BankAccountFacade {
 
         Report<ReportBankAccount> report = importerContext.parse(ReportBankAccount.class, filename);
 
-        List<BankAccount> accounts = report.content().stream()
-                .map(BankAccount::new) // Вызываем конструктор BankAccount(Report)
-                .collect(Collectors.toList());
-
-        storage.setAccounts(accounts);
+        service.fillAccountsByReports(report.content());
     }
 }

@@ -8,6 +8,8 @@ import bank.interfaces.IBankAccountFactory;
 import bank.interfaces.IBankAccountStorage;
 import bank.interfaces.ICategoryFactory;
 import bank.interfaces.ICategoryStorage;
+import bank.report.ReportBankAccount;
+import bank.report.ReportCategory;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,11 +26,22 @@ public class CategoryService {
         categoryStorage.addCategory(categoryFactory, type, name);
     }
 
+    public void fillCategoriesByReports(List<ReportCategory> reports) {
+        List<Category> categories = reports.stream()
+                .map(report -> new Category(
+                        report.id,
+                        report.type,
+                        report.name
+                )).collect(Collectors.toList());
+
+        categoryStorage.setCategories(categories);
+    }
+
     public List<Category> getCategories() {
         return categoryStorage.getCategories();
     }
 
-    public Optional<Category> getOperationById(int id) {
+    public Optional<Category> getCategoryById(int id) {
         return getCategories().stream()
                 .filter(cat -> cat.getId() == id) // фильтруем
                 .findFirst(); // берём первый попавшийся
