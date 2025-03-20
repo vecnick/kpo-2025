@@ -3,6 +3,7 @@ package hse.kpo.interfaces;
 
 import hse.kpo.Enums.Types;
 import hse.kpo.domains.Customers.Customer;
+import lombok.Getter;
 
 /**
  * Интерфейс двигателя.

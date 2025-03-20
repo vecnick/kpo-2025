@@ -56,7 +56,7 @@ public class CarServiceI implements CarProviderI {
      * @param carParams - параметры новой машины
      * @param <T> - тип параметров машины
      */
-    public <T> void addCar(CarFactoryI<T> carFactory, T carParams) {
+    public <T> Car addCar(CarFactoryI<T> carFactory, T carParams) {
         // создаем автомобиль из переданной фабрики
         var car = carFactory.createCar(
                 carParams, // передаем параметры
@@ -64,5 +64,13 @@ public class CarServiceI implements CarProviderI {
         );
         notifyObserversForSale(Types.CAR, car.getVin());
         cars.add(car); // добавляем автомобиль
+
+        return car;
+    }
+
+    public Car addExistingCar(Car car) {
+        notifyObserversForSale(Types.CAR, car.getVin());
+        cars.add(car);
+        return car;
     }
 }

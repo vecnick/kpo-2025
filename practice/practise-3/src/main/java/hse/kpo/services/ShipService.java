@@ -1,6 +1,7 @@
 package hse.kpo.services;
 
 import hse.kpo.Enums.Types;
+import hse.kpo.domains.Cars.Car;
 import hse.kpo.domains.Customers.Customer;
 import hse.kpo.domains.Ships.Ship;
 import hse.kpo.factories.Ships.ShipFactory;
@@ -56,7 +57,7 @@ public class ShipService {
         return firstShip.orElse(null);
     }
 
-    public void addCar(ShipFactory shipFactory, EmptyEngineParams carParams) {
+    public Ship addCar(ShipFactory shipFactory, EmptyEngineParams carParams) {
         // создаем автомобиль из переданной фабрики
         var car = shipFactory.createShip(
                 carParams, // передаем параметры
@@ -64,5 +65,12 @@ public class ShipService {
         );
         notifyObserversForSale(Types.SHIP, car.getVin());
         ships.add(car); // добавляем автомобиль
+        return car;
+    }
+
+    public Ship addExistingShip(Ship car) {
+        notifyObserversForSale(Types.CAR, car.getVin());
+        ships.add(car);
+        return car;
     }
 }

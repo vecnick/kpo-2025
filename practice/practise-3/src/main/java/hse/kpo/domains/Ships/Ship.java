@@ -1,5 +1,6 @@
 package hse.kpo.domains.Ships;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import hse.kpo.Enums.Types;
 import hse.kpo.domains.Customers.Customer;
 import hse.kpo.interfaces.EngineI;
@@ -11,6 +12,7 @@ import lombok.ToString;
  * Класс катамарана.
  */
 @ToString
+@JsonIgnoreProperties({"engine"})
 public class Ship implements Transport {
     @Getter
     private EngineI engine;

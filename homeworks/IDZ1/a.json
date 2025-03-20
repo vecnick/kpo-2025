@@ -1,0 +1,81 @@
+{
+  "operations" : [ {
+    "id" : 0,
+    "type" : "EXPENSE",
+    "bankAccountId" : 0,
+    "amount" : 1000.0,
+    "date" : "2000-01-01",
+    "description" : "Restaurant",
+    "categoryId" : 0
+  }, {
+    "id" : 1,
+    "type" : "EXPENSE",
+    "bankAccountId" : 0,
+    "amount" : 2000.0,
+    "date" : "2000-01-02",
+    "description" : "",
+    "categoryId" : 0
+  }, {
+    "id" : 2,
+    "type" : "INCOME",
+    "bankAccountId" : 1,
+    "amount" : 100000.0,
+    "date" : "2000-01-01",
+    "description" : "",
+    "categoryId" : 1
+  }, {
+    "id" : 3,
+    "type" : "INCOME",
+    "bankAccountId" : 1,
+    "amount" : 5555.1,
+    "date" : "2000-01-02",
+    "description" : "",
+    "categoryId" : 1
+  }, {
+    "id" : 4,
+    "type" : "INCOME",
+    "bankAccountId" : 2,
+    "amount" : 2000.0,
+    "date" : "2000-01-01",
+    "description" : "",
+    "categoryId" : 2
+  }, {
+    "id" : 5,
+    "type" : "EXPENSE",
+    "bankAccountId" : 2,
+    "amount" : 2000.0,
+    "date" : "2000-01-02",
+    "description" : "",
+    "categoryId" : 3
+  } ],
+  "accounts" : [ {
+    "id" : 0,
+    "accountName" : "Alpha",
+    "balance" : -3000.0
+  }, {
+    "id" : 1,
+    "accountName" : "Betha",
+    "balance" : 105555.1
+  }, {
+    "id" : 2,
+    "accountName" : "Gamma",
+    "balance" : 0.0
+  } ],
+  "categories" : [ {
+    "id" : 0,
+    "name" : "Food",
+    "operationType" : "EXPENSE"
+  }, {
+    "id" : 1,
+    "name" : "Salary",
+    "operationType" : "INCOME"
+  }, {
+    "id" : 2,
+    "name" : "Business",
+    "operationType" : "INCOME"
+  }, {
+    "id" : 3,
+    "name" : "Presents",
+    "operationType" : "EXPENSE"
+  } ]
+}

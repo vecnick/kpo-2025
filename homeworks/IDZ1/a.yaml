@@ -1,0 +1,80 @@
+accounts:
+ - id: 0 
+   accountName: Alpha 
+   balance: -3000.00 
+ - id: 1 
+   accountName: Betha 
+   balance: 105555.10 
+ - id: 2 
+   accountName: Gamma 
+   balance: 0.00 
+categories:
+ - id: 0 
+   name: Food 
+   operationType: EXPENSE 
+ - id: 1 
+   name: Salary 
+   operationType: INCOME 
+ - id: 2 
+   name: Business 
+   operationType: INCOME 
+ - id: 3 
+   name: Presents 
+   operationType: EXPENSE 
+operations:
+ - id: 0 
+   type: EXPENSE 
+   bankAccountId: 0 
+   amount: 1000.00 
+   categoryId: 0 
+   date: 2000-01-01 
+   description: Restaurant
+ - id: 1 
+   type: EXPENSE 
+   bankAccountId: 0 
+   amount: 2000.00 
+   categoryId: 0 
+   date: 2000-01-02 
+   description: 
+ - id: 2 
+   type: INCOME 
+   bankAccountId: 1 
+   amount: 100000.00 
+   categoryId: 1 
+   date: 2000-01-01 
+   description: 
+ - id: 3 
+   type: INCOME 
+   bankAccountId: 1 
+   amount: 5555.10 
+   categoryId: 1 
+   date: 2000-01-02 
+   description: 
+ - id: 4 
+   type: INCOME 
+   bankAccountId: 2 
+   amount: 2000.00 
+   categoryId: 2 
+   date: 2000-01-01 
+   description: 
+ - id: 5 
+   type: EXPENSE 
+   bankAccountId: 2 
+   amount: 2000.00 
+   categoryId: 3 
+   date: 2000-01-02 
+   description: 
+ - id: 6 
+   type: EXPENSE 
+   bankAccountId: 0 
+   amount: 2000.00 
+   categoryId: 0 
+   date: 2000-01-02 
+   description: 
+ - id: 7 
+   type: INCOME 
+   bankAccountId: 0 
+   amount: 2000.00 
+   categoryId: 0 
+   date: 2000-01-02 
+   description: Cafe

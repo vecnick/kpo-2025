@@ -7,6 +7,7 @@ import hse.kpo.Exporters.Transport.TransportExporter;
 import hse.kpo.Importers.TransportImporter.CSVTransportImporter;
 import hse.kpo.Importers.TransportImporter.TransportImporter;
 import hse.kpo.Observers.ReportSalesObserver;
+import hse.kpo.domains.Cars.Car;
 import hse.kpo.domains.Customers.Customer;
 import hse.kpo.domains.Reports.Report;
 import hse.kpo.factories.Cars.HandCarFactoryI;
@@ -48,6 +49,7 @@ public class Hse {
     private final TransportExporterFactory transportExporterFactory;
     private final CSVTransportImporter csvTransportImporter;
     private final TransportImporter transportImporter;
+    private final LevitatingCarFactoryI levitationCarFactory;
 
     @PostConstruct
     private void setUp() {
@@ -59,14 +61,14 @@ public class Hse {
     public void addCustomer(String name, int legPower, int handPower, int iq) {
         customerStorage.addCustomer(new Customer(name, legPower, handPower, iq));
     }
-
-    public void addPedalCar(int pedalSize) {
-        carService.addCar(pedalCarFactory, new PedalEngineParams(pedalSize));
-    }
-
-    public void addHandCar() {
-        carService.addCar(handCarFactory, new EmptyEngineParams());
-    }
+//
+//    public void addPedalCar(int pedalSize) {
+//        carService.addCar(pedalCarFactory, new PedalEngineParams(pedalSize));
+//    }
+//
+//    public void addHandCar() {
+//        carService.addCar(handCarFactory, new EmptyEngineParams());
+//    }
 
     public void sell() {
         hseCarService.sellCars();
@@ -113,5 +115,28 @@ public class Hse {
             System.out.println(e.getMessage());
             throw new RuntimeException();
         }
+    }
+
+    /**
+     * Добавляет педальный автомобиль в систему.
+     *
+     * @param pedalSize размер педалей (1-15)
+     */
+    public Car addPedalCar(int pedalSize) {
+        return carService.addCar(pedalCarFactory, new PedalEngineParams(pedalSize));
+    }
+
+    /**
+     * Добавляет автомобиль с ручным приводом.
+     */
+    public Car addHandCar() {
+        return carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
+    }
+
+    /**
+     * Добавляет левитирующий автомобиль.
+     */
+    public Car addLevitationCar() {
+        return carService.addCar(levitationCarFactory, EmptyEngineParams.DEFAULT);
     }
 }

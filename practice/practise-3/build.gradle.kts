@@ -41,6 +41,10 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.7.1")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+	// Spring Web (включает REST и Tomcat)
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	// Swagger UI и OpenAPI
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
 }
 
 tasks.withType<Test> {

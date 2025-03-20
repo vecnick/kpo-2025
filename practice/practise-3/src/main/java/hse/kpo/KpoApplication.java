@@ -51,7 +51,7 @@ public class KpoApplication {
             throw new RuntimeException(e);
         }
 
-        hse.sell();
+        //hse.sell();
 
 
         hse.exportReport(ReportFormat.MARKDOWN, new PrintWriter(System.out));

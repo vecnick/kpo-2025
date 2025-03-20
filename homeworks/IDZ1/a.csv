@@ -1,0 +1,8 @@
+Accounts,1
+0,Main,29000.00
+Categories,2
+0,Food,EXPENSE
+1,Job,INCOME
+Operations,2
+0,EXPENSE,0,1000.00,0,2007-12-03,dinner
+1,INCOME,0,30000.00,1,2007-12-03,salary

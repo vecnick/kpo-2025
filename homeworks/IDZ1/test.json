@@ -1,0 +1,33 @@
+{
+  "operations" : [ {
+    "id" : 0,
+    "type" : "EXPENSE",
+    "bankAccountId" : 0,
+    "amount" : 1000.0,
+    "date" : "2007-12-03",
+    "description" : "dinner",
+    "categoryId" : 0
+  }, {
+    "id" : 1,
+    "type" : "INCOME",
+    "bankAccountId" : 0,
+    "amount" : 30000.0,
+    "date" : "2007-12-03",
+    "description" : "salary",
+    "categoryId" : 1
+  } ],
+  "accounts" : [ {
+    "id" : 0,
+    "accountName" : "Main",
+    "balance" : 29000.0
+  } ],
+  "categories" : [ {
+    "id" : 0,
+    "name" : "Food",
+    "operationType" : "EXPENSE"
+  }, {
+    "id" : 1,
+    "name" : "Job",
+    "operationType" : "INCOME"
+  } ]
+}
