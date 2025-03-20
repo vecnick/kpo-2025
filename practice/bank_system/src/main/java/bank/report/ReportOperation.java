@@ -16,6 +16,21 @@ public class ReportOperation {
     public String description;
     public int categoryId;
 
+    // Пустой конструктор необходим для импорта
+    public ReportOperation() {
+        this(0, null, 0, 0, null, null, 0);
+    }
+
+    public ReportOperation(int id, OperationType type, int bankAccountId, double amount, LocalDateTime date, String description, int categoryId) {
+        this.id = id;
+        this.type = type;
+        this.bankAccountId = bankAccountId;
+        this.amount = amount;
+        this.date = date;
+        this.description = description;
+        this.categoryId = categoryId;
+    }
+
     public ReportOperation(Operation operation) {
         this.id = operation.getId();
         this.type = operation.getType();

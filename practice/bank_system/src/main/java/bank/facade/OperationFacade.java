@@ -1,5 +1,6 @@
 package bank.facade;
 
+import bank.Factories.ImporterFactory;
 import bank.Factories.OperationFactory;
 import bank.Factories.ExporterFactory;
 import bank.domains.BankAccount;
@@ -8,26 +9,25 @@ import bank.domains.Operation;
 import bank.enums.DomainType;
 import bank.enums.OperationType;
 import bank.enums.ReportFormat;
-import bank.export.Exporter;
-import bank.interfaces.IOperationFactory;
+import bank.exporter.Exporter;
+import bank.importer.ImporterContext;
+import bank.interfaces.ImporterStrategy;
 import bank.report.Report;
-import bank.report.ReportCategory;
+import bank.report.ReportBankAccount;
 import bank.report.ReportOperation;
 import bank.services.OperationService;
 import bank.storages.OperationStorage;
 import bank.visitors.ExportVisitor;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static bank.utils.Date.stringToDateTime;
-
 public class OperationFacade {
+    private final ImporterContext<ReportOperation> importerContext = new ImporterContext<>();
+    private final ImporterFactory<ReportOperation> importerFactory = new ImporterFactory<>();
     private final ExportVisitor exportVisitor = new ExportVisitor();
     private final ExporterFactory exporterFactory = new ExporterFactory();
     private final OperationFactory factory = new OperationFactory();
@@ -81,6 +81,19 @@ public class OperationFacade {
 
         Exporter exporter = exporterFactory.create(reportFormat);
         exporter.accept(exportVisitor, report); // определяем тип к которому обращаемся и вызываем его через visitor
+    }
+
+    public void importOperations(String filename) throws IOException {
+        ImporterStrategy<ReportOperation> strategy = importerFactory.create(filename);
+        importerContext.setStrategy(strategy);
+
+        Report<ReportOperation> report = importerContext.parse(ReportOperation.class, filename);
+
+        List<Operation> operations = report.content().stream()
+                .map(Operation::new) // Вызываем конструктор Operation(Report)
+                .collect(Collectors.toList());
+
+        storage.setOperations(operations);
     }
 
 }

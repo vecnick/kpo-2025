@@ -1,5 +1,6 @@
 package bank.storages;
 
+import bank.domains.BankAccount;
 import bank.domains.Category;
 import bank.domains.Operation;
 import bank.enums.OperationType;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CategoryStorage implements ICategoryStorage {
-    private final List<Category> categories = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();
     private int categoriesCounter = 0;
 
     @Override
@@ -19,6 +20,11 @@ public class CategoryStorage implements ICategoryStorage {
         Category category = categoryFactory.create(categoriesCounter, type, name);
         categories.add(category);
         ++categoriesCounter;
+    }
+
+    @Override
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
     }
 
     @Override

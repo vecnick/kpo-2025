@@ -9,6 +9,8 @@ import java.util.List;
 public interface ICategoryStorage {
     void addCategory(ICategoryFactory categoryFactory, OperationType type, String name);
 
+    void setCategories(List<Category> categories);
+
     List<Category> getCategories();
 
     void removeCategoryById(int id);

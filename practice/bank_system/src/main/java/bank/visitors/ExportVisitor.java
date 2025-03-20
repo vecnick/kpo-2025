@@ -1,11 +1,9 @@
 package bank.visitors;
 
-import bank.enums.DomainType;
-import bank.export.Exporter;
 import bank.report.Report;
-import bank.export.ExporterCSV;
-import bank.export.ExporterJSON;
-import bank.export.ExporterYAML;
+import bank.exporter.ExporterCSV;
+import bank.exporter.ExporterJSON;
+import bank.exporter.ExporterYAML;
 
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,6 +1,8 @@
 package bank.domains;
 
 import bank.enums.OperationType;
+import bank.report.ReportCategory;
+import bank.report.ReportOperation;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -41,4 +43,13 @@ public class Operation {
         this.categoryId = categoryId;
     }
 
+    public Operation(ReportOperation report) {
+        this.id = report.id;
+        this.type = report.type;
+        this.bankAccountId = report.bankAccountId;
+        this.amount = report.amount;
+        this.date = report.date;
+        this.description = report.description;
+        this.categoryId = report.categoryId;
+    }
 }

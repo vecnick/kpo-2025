@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BankAccountStorage implements IBankAccountStorage {
-    private final List<BankAccount> bankAccounts = new ArrayList<>();
+    private List<BankAccount> bankAccounts = new ArrayList<>();
     private int bankAccountsCounter = 0;
 
     @Override
@@ -16,6 +16,11 @@ public class BankAccountStorage implements IBankAccountStorage {
         BankAccount bankAccount = bankAccountFactory.create(bankAccountsCounter, name, balance);
         bankAccounts.add(bankAccount);
         ++bankAccountsCounter;
+    }
+
+    @Override
+    public void setAccounts(List<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
     }
 
     @Override

@@ -2,18 +2,18 @@ package bank.facade;
 
 import bank.Factories.CategoryFactory;
 import bank.Factories.ExporterFactory;
+import bank.Factories.ImporterFactory;
 import bank.domains.BankAccount;
 import bank.domains.Category;
 import bank.enums.DomainType;
 import bank.enums.OperationType;
 import bank.enums.ReportFormat;
-import bank.export.Exporter;
-import bank.interfaces.ICategoryFactory;
-import bank.interfaces.ICategoryStorage;
+import bank.exporter.Exporter;
+import bank.importer.ImporterContext;
+import bank.interfaces.ImporterStrategy;
 import bank.report.Report;
 import bank.report.ReportBankAccount;
 import bank.report.ReportCategory;
-import bank.report.ReportOperation;
 import bank.services.CategoryService;
 import bank.storages.CategoryStorage;
 import bank.visitors.ExportVisitor;
@@ -24,6 +24,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CategoryFacade {
+    private final ImporterContext<ReportCategory> importerContext = new ImporterContext<>();
+    private final ImporterFactory<ReportCategory> importerFactory = new ImporterFactory<>();
     private final ExportVisitor exportVisitor = new ExportVisitor();
     private final ExporterFactory exporterFactory = new ExporterFactory();
     private final CategoryFactory factory = new CategoryFactory();
@@ -65,5 +67,18 @@ public class CategoryFacade {
 
         Exporter exporter = exporterFactory.create(reportFormat);
         exporter.accept(exportVisitor, report); // определяем тип к которому обращаемся и вызываем его через visitor
+    }
+
+    public void importCategories(String filename) throws IOException {
+        ImporterStrategy<ReportCategory> strategy = importerFactory.create(filename);
+        importerContext.setStrategy(strategy);
+
+        Report<ReportCategory> report = importerContext.parse(ReportCategory.class, filename);
+
+        List<Category> categories = report.content().stream()
+                .map(Category::new) // Вызываем конструктор Category(Report)
+                .collect(Collectors.toList());
+
+        storage.setCategories(categories);
     }
 }

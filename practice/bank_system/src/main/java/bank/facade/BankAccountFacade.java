@@ -2,14 +2,15 @@ package bank.facade;
 
 import bank.Factories.BankAccountFactory;
 import bank.Factories.ExporterFactory;
+import bank.Factories.ImporterFactory;
 import bank.domains.BankAccount;
 import bank.enums.DomainType;
-import bank.export.ExporterCSV;
+import bank.importer.ImporterContext;
+import bank.interfaces.ImporterStrategy;
 import bank.report.Report;
 import bank.enums.ReportFormat;
-import bank.export.Exporter;
+import bank.exporter.Exporter;
 import bank.report.ReportBankAccount;
-import bank.report.ReportOperation;
 import bank.services.BankAccountService;
 import bank.storages.BankAccountStorage;
 import bank.visitors.ExportVisitor;
@@ -20,6 +21,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class BankAccountFacade {
+    private final ImporterContext<ReportBankAccount> importerContext = new ImporterContext<>();
+    private final ImporterFactory<ReportBankAccount> importerFactory = new ImporterFactory<>();
     private final ExportVisitor exportVisitor = new ExportVisitor();
     private final ExporterFactory exporterFactory = new ExporterFactory();
     private final BankAccountFactory factory = new BankAccountFactory();
@@ -53,5 +56,18 @@ public class BankAccountFacade {
 
         Exporter exporter = exporterFactory.create(reportFormat);
         exporter.accept(exportVisitor, report); // определяем тип к которому обращаемся и вызываем его через visitor
+    }
+
+    public void importAccounts(String filename) throws IOException {
+        ImporterStrategy<ReportBankAccount> strategy = importerFactory.create(filename);
+        importerContext.setStrategy(strategy);
+
+        Report<ReportBankAccount> report = importerContext.parse(ReportBankAccount.class, filename);
+
+        List<BankAccount> accounts = report.content().stream()
+                .map(BankAccount::new) // Вызываем конструктор BankAccount(Report)
+                .collect(Collectors.toList());
+
+        storage.setAccounts(accounts);
     }
 }

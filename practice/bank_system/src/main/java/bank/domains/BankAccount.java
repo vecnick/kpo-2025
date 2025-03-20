@@ -1,5 +1,6 @@
 package bank.domains;
 
+import bank.report.ReportBankAccount;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -24,5 +25,11 @@ public class BankAccount {
         this.id = id;
         this.name = name;
         this.balance = balance;
+    }
+
+    public BankAccount(ReportBankAccount report) {
+        this.id = report.id;
+        this.name = report.name;
+        this.balance = report.balance;
     }
 }

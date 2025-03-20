@@ -36,9 +36,12 @@ public class Main {
 //
 //        System.out.println(categoryService.getOperationById(1).toString());
         BankAccountFacade bankAccountFacade = new BankAccountFacade();
-        bankAccountFacade.addAccount("Maksim", 200);
-        bankAccountFacade.addAccount("Boris", 780);
-        bankAccountFacade.exportAccounts(ReportFormat.CSV);
+//        bankAccountFacade.addAccount("Maksim", 200);
+//        bankAccountFacade.addAccount("Boris", 780);
+//        bankAccountFacade.exportAccounts(ReportFormat.YAML);
+        bankAccountFacade.importAccounts("report.csv");
+
+        bankAccountFacade.getAccounts().stream().map(Object::toString).forEach(System.out::println);
 
     }
 }

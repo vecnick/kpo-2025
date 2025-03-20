@@ -1,21 +1,18 @@
-package bank.export;
+package bank.exporter;
 
-import bank.enums.DomainType;
 import bank.report.Report;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import bank.visitors.ExportVisitor;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Arrays;
-import java.util.List;
 
-public class ExporterJSON extends Exporter {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+public class ExporterYAML extends Exporter {
+    private final YAMLMapper yamlMapper = new YAMLMapper();
 
     @Override
     public <T> void export(Writer writer, Report<T> report) throws IOException {
-        objectMapper.writeValue(writer, report);
+        yamlMapper.writeValue(writer, report);
     }
 
     @Override

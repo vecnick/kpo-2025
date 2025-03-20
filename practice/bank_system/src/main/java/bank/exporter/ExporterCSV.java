@@ -1,4 +1,4 @@
-package bank.export;
+package bank.exporter;
 
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 public class ExporterCSV extends Exporter {
-    CsvMapper csvMapper = new CsvMapper();
+    private final CsvMapper csvMapper = new CsvMapper();
 
     @Override
     public <T> void export(Writer writer, Report<T> report) throws IOException {

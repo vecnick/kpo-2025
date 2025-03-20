@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OperationStorage implements IOperationStorage {
-    private final List<Operation> operations = new ArrayList<>();
+    private List<Operation> operations = new ArrayList<>();
     private int operationsCounter = 0;
 
     @Override
@@ -20,6 +20,11 @@ public class OperationStorage implements IOperationStorage {
         Operation operation = operationFactory.create(operationsCounter, type, bankAccountId, amount, date, description, categoryId);
         operations.add(operation);
         ++operationsCounter;
+    }
+
+    @Override
+    public void setOperations(List<Operation> operations) {
+        this.operations = operations;
     }
 
     @Override
