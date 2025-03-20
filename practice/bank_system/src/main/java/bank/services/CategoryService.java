@@ -38,14 +38,14 @@ public class CategoryService {
         categoryStorage.removeCategoryById(id);
     }
 
-    public List<Category> getCategoriesIncome() {
-        return getCategories().stream()
+    static public List<Category> getCategoriesIncome(List<Category> categories) {
+        return categories.stream()
                 .filter(cat -> cat.getType() == OperationType.INCOME) // проверка типа
                 .collect(Collectors.toList()); // составление нового List
     }
 
-    public List<Category> getCategoriesOutcome() {
-        return getCategories().stream()
+    static public List<Category> getCategoriesOutcome(List<Category> categories) {
+        return categories.stream()
                 .filter(cat -> cat.getType() == OperationType.OUTCOME) // проверка типа
                 .collect(Collectors.toList()); // составление нового List
     }

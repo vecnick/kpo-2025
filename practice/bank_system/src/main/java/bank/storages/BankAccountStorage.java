@@ -7,7 +7,7 @@ import bank.interfaces.IBankAccountStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BankAccountsStorage implements IBankAccountStorage {
+public class BankAccountStorage implements IBankAccountStorage {
     private final List<BankAccount> bankAccounts = new ArrayList<>();
     private int bankAccountsCounter = 0;
 

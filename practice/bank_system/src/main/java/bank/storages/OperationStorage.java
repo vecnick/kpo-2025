@@ -10,10 +10,8 @@ import bank.interfaces.IOperationStorage;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-public class OperationsStorage implements IOperationStorage {
+public class OperationStorage implements IOperationStorage {
     private final List<Operation> operations = new ArrayList<>();
     private int operationsCounter = 0;
 
