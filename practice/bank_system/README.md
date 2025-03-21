@@ -8,7 +8,7 @@
 
 Запуск
 ```
-java -jar build/libs/zoo_erp-1.0.0.jar
+java -jar build/libs/bank_system-1.0.0.jar
 ```
 - или через функцию main класса Main
 
