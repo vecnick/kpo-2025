@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonVisitor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">practise-7</a> &gt; <a href="index.source.html" class="el_package">hse.kpo.export.visitors.JSONvisitors</a> &gt; <span class="el_source">JsonVisitor.java</span></div><h1>JsonVisitor.java</h1><pre class="source lang-java linenums">package hse.kpo.export.visitors.JSONvisitors;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import hse.kpo.entities.BankAccount;
+import hse.kpo.entities.Category;
+import hse.kpo.entities.Operation;
+import hse.kpo.interfaces.Visitor;
+import hse.kpo.storages.IdEntityStorage;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@Component
+<span class="fc" id="L23">public class JsonVisitor {</span>
+<span class="fc" id="L24">    private Map&lt;String, List&lt;Object&gt;&gt; objects = Map.of(</span>
+            &quot;BankAccount&quot;, new ArrayList&lt;&gt;(),
+            &quot;Category&quot;, new ArrayList&lt;&gt;(),
+            &quot;Operation&quot;, new ArrayList&lt;&gt;()
+        );
+
+    @Autowired
+    IdEntityStorage&lt;BankAccount&gt; accountStorage;
+    @Autowired
+    IdEntityStorage&lt;Category&gt; categoryStorage;
+    @Autowired
+    IdEntityStorage&lt;Operation&gt; operationStorage;
+
+<span class="fc" id="L37">    JsonEntityVisitor&lt;BankAccount&gt; BankAccountvisitor = new JsonEntityVisitor&lt;BankAccount&gt;();;</span>
+<span class="fc" id="L38">    JsonEntityVisitor&lt;Category&gt; Categoryvisitor = new JsonEntityVisitor&lt;Category&gt;();;</span>
+<span class="fc" id="L39">    JsonEntityVisitor&lt;Operation&gt; Operationvisitor = new JsonEntityVisitor&lt;Operation&gt;();;</span>
+
+    // JsonVisitor() {
+    //     clear();
+    //     BankAccountvisitor = new JsonEntityVisitor&lt;BankAccount&gt;();
+    //     Categoryvisitor = new JsonEntityVisitor&lt;Category&gt;();
+    //     Operationvisitor = new JsonEntityVisitor&lt;Operation&gt;();
+    // }
+
+    private void clear() {
+<span class="nc" id="L49">        objects = Map.of(</span>
+                &quot;BankAccount&quot;, new ArrayList&lt;&gt;(),
+                &quot;Category&quot;, new ArrayList&lt;&gt;(),
+                &quot;Operation&quot;, new ArrayList&lt;&gt;());
+<span class="nc" id="L53">        BankAccountvisitor.clear();</span>
+<span class="nc" id="L54">        Categoryvisitor.clear();</span>
+<span class="nc" id="L55">        Operationvisitor.clear();</span>
+<span class="nc" id="L56">    }</span>
+
+    public boolean writeJson(PrintWriter printer) {
+<span class="nc" id="L59">        accountStorage.accept(BankAccountvisitor);</span>
+<span class="nc" id="L60">        categoryStorage.accept(Categoryvisitor);</span>
+<span class="nc" id="L61">        operationStorage.accept(Operationvisitor);</span>
+<span class="nc" id="L62">        objects.put(&quot;BankAccount&quot;, BankAccountvisitor.getObjects());</span>
+<span class="nc" id="L63">        objects.put(&quot;Category&quot;, Categoryvisitor.getObjects());</span>
+<span class="nc" id="L64">        objects.put(&quot;Operation&quot;, Operationvisitor.getObjects());</span>
+<span class="nc" id="L65">        var mapper = new ObjectMapper();</span>
+<span class="nc" id="L66">        boolean result = true;</span>
+        try {
+<span class="nc" id="L68">            mapper.writeValue(printer, objects);</span>
+<span class="nc" id="L69">        } catch (IOException e) {</span>
+<span class="nc" id="L70">            result = false;</span>
+<span class="nc" id="L71">        }</span>
+<span class="nc" id="L72">        clear();</span>
+<span class="nc" id="L73">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

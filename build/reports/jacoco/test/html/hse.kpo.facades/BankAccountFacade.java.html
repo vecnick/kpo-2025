@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BankAccountFacade.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">practise-7</a> &gt; <a href="index.source.html" class="el_package">hse.kpo.facades</a> &gt; <span class="el_source">BankAccountFacade.java</span></div><h1>BankAccountFacade.java</h1><pre class="source lang-java linenums">package hse.kpo.facades;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import hse.kpo.entities.BankAccount;
+import hse.kpo.exceptions.ValueException;
+import hse.kpo.factories.BankAccountFactory;
+import hse.kpo.params.BankAccountParams;
+import hse.kpo.storages.IdEntityStorage;
+import hse.kpo.types.Id;
+
+@Component
+public class BankAccountFacade {
+    
+    BankAccountFactory factory;
+    IdEntityStorage&lt;BankAccount&gt; storage;
+<span class="fc" id="L21">    int max_id = 0;</span>
+
+    @Autowired
+    public BankAccountFacade(BankAccountFactory factory, IdEntityStorage&lt;BankAccount&gt; storage)
+<span class="fc" id="L25">    {</span>
+<span class="fc" id="L26">        this.factory = factory;</span>
+<span class="fc" id="L27">        this.storage = storage;</span>
+<span class="fc" id="L28">    }</span>
+
+    public List&lt;BankAccount&gt; getBankAccounts()
+    {
+<span class="fc" id="L32">        return storage.getEntities();</span>
+    }
+
+    public void createBankAccount(BankAccountParams params) throws ValueException
+    {
+<span class="fc" id="L37">        storage.add(factory.createBankAccount(new Id(max_id), params));</span>
+<span class="fc" id="L38">        max_id++;</span>
+<span class="fc" id="L39">    }</span>
+
+    public Optional&lt;BankAccount&gt; getBankAccountbyId(Id id)
+    {
+<span class="fc" id="L43">        return storage.get(id);</span>
+    }
+
+    public void removeBankAccount(Id id)
+    {
+<span class="fc" id="L48">        storage.remove(id);</span>
+<span class="fc" id="L49">    }</span>
+
+    public void addSumToAccount(Id id, int delta) {
+<span class="nc" id="L52">        var rawAccount = storage.get(id);</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (rawAccount.isEmpty()) {</span>
+<span class="nc" id="L54">            throw new NullPointerException(&quot;Account not found&quot;);</span>
+        }
+<span class="nc" id="L56">        var account = rawAccount.get();</span>
+<span class="nc" id="L57">        account.setBalance(account.getBalance() + delta);</span>
+<span class="nc" id="L58">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

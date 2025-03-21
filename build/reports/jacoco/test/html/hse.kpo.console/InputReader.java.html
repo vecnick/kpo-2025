@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InputReader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">practise-7</a> &gt; <a href="index.source.html" class="el_package">hse.kpo.console</a> &gt; <span class="el_source">InputReader.java</span></div><h1>InputReader.java</h1><pre class="source lang-java linenums">package hse.kpo.console;
+
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeParseException;
+import java.util.Date;
+import java.util.InputMismatchException;
+import java.util.Locale;
+import java.util.Scanner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class InputReader {
+
+    private Scanner scanner;
+
+    PrintStream out;
+
+    @Autowired
+<span class="fc" id="L25">    public InputReader(InputStream source, PrintStream out) {</span>
+<span class="fc" id="L26">        this.scanner = new Scanner(source);</span>
+<span class="fc" id="L27">        this.out = out;</span>
+<span class="fc" id="L28">    }</span>
+
+    /**
+     * Метод для считывания целого числа.
+     *
+     * @param prompt Сообщение, которое будет показано пользователю.
+     * @return Введенное пользователем число.
+     */
+    public int readInt(String prompt) {
+        do {
+<span class="nc" id="L38">            out.print(prompt);</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">            while (!scanner.hasNextLine());</span>
+<span class="nc" id="L40">            String line = scanner.nextLine();</span>
+            try {
+<span class="nc" id="L42">                int number = Integer.parseInt(line);</span>
+<span class="nc" id="L43">                return number;</span>
+<span class="nc" id="L44">            } catch (NumberFormatException exception) {</span>
+<span class="nc" id="L45">                out.println(&quot;Invalid number, try again.\n&quot;);</span>
+            }
+<span class="nc" id="L47">        } while (true);</span>
+    }
+
+    /**
+     * Метод для считывания строки.
+     *
+     * @param prompt Сообщение, которое будет показано пользователю.
+     * @return Введенная пользователем строка.
+     */
+    public String readString(String prompt) {
+<span class="nc" id="L57">        out.print(prompt);</span>
+<span class="nc" id="L58">        return scanner.nextLine();</span>
+    }
+
+    /**
+     * Метод для считывания даты.
+     *
+     * @param prompt Сообщение, которое будет показано пользователю.
+     * @param format Формат даты (например, &quot;dd.MM.yyyy&quot;).
+     * @return Введенная пользователем дата в виде объекта LocalDate.
+     * @throws ParseException 
+     */
+    public Date readDate(String prompt) throws ParseException {
+<span class="nc" id="L70">        SimpleDateFormat formatter = new SimpleDateFormat(&quot;dd.MM.yyyy&quot;, Locale.ENGLISH);</span>
+        while (true) {
+            try {
+<span class="nc" id="L73">                out.print(prompt);</span>
+<span class="nc" id="L74">                String dateString = scanner.nextLine();</span>
+<span class="nc" id="L75">                return formatter.parse(dateString);</span>
+<span class="nc" id="L76">            } catch (Exception e) {</span>
+<span class="nc" id="L77">                out.println(&quot;invalid date format.\n&quot;);</span>
+<span class="nc" id="L78">            }</span>
+        }
+    }
+
+    /**
+     * Закрывает Scanner.
+     */
+    public void close() {
+<span class="nc" id="L86">        scanner.close();</span>
+<span class="nc" id="L87">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
