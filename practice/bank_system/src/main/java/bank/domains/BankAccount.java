@@ -26,4 +26,8 @@ public class BankAccount {
         this.name = name;
         this.balance = balance;
     }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 }

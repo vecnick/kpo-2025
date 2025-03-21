@@ -67,6 +67,7 @@ public class OperationService {
         return getOperations().stream().collect(Collectors.groupingBy(op -> op.getCategoryId().getName()));
     }
 
+    // income - outcome
     public double getAmountDifferenceByPeriod(String dateFrom, String dateTo) {
         List<Operation> incomeOperations = getOperationsIncome(getOperations());
         List<Operation> outcomeOperations = getOperationsOutcome(getOperations());

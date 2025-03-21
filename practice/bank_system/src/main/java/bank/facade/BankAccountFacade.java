@@ -3,6 +3,9 @@ package bank.facade;
 import bank.Factories.BankAccountFactory;
 import bank.Factories.ExporterFactory;
 import bank.Factories.ImporterFactory;
+import bank.commands.CommandsExecutor;
+import bank.commands.RecalculateBalanceCommand;
+import bank.decorators.CommandsExecutorWithTimer;
 import bank.domains.BankAccount;
 import bank.enums.DomainType;
 import bank.importer.ImporterContext;
@@ -12,7 +15,7 @@ import bank.enums.ReportFormat;
 import bank.exporter.Exporter;
 import bank.report.ReportBankAccount;
 import bank.services.BankAccountService;
-import bank.storages.BankAccountStorage;
+import bank.services.OperationService;
 import bank.visitors.ExportVisitor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -25,10 +28,13 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class BankAccountFacade {
+    private final CommandsExecutor commandsExecutor;
+    private final CommandsExecutorWithTimer commandsExecutorWithTimer;
     private final ImporterContext<ReportBankAccount> importerContext;
     private final ImporterFactory<ReportBankAccount> importerFactory;
     private final ExportVisitor exportVisitor;
     private final ExporterFactory exporterFactory;
+    private final OperationService operationService;
     private final BankAccountFactory factory;
     private final BankAccountService service;
 
@@ -69,4 +75,16 @@ public class BankAccountFacade {
 
         service.fillAccountsByReports(report.content());
     }
+
+    public void recalculateBalance(int bankAccountId, String dateFrom, String dateTo) {
+        RecalculateBalanceCommand command = new RecalculateBalanceCommand(service, operationService, bankAccountId, dateFrom, dateTo);
+        commandsExecutor.run(command);
+    }
+
+    public void recalculateBalanceWithTimer(int bankAccountId, String dateFrom, String dateTo) {
+        RecalculateBalanceCommand command = new RecalculateBalanceCommand(service, operationService, bankAccountId, dateFrom, dateTo);
+        commandsExecutorWithTimer.run(command);
+    }
+
+
 }
