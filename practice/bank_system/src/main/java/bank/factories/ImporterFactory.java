@@ -1,4 +1,4 @@
-package bank.Factories;
+package bank.factories;
 
 import bank.importer.ImporterCSV;
 import bank.importer.ImporterJSON;

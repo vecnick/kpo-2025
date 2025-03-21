@@ -1,4 +1,4 @@
-package bank.Factories;
+package bank.factories;
 
 import bank.enums.ReportFormat;
 import bank.exporter.ExporterCSV;

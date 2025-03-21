@@ -1,9 +1,8 @@
 package bank.facade;
 
-import bank.Factories.CategoryFactory;
-import bank.Factories.ExporterFactory;
-import bank.Factories.ImporterFactory;
-import bank.domains.BankAccount;
+import bank.factories.CategoryFactory;
+import bank.factories.ExporterFactory;
+import bank.factories.ImporterFactory;
 import bank.domains.Category;
 import bank.enums.DomainType;
 import bank.enums.OperationType;
@@ -12,10 +11,8 @@ import bank.exporter.Exporter;
 import bank.importer.ImporterContext;
 import bank.interfaces.ImporterStrategy;
 import bank.report.Report;
-import bank.report.ReportBankAccount;
 import bank.report.ReportCategory;
 import bank.services.CategoryService;
-import bank.storages.CategoryStorage;
 import bank.visitors.ExportVisitor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

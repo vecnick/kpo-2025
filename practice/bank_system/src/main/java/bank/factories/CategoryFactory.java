@@ -1,4 +1,4 @@
-package bank.Factories;
+package bank.factories;
 
 import bank.domains.Category;
 import bank.enums.OperationType;

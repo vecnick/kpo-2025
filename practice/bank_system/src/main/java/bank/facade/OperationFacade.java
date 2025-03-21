@@ -1,8 +1,8 @@
 package bank.facade;
 
-import bank.Factories.ImporterFactory;
-import bank.Factories.OperationFactory;
-import bank.Factories.ExporterFactory;
+import bank.factories.ImporterFactory;
+import bank.factories.OperationFactory;
+import bank.factories.ExporterFactory;
 import bank.domains.BankAccount;
 import bank.domains.Category;
 import bank.domains.Operation;
@@ -13,14 +13,10 @@ import bank.exporter.Exporter;
 import bank.importer.ImporterContext;
 import bank.interfaces.ImporterStrategy;
 import bank.report.Report;
-import bank.report.ReportBankAccount;
 import bank.report.ReportOperation;
 import bank.services.BankAccountService;
 import bank.services.CategoryService;
 import bank.services.OperationService;
-import bank.storages.BankAccountStorage;
-import bank.storages.CategoryStorage;
-import bank.storages.OperationStorage;
 import bank.visitors.ExportVisitor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -63,8 +59,8 @@ public class OperationFacade {
         return service.groupOperationsByCategoryName();
     }
 
-    public double getAmountDifferenceByPeriod(String dateFrom, String dateTo) {
-        return service.getAmountDifferenceByPeriod(dateFrom, dateTo);
+    static public double getAmountDifferenceByPeriod(List<Operation> operations, String dateFrom, String dateTo) {
+        return OperationService.getAmountDifferenceByPeriod(operations, dateFrom, dateTo);
     }
 
     static public List<Operation> getOperationsIncome(List<Operation> operations) {

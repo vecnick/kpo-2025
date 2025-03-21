@@ -68,9 +68,9 @@ public class OperationService {
     }
 
     // income - outcome
-    public double getAmountDifferenceByPeriod(String dateFrom, String dateTo) {
-        List<Operation> incomeOperations = getOperationsIncome(getOperations());
-        List<Operation> outcomeOperations = getOperationsOutcome(getOperations());
+    public static double getAmountDifferenceByPeriod(List<Operation> operations, String dateFrom, String dateTo) {
+        List<Operation> incomeOperations = getOperationsIncome(operations);
+        List<Operation> outcomeOperations = getOperationsOutcome(operations);
 
         LocalDateTime from = stringToDateTime(dateFrom);
         LocalDateTime to = stringToDateTime(dateTo);
