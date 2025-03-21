@@ -9,5 +9,7 @@
 ## Запуск
 
 Для запуска используются команды:
+
 ./gradlew bootJar
+
 java -jar build/libs/practise-7.jar
