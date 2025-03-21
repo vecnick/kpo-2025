@@ -4,6 +4,7 @@ import bank.domains.BankAccount;
 import bank.domains.Category;
 import bank.domains.Operation;
 import bank.enums.OperationType;
+import bank.utils.Date;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +13,7 @@ public class ReportOperation {
     public OperationType type;
     public int bankAccountId;
     public double amount;
-    public LocalDateTime date;
+    public String date;
     public String description;
     public int categoryId;
 
@@ -21,7 +22,7 @@ public class ReportOperation {
         this(0, null, 0, 0, null, null, 0);
     }
 
-    public ReportOperation(int id, OperationType type, int bankAccountId, double amount, LocalDateTime date, String description, int categoryId) {
+    public ReportOperation(int id, OperationType type, int bankAccountId, double amount, String date, String description, int categoryId) {
         this.id = id;
         this.type = type;
         this.bankAccountId = bankAccountId;
@@ -36,7 +37,7 @@ public class ReportOperation {
         this.type = operation.getType();
         this.bankAccountId = operation.getBankAccountId().getId();
         this.amount = operation.getAmount();
-        this.date = operation.getDate();
+        this.date = Date.dateTimeToString(operation.getDate());
         this.description = operation.getDescription();
         this.categoryId = operation.getCategoryId().getId();
     }

@@ -9,6 +9,7 @@ import bank.interfaces.IOperationFactory;
 import bank.interfaces.IOperationStorage;
 import bank.report.ReportBankAccount;
 import bank.report.ReportOperation;
+import bank.utils.Date;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -41,7 +42,7 @@ public class OperationService {
                         report.type,
                         bankAccountService.getAccountById(report.bankAccountId).orElseThrow(() -> new IllegalArgumentException("bankAccountId отсутствует")),
                         report.amount,
-                        report.date,
+                        Date.stringToDateTime(report.date),
                         report.description,
                         categoryService.getCategoryById(report.categoryId).orElseThrow(() -> new IllegalArgumentException("categoryId отсутствует"))
                 )).collect(Collectors.toList());

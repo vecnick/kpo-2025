@@ -33,4 +33,8 @@ public class Date {
             throw new IllegalArgumentException("Неверный формат даты: " + dateStr);
         }
     }
+
+    public static String dateTimeToString(LocalDateTime dateTime) {
+        return dateTime.format(FORMATTER);
+    }
 }

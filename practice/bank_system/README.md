@@ -3,7 +3,7 @@
 
 Сборка
 ```
-./gradlew clean build
+./gradlew build
 ```
 
 Запуск
@@ -124,8 +124,6 @@ java -jar build/libs/bank_system-1.0.0.jar
     - (dateTo): "yyyy-MM-dd HH:mm:ss" - конечная дата
 
 - groupOperationsByCategoryName - получить операции, сгруппированные по категориям
-
-
 
 # Краткое описание основной структуры:
 
