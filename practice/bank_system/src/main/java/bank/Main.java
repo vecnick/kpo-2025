@@ -2,13 +2,22 @@ package bank;
 
 import bank.enums.ReportFormat;
 import bank.facade.BankAccountFacade;
+import bank.facade.CategoryFacade;
+import bank.facade.OperationFacade;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.IOException;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+@SpringBootApplication
 public class Main {
     public static void main(String[] args) throws IOException, IllegalAccessException {
+        ConfigurableApplicationContext context = SpringApplication.run(Main.class, args);
+        BankAccountFacade bankAccountFacade = context.getBean(BankAccountFacade.class);
+        CategoryFacade categoryFacade = context.getBean(CategoryFacade.class);
+        OperationFacade operationFacade = context.getBean(OperationFacade.class);
+
 //        // ФАБРИКИ
 //        BankAccountFactory bankAccountFactory = new BankAccountFactory();
 //        CategoryFactory categoryFactory = new CategoryFactory();
@@ -35,7 +44,6 @@ public class Main {
 //        categoryService.addCategory(categoryFactory, OperationType.OUTCOME, "supermarket");
 //
 //        System.out.println(categoryService.getOperationById(1).toString());
-        BankAccountFacade bankAccountFacade = new BankAccountFacade();
 //        bankAccountFacade.addAccount("Maksim", 200);
 //        bankAccountFacade.addAccount("Boris", 780);
 //        bankAccountFacade.exportAccounts(ReportFormat.YAML);

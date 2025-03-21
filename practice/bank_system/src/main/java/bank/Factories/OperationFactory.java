@@ -5,11 +5,13 @@ import bank.domains.Category;
 import bank.domains.Operation;
 import bank.enums.OperationType;
 import bank.interfaces.IOperationFactory;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 import static bank.utils.Date.isDateFormat;
 
+@Component
 public class OperationFactory implements IOperationFactory {
 
     @Override

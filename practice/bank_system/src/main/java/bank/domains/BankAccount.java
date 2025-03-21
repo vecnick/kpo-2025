@@ -12,7 +12,7 @@ import lombok.ToString;
 public class BankAccount {
     private final int id;
     private final String name;
-    private int balance;
+    private double balance;
 
     /**
      * Создаяние BankAccount
@@ -21,7 +21,7 @@ public class BankAccount {
      * @param name - название счёта
      * @param balance - баланс счёта
      */
-    public BankAccount(int id, String name, int balance) {
+    public BankAccount(int id, String name, double balance) {
         this.id = id;
         this.name = name;
         this.balance = balance;

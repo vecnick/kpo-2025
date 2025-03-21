@@ -10,11 +10,13 @@ import bank.interfaces.ICategoryFactory;
 import bank.interfaces.ICategoryStorage;
 import bank.report.ReportBankAccount;
 import bank.report.ReportCategory;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
 public class CategoryService {
     private final ICategoryStorage categoryStorage;
 

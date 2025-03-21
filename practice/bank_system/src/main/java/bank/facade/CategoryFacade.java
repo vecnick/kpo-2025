@@ -17,20 +17,23 @@ import bank.report.ReportCategory;
 import bank.services.CategoryService;
 import bank.storages.CategoryStorage;
 import bank.visitors.ExportVisitor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
+@RequiredArgsConstructor
 public class CategoryFacade {
-    private final ImporterContext<ReportCategory> importerContext = new ImporterContext<>();
-    private final ImporterFactory<ReportCategory> importerFactory = new ImporterFactory<>();
-    private final ExportVisitor exportVisitor = new ExportVisitor();
-    private final ExporterFactory exporterFactory = new ExporterFactory();
-    private final CategoryFactory factory = new CategoryFactory();
-    private final CategoryStorage storage = new CategoryStorage();
-    private final CategoryService service = new CategoryService(storage);
+    private final ImporterContext<ReportCategory> importerContext;
+    private final ImporterFactory<ReportCategory> importerFactory;
+    private final ExportVisitor exportVisitor;
+    private final ExporterFactory exporterFactory;
+    private final CategoryFactory factory;
+    private final CategoryService service;
 
     public void addCategory(OperationType type, String name) {
         service.addCategory(factory, type, name);

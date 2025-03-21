@@ -4,11 +4,13 @@ import bank.domains.BankAccount;
 import bank.interfaces.IBankAccountFactory;
 import bank.interfaces.IBankAccountStorage;
 import bank.report.ReportBankAccount;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
 public class BankAccountService {
     private final IBankAccountStorage bankAccountsStorage;
 
@@ -16,7 +18,7 @@ public class BankAccountService {
         this.bankAccountsStorage = bankAccountsStorage;
     }
 
-    public void addAccount(IBankAccountFactory bankAccountFactory, String name, int balance) {
+    public void addAccount(IBankAccountFactory bankAccountFactory, String name, double balance) {
         bankAccountsStorage.addAccount(bankAccountFactory, name, balance);
     }
 

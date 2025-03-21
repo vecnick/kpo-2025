@@ -9,6 +9,7 @@ import bank.interfaces.IOperationFactory;
 import bank.interfaces.IOperationStorage;
 import bank.report.ReportBankAccount;
 import bank.report.ReportOperation;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 import static bank.utils.Date.stringToDateTime;
 
+@Component
 public class OperationService {
     private final IOperationStorage operationStorage;
 
@@ -26,7 +28,7 @@ public class OperationService {
         this.operationStorage = operationStorage;
     }
 
-    public void addOperation(IOperationFactory operationFactory, OperationType type, BankAccount bankAccountId, int amount, String description, Category categoryId) {
+    public void addOperation(IOperationFactory operationFactory, OperationType type, BankAccount bankAccountId, double amount, String description, Category categoryId) {
         LocalDateTime date = LocalDateTime.now();
         operationStorage.addOperation(operationFactory, type, bankAccountId, amount, date, description, categoryId);
     }

@@ -7,14 +7,14 @@ import java.util.List;
 public class ReportBankAccount {
     public int id;
     public String name;
-    public int balance;
+    public double balance;
 
     // Пустой конструктор необходим для импорта
     public ReportBankAccount() {
         this(0, null, 0);
     }
 
-    public ReportBankAccount(int id, String name, int balance) {
+    public ReportBankAccount(int id, String name, double balance) {
         this.id = id;
         this.name = name;
         this.balance = balance;

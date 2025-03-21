@@ -5,7 +5,9 @@ import bank.exporter.ExporterCSV;
 import bank.exporter.ExporterJSON;
 import bank.exporter.ExporterYAML;
 import bank.exporter.Exporter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ExporterFactory {
     public Exporter create(ReportFormat format) throws IllegalAccessException {
         return switch (format) {

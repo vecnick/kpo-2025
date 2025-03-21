@@ -14,22 +14,25 @@ import bank.report.ReportBankAccount;
 import bank.services.BankAccountService;
 import bank.storages.BankAccountStorage;
 import bank.visitors.ExportVisitor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
+@RequiredArgsConstructor
 public class BankAccountFacade {
-    private final ImporterContext<ReportBankAccount> importerContext = new ImporterContext<>();
-    private final ImporterFactory<ReportBankAccount> importerFactory = new ImporterFactory<>();
-    private final ExportVisitor exportVisitor = new ExportVisitor();
-    private final ExporterFactory exporterFactory = new ExporterFactory();
-    private final BankAccountFactory factory = new BankAccountFactory();
-    private final BankAccountStorage storage = new BankAccountStorage();
-    private final BankAccountService service = new BankAccountService(storage);
+    private final ImporterContext<ReportBankAccount> importerContext;
+    private final ImporterFactory<ReportBankAccount> importerFactory;
+    private final ExportVisitor exportVisitor;
+    private final ExporterFactory exporterFactory;
+    private final BankAccountFactory factory;
+    private final BankAccountService service;
 
-    public void addAccount(String name, int balance) {
+    public void addAccount(String name, double balance) {
         service.addAccount(factory, name, balance);
     }
 

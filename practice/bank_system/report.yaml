@@ -3,7 +3,7 @@ title: "BANKACCOUNT"
 content:
 - id: 0
   name: "Maksim"
-  balance: 200
+  balance: 200.0
 - id: 1
   name: "Boris"
-  balance: 780
+  balance: 780.0

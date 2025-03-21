@@ -4,10 +4,12 @@ import bank.importer.ImporterCSV;
 import bank.importer.ImporterJSON;
 import bank.importer.ImporterYAML;
 import bank.interfaces.ImporterStrategy;
+import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class ImporterFactory<T> {
     public ImporterStrategy<T> create(String filename) {
         Pattern pattern = Pattern.compile("\\.([^.]+)$"); // Регулярка для формата файла

@@ -6,11 +6,13 @@ import bank.domains.Operation;
 import bank.enums.OperationType;
 import bank.interfaces.ICategoryFactory;
 import bank.interfaces.ICategoryStorage;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class CategoryStorage implements ICategoryStorage {
     private List<Category> categories = new ArrayList<>();
     private int categoriesCounter = 0;

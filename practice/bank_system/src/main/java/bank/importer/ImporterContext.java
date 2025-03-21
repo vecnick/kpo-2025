@@ -5,6 +5,7 @@ import bank.interfaces.ImporterStrategy;
 import bank.report.Report;
 import bank.report.ReportBankAccount;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
+@Component
 @Setter
 public class ImporterContext<T> {
     private ImporterStrategy<T> strategy;

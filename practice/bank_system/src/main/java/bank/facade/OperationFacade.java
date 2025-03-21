@@ -22,6 +22,8 @@ import bank.storages.BankAccountStorage;
 import bank.storages.CategoryStorage;
 import bank.storages.OperationStorage;
 import bank.visitors.ExportVisitor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,20 +31,19 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
+@RequiredArgsConstructor
 public class OperationFacade {
-    private final ImporterContext<ReportOperation> importerContext = new ImporterContext<>();
-    private final ImporterFactory<ReportOperation> importerFactory = new ImporterFactory<>();
-    private final ExportVisitor exportVisitor = new ExportVisitor();
-    private final ExporterFactory exporterFactory = new ExporterFactory();
-    private final BankAccountStorage bankAccountStorage = new BankAccountStorage();
-    private final BankAccountService bankAccountService = new BankAccountService(bankAccountStorage);
-    private final CategoryStorage categoryStorage = new CategoryStorage();
-    private final CategoryService categoryService = new CategoryService(categoryStorage);
-    private final OperationFactory factory = new OperationFactory();
-    private final OperationStorage storage = new OperationStorage();
-    private final OperationService service = new OperationService(storage);
+    private final ImporterContext<ReportOperation> importerContext;
+    private final ImporterFactory<ReportOperation> importerFactory;
+    private final ExportVisitor exportVisitor;
+    private final ExporterFactory exporterFactory;
+    private final BankAccountService bankAccountService;
+    private final CategoryService categoryService;
+    private final OperationFactory factory;
+    private final OperationService service;
 
-    public void addOperation(OperationType type, BankAccount bankAccountId, int amount, String description, Category categoryId) {
+    public void addOperation(OperationType type, BankAccount bankAccountId, double amount, String description, Category categoryId) {
         service.addOperation(factory, type, bankAccountId, amount, description, categoryId);
     }
 

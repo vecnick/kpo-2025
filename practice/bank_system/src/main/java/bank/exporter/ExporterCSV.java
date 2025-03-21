@@ -4,10 +4,12 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import bank.report.Report;
 import bank.visitors.ExportVisitor;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.io.Writer;
 
+@Component
 public class ExporterCSV extends Exporter {
     private final CsvMapper csvMapper = new CsvMapper();
 

@@ -6,11 +6,13 @@ import bank.domains.Operation;
 import bank.enums.OperationType;
 import bank.interfaces.IOperationFactory;
 import bank.interfaces.IOperationStorage;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class OperationStorage implements IOperationStorage {
     private List<Operation> operations = new ArrayList<>();
     private int operationsCounter = 0;

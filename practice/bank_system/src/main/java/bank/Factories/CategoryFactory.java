@@ -3,7 +3,9 @@ package bank.Factories;
 import bank.domains.Category;
 import bank.enums.OperationType;
 import bank.interfaces.ICategoryFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CategoryFactory implements ICategoryFactory {
 
     @Override

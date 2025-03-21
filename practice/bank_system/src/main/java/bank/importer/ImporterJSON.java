@@ -5,12 +5,14 @@ import bank.interfaces.ImporterStrategy;
 import bank.report.Report;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
+@Component
 public class ImporterJSON<T>  implements ImporterStrategy<T> {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
