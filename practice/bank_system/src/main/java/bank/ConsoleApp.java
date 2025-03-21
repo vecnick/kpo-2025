@@ -71,7 +71,7 @@ public class ConsoleApp {
         String name = scanner.nextLine();
 
         System.out.print("(balance): ");
-        double balance = scanner.nextDouble();
+        double balance = Double.parseDouble(scanner.nextLine());
 
          bankAccountFacade.addAccount(name, balance);
     }
@@ -94,16 +94,18 @@ public class ConsoleApp {
 
         System.out.print("(bankAccountId): ");
         int bankAccountId = scanner.nextInt();
+        scanner.nextLine();
         BankAccount bankAccount = bankAccountFacade.getAccountById(bankAccountId).orElseThrow(() -> new IllegalArgumentException("Аккаунт с данным id не найден"));
 
         System.out.print("(amount): ");
-        double amount = scanner.nextDouble();
+        double amount = Double.parseDouble(scanner.nextLine());
 
         System.out.print("(description): ");
         String description = scanner.nextLine();
 
         System.out.print("(categoryId): ");
         int categoryId = scanner.nextInt();
+        scanner.nextLine();
         Category category = categoryFacade.getCategoryById(categoryId).orElseThrow(() -> new IllegalArgumentException("Категория с данным id не найден"));
 
         operationFacade.addOperation(type, bankAccount, amount, description, category);
@@ -112,25 +114,28 @@ public class ConsoleApp {
     public void getAccountById(Scanner scanner) {
         System.out.print("(id): ");
         int id = scanner.nextInt();
+        scanner.nextLine();
 
          BankAccount bankAccount = bankAccountFacade.getAccountById(id).orElseThrow(() -> new IllegalArgumentException("Аккаунт с данным id не найден"));
-         System.out.print(bankAccount.toString());
+         System.out.println(bankAccount.toString());
     }
 
     public void getCategoryById(Scanner scanner) {
         System.out.print("(id): ");
         int id = scanner.nextInt();
+        scanner.nextLine();
 
         Category category = categoryFacade.getCategoryById(id).orElseThrow(() -> new IllegalArgumentException("Категория с данным id не найден"));
-        System.out.print(category.toString());
+        System.out.println(category.toString());
      }
 
     public void getOperationById(Scanner scanner) {
         System.out.print("(id): ");
         int id = scanner.nextInt();
+        scanner.nextLine();
 
         Operation operation = operationFacade.getOperationById(id).orElseThrow(() -> new IllegalArgumentException("Операция с данным id не найден"));
-        System.out.print(operation.toString());
+        System.out.println(operation.toString());
     }
 
     public void getAccounts() {
@@ -151,16 +156,19 @@ public class ConsoleApp {
     public void removeAccountById(Scanner scanner) {
         System.out.print("(id): ");
         int id = scanner.nextInt();
+        scanner.nextLine();
         bankAccountFacade.removeAccountById(id);
     }
     public void removeCategoryById(Scanner scanner) {
         System.out.print("(id): ");
         int id = scanner.nextInt();
+        scanner.nextLine();
         categoryFacade.removeCategoryById(id);
     }
     public void removeOperationById(Scanner scanner) {
         System.out.print("(id): ");
         int id = scanner.nextInt();
+        scanner.nextLine();
         operationFacade.removeOperationById(id);
     }
 
@@ -209,6 +217,7 @@ public class ConsoleApp {
     public void recalculateBalance(Scanner scanner) {
         System.out.print("(bankAccountId): ");
         int bankAccountId = scanner.nextInt();
+        scanner.nextLine();
 
         System.out.print("(dateFrom): ");
         String dateFrom = scanner.nextLine();
@@ -222,6 +231,7 @@ public class ConsoleApp {
     public void recalculateBalanceWithTimer(Scanner scanner) {
         System.out.print("(bankAccountId): ");
         int bankAccountId = scanner.nextInt();
+        scanner.nextLine();
 
         System.out.print("(dateFrom): ");
         String dateFrom = scanner.nextLine();
