@@ -1,4 +1,4 @@
-plugins {
+	plugins {
 	java
 	checkstyle
 	jacoco

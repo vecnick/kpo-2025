@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @ToString
 @RequiredArgsConstructor
-public class FactoryAF {
+public class    FactoryAF {
     private int carNumber;
 
     private List<Car> cars = new ArrayList<>();

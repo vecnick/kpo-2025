@@ -1,0 +1,3 @@
+[submodule "practice/zoo_erp"]
+	path = practice/zoo_erp
+	url = https://github.com/maksim0840/zoo_erp

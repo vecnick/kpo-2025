@@ -5,3 +5,13 @@
 ## Структура репозитория
 
 - [`/practice`](./practice) - материалы по практическим занятиям
+
+```
+git fetch upstream
+git merge -X ours upstream/main
+```
+
+```
+git checkout -b sem{n-1}-sem{n}_hw
+```
+
