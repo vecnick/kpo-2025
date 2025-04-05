@@ -1,108 +1,336 @@
 # Занятие 8. DDD
 
 ## Цель занятия
-- Изучение возможности общения с внешними сервисами, с помощью контролеров.
+- Научиться работать с базой данных.
 ## Требования к реализации
-1. 
+1. Бд поднята в докере и хранение машин происходит в ней.
 ## Тестирование
-1. 
+1. Добавить через свагер или постман сущность, получить информацию о ней в ответ.
 ## Задание на доработку
-- 
+- Доработать хранение сущностей катамаранов и покупателей в бд
 ## Пояснения к реализации
 
+Добавить зависимость в gradle:
+spring-boot-starter-data-jpa — для работы с JPA и Hibernate.
+postgresql — драйвер PostgreSQL.
 ```
-package hse.kpo.exception;
+implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+runtimeOnly("org.postgresql:postgresql")
+```
+Создание абстрактного класса для двигателей
+Для работы с Hibernate создан абстрактный класс AbstractEngine, реализующий интерфейс Engine. 
+Это позволяет использовать JPA для маппинга наследования.
+```
+package hse.kpo.domains;
 
+import hse.kpo.enums.ProductionTypes;
+import hse.kpo.interfaces.Engine;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-public class KpoException extends RuntimeException {
-    private final int code;
+@Setter
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "engine_type")
+public class AbstractEngine implements Engine {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public KpoException(int code, String message) {
-        super(message);
-        this.code = code;
+    @Override
+    public boolean isCompatible(Customer customer, ProductionTypes type) {
+        return false;
     }
 }
 ```
-
+Реализация конкретных двигателей
+Нужно, чтобы каждый тип двигателя (PedalEngine, HandEngine, LevitationEngine) стал сущностью, 
+унаследованной от AbstractEngine. Пример приведен к PedalEngine
 ```
-package hse.kpo.exception.handler;
+@Entity
+@DiscriminatorValue("PEDAL")
+public class PedalEngine extends AbstractEngine {
+```
+Настройка связи между Car и Engine
+Класс Car преобразован в сущность JPA со связью @OneToOne к AbstractEngine.
+Конструктор будет выдавать ошибки, исправьте так, чтобы все было работало.
+```
+@Entity
+@Table(name = "cars")
+@ToString
+@NoArgsConstructor
+public class Car implements Transport {
 
-import hse.kpo.exception.KpoException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-@RestControllerAdvice(basePackages = "hse.kpo")
-public class KpoExceptionHandler {
-    @ExceptionHandler(KpoException.class)
-    public ResponseEntity<KpoException> handleKpoException(KpoException ex) {
-        return ResponseEntity.status(HttpStatus.valueOf(ex.getCode()))
-                .body(ex);
+    @Getter
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int vin;
+    
+    @Getter
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "engine_id")
+    private AbstractEngine engine;
+    
+    public Car(int vin, AbstractEngine engine) {
+        this.vin = vin;
+        this.engine = engine;
     }
+    
+    public Car(AbstractEngine engine) {
+        this.engine = engine;
+    }
+```
+Добавить репозитории Spring Data JPA для доступа к данным, где Car - это сущность,
+которая хранится в репозитории, а Integer, ее ключ.
+```
+public interface CarRepository extends JpaRepository<Car, Integer> {
+    @Query("""
+        SELECT c 
+        FROM Car c 
+        JOIN c.engine e 
+        WHERE e.type = :engineType 
+        AND c.vin > :minVin
+    """)
+    List<Car> findCarsByEngineTypeAndVinGreaterThan(
+            @Param("engineType") String engineType,
+            @Param("minVin") Integer minVin
+    );
+}
+```
+В абстрактной фабрике поменять
+```
+public interface CarFactory<T> {
+    Car createCar(T parameters);
+}
+```
+А так же все реализации на примере PedalCarFactory
+```
+@Component
+public class PedalCarFactory implements CarFactory<PedalEngineParams> {
+    @Override
+    public Car create(PedalEngineParams carParams) {
+        var engine = new PedalEngine(carParams.pedalSize());
 
-    @ExceptionHandler(Error.class)
-    public ResponseEntity<KpoException> handleError(Error error) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new KpoException(HttpStatus.INTERNAL_SERVER_ERROR.value(), error.getMessage()));
+        return new Car(engine);
     }
 }
 ```
-
-Откройте Postman и выполните импорт спецификации:
-
-1) Нажмите кнопку file->Import в верхнем левом углу.
-2) Выберите файл swagger.yaml (или openapi.yaml) через вкладку File.
-3) Нажмите Import.
-
-Создайте среду для тестирования:
-
-1) Нажмите Environments в левом меню.
-2) Нажмите Create Environment .
-3) Укажите:
-   - Name : Local 
-   - Variables :
-     * baseUrl: http://localhost:8080
-4) Справа включите использование нужного Environment
-5) Отправьте запросы к включенному сервису
-
+Удалить Car Storage и внедрить использование CarRepository вместо хранения данных в памяти.
 ```
-@SpringBootTest
-@AutoConfigureMockMvc
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-class CarControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
+@Component
+@RequiredArgsConstructor
+@Slf4j
+public class HseCarService implements CarProvider{
 
-   @Test
-    @DisplayName("Создание педального автомобиля с валидными параметрами")
-    void createPedalCar_ValidData_Returns2012() throws Exception {
-        CarRequest request = new CarRequest("PEDAL", 10);
+    private final List<SalesObserver> observers = new ArrayList<>();
 
-        String responseJson = mockMvc.perform(post("/api/cars")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isCreated())
-                .andReturn().getResponse().getContentAsString();
+    private final CustomerProvider customerProvider;
+    private final CarRepository carRepository;
 
-        CarResponse response = objectMapper.readValue(responseJson, CarResponse.class);
-        assertAll(
-                () -> assertNotNull("VIN должен быть присвоен", response.vin()),
-                () -> assertEquals("Тип двигателя должен быть PEDAL", EngineTypes.PEDAL.name(), response.engineType())
-        );
+    public void addObserver(SalesObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObserversForSale(Customer customer, ProductionTypes productType, int vin) {
+        observers.forEach(obs -> obs.onSale(customer, productType, vin));
+    }
+
+    /**
+     * Метод продажи машин
+     */
+    @Sales
+    public void sellCars() {
+        var customers = customerProvider.getCustomers();
+        customers.stream().filter(customer -> Objects.isNull(customer.getCar()))
+                .forEach(customer -> {
+                    var car = this.takeCar(customer);
+                    if (Objects.nonNull(car)) {
+                        customer.setCar(car);
+                        notifyObserversForSale(customer, ProductionTypes.CAR, car.getVin());
+                    } else {
+                        log.warn("No car in CarService");
+                    }
+                });
+    }
+
+    @Override
+    public Car takeCar(Customer customer) {
+
+        var filteredCars = carRepository.findAll().stream().filter(car -> car.isCompatible(customer)).toList();
+
+        var firstCar = filteredCars.stream().findFirst();
+
+        firstCar.ifPresent(carRepository::delete);
+
+        return firstCar.orElse(null);
+    }
+
+    /**
+     * Метод добавления {@link Car} в систему.
+     *
+     * @param carFactory фабрика для создания автомобилей
+     * @param carParams параметры для создания автомобиля
+     */
+    public <T> Car addCar(CarFactory<T> carFactory, T carParams) {
+        return carRepository.save(carFactory.create(carParams));
+    }
+
+    public Car addExistingCar(Car car) {
+        return carRepository.save(car);
+    }
+
+    public Optional<Car> findByVin(Integer vin) {
+        return carRepository.findById(vin);
+    }
+
+    public void deleteByVin(Integer vin) {
+        carRepository.deleteById(vin);
+    }
+
+    public List<Car> getCarsWithFiltration(String engineType, Integer vin) {
+        return carRepository.findCarsByEngineTypeAndVinGreaterThan(engineType, vin);
+    }
+
+    public List<Car> getCars() {
+        return carRepository.findAll();
     }
 }
 ```
+Измените контроллер
 ```
-public record CarResponse(
-Integer vin,
-String engineType,
-Integer pedalSize
-) {}
+
+@RestController
+@RequestMapping("/api/cars")
+@RequiredArgsConstructor
+@Tag(name = "Автомобили", description = "Управление транспортными средствами")
+public class CarController {
+    private final HseCarService carService;
+    private final Hse hseFacade;
+
+    @GetMapping("/{vin}")
+    @Operation(summary = "Получить автомобиль по VIN")
+    public ResponseEntity<Car> getCarByVin(@PathVariable int vin) {
+        return carService.findByVin(vin)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    @Operation(summary = "Создать автомобиль",
+            description = "Для PEDAL требуется pedalSize (1-15)")
+    public ResponseEntity<Car> createCar(
+            @Valid @RequestBody CarRequest request,
+            BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    bindingResult.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        var engineType = EngineTypes.find(request.engineType());
+        if (engineType.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "No this type");
+        }
+
+        var car = switch (engineType.get()) {
+            case EngineTypes.PEDAL -> hseFacade.addPedalCar(request.pedalSize());
+            case EngineTypes.HAND -> hseFacade.addHandCar();
+            case EngineTypes.LEVITATION -> hseFacade.addLevitationCar();
+            default -> throw new RuntimeException();
+        };
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(car);
+    }
+
+    @PostMapping("/sell")
+    @Operation(summary = "Продать все доступные автомобили")
+    public ResponseEntity<Void> sellAllCars() {
+        carService.sellCars();
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/sell/{vin}")
+    @Operation(summary = "Продать автомобиль по VIN")
+    public ResponseEntity<Object> sellCar(@PathVariable int vin) {
+        return carService.findByVin(vin).map(car -> {
+            carService.deleteByVin(car.getVin());
+            hseFacade.sell();
+            return ResponseEntity.ok().build();
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{vin}")
+    @Operation(summary = "Обновить автомобиль")
+    public ResponseEntity<Car> updateCar(
+            @PathVariable int vin,
+            @Valid @RequestBody CarRequest request) {
+
+        return carService.findByVin(vin)
+                .map(existingCar -> {
+                    existingCar.setEngine(createEngineFromRequest(request));
+                    carService.addExistingCar(existingCar);
+                    return ResponseEntity.ok(existingCar);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{vin}")
+    @Operation(summary = "Удалить автомобиль")
+    public ResponseEntity<Void> deleteCar(@PathVariable int vin) {
+        carService.deleteByVin(vin);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    @Operation(summary = "Получить все автомобили с фильтрацией",
+            parameters = {
+                    @Parameter(name = "engineType", description = "Фильтр по типу двигателя"),
+                    @Parameter(name = "minVin", description = "Минимальный VIN")
+            })
+    public List<Car> getAllCars(
+            @RequestParam(required = false) String engineType,
+            @RequestParam(required = false) Integer minVin) {
+
+        return carService.getCarsWithFiltration(engineType, minVin);
+    }
+
+    private AbstractEngine createEngineFromRequest(CarRequest request) {
+        return switch (EngineTypes.valueOf(request.engineType())) {
+            case PEDAL -> new PedalEngine(request.pedalSize());
+            case HAND -> new HandEngine();
+            case LEVITATION -> new LevitationEngine();
+        };
+    }
+}
+```
+Добавьте конфигурацию в application.yml
+```
+spring:
+  application:
+    name: products-api
+  datasource:
+    url: jdbc:postgresql://postgres:5432/hse_db
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+server:
+  port: 8080
 ```
 <details> 
 <summary>Ссылки</summary>
