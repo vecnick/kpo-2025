@@ -108,7 +108,7 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
 В абстрактной фабрике поменять
 ```
 public interface CarFactory<T> {
-    Car createCar(T parameters);
+    Car create(T parameters);
 }
 ```
 А так же все реализации на примере PedalCarFactory
