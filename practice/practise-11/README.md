@@ -123,7 +123,7 @@ public class PedalCarFactory implements CarFactory<PedalEngineParams> {
     }
 }
 ```
-Удалить Car Storage и внедрить использование CarRepository вместо хранения данных в памяти.
+Удалить Car Storage и внедрить использование CarRepository в HseCarService вместо хранения данных в памяти.
 ```
 @Component
 @RequiredArgsConstructor
