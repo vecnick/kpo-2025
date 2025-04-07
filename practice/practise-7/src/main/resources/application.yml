@@ -1,3 +1,3 @@
 spring:
   application:
-    name: products-api
+    name: kpo-app
