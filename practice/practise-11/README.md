@@ -83,9 +83,13 @@ public class AbstractEngine implements Engine {
 Нужно, чтобы каждый тип двигателя (PedalEngine, HandEngine, LevitationEngine) стал сущностью, 
 унаследованной от AbstractEngine. Пример приведен к PedalEngine
 ```
+@ToString
+@Getter
 @Entity
 @DiscriminatorValue("PEDAL")
+@NoArgsConstructor
 public class PedalEngine extends AbstractEngine {
+    private int size;
 ```
 Настройка связи между Car и Engine
 Класс Car преобразован в сущность JPA со связью @OneToOne к AbstractEngine.
@@ -346,7 +350,7 @@ public class CarController {
 ```
 spring:
   application:
-    name: products-api
+    name: kpo-app
   datasource:
     url: jdbc:postgresql://localhost:5432/car_db
     username: postgres
