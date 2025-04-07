@@ -10,6 +10,30 @@
 - Доработать хранение сущностей катамаранов и покупателей в бд
 ## Пояснения к реализации
 
+Скачать docker на ноутбук
+Добавьте docker-compose.yml
+```
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: car_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+```
+Запустить через терминал в папке проекта
+docker-compose up
+
 Добавить зависимость в gradle:
 spring-boot-starter-data-jpa — для работы с JPA и Hibernate.
 postgresql — драйвер PostgreSQL.
@@ -317,26 +341,6 @@ public class CarController {
         };
     }
 }
-```
-Добавьте docker-compose.yml
-```
-services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: postgres_db
-    environment:
-      POSTGRES_DB: car_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
 ```
 Добавьте конфигурацию в application.yml
 ```
