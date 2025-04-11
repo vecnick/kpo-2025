@@ -134,8 +134,8 @@ public class Hse {
     /**
      * Добавляет катамаран с ручным приводом.
      */
-    public void addHandCatamaran() {
-        catamaranStorage.addCatamaran(handCatamaranFactory, EmptyEngineParams.DEFAULT);
+    public Catamaran addHandCatamaran() {
+        return catamaranStorage.addCatamaran(handCatamaranFactory, EmptyEngineParams.DEFAULT);
     }
 
     /**
