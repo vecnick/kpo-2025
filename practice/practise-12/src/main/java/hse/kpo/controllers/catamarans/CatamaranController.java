@@ -2,9 +2,14 @@ package hse.kpo.controllers.catamarans;
 
 import java.util.List;
 import hse.kpo.domains.Catamaran;
+import hse.kpo.domains.cars.Car;
+import hse.kpo.dto.request.CarRequest;
+import hse.kpo.dto.request.CatamaranRequest;
+import hse.kpo.enums.EngineTypes;
 import hse.kpo.facade.Hse;
 import hse.kpo.services.catamarans.HseCatamaranService;
 import hse.kpo.storages.CatamaranStorage;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -34,15 +39,30 @@ public class CatamaranController {
     }
 
     @PostMapping
-    @Operation(summary = "Создать катамаран")
+    @Operation(summary = "Создать катамаран",
+        description = "Для PEDAL требуется pedalSize (1-15)")
     public ResponseEntity<Catamaran> createCatamaran(
+        @Valid @RequestBody CatamaranRequest request,
         BindingResult bindingResult) {
+
         if (bindingResult.hasErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                 bindingResult.getAllErrors().get(0).getDefaultMessage());
         }
 
-        Catamaran catamaran = hseFacade.addHandCatamaran();
+        var engineType = EngineTypes.find(request.engineType());
+        if (engineType.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "No this type");
+        }
+
+        var catamaran = switch (engineType.get()) {
+            case EngineTypes.PEDAL -> hseFacade.addPedalCatamaran(request.pedalSize());
+            case EngineTypes.HAND -> hseFacade.addHandCatamaran();
+            case EngineTypes.LEVITATION -> hseFacade.addLevitationCatamaran();
+            default -> throw new RuntimeException();
+        };
+
         return ResponseEntity.status(HttpStatus.CREATED).body(catamaran);
     }
 

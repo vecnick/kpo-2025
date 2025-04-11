@@ -127,8 +127,8 @@ public class Hse {
      *
      * @param pedalSize размер педалей (1-15)
      */
-    public void addPedalCatamaran(int pedalSize) {
-        catamaranStorage.addCatamaran(pedalCatamaranFactory, new PedalEngineParams(pedalSize));
+    public Catamaran addPedalCatamaran(int pedalSize) {
+        return catamaranStorage.addCatamaran(pedalCatamaranFactory, new PedalEngineParams(pedalSize));
     }
 
     /**
@@ -141,8 +141,8 @@ public class Hse {
     /**
      * Добавляет левитирующий катамаран.
      */
-    public void addLevitationCatamaran() {
-        catamaranStorage.addCatamaran(levitationCatamaranFactory, EmptyEngineParams.DEFAULT);
+    public Catamaran addLevitationCatamaran() {
+        return catamaranStorage.addCatamaran(levitationCatamaranFactory, EmptyEngineParams.DEFAULT);
     }
 
     /**

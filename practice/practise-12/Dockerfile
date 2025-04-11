@@ -1,7 +1,7 @@
 # Build stage
 FROM gradle:8.7-jdk21 AS build
 WORKDIR /app
-COPY build.gradle settings.gradle gradle.properties ./
+COPY build.gradle.kts settings.gradle.kts ./
 COPY --chown=gradle:gradle . .
 RUN gradle dependencies --refresh-dependencies && \
     gradle build -x test --no-daemon
