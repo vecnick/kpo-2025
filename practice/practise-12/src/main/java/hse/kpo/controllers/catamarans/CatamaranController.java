@@ -1,15 +1,16 @@
 package hse.kpo.controllers.catamarans;
 
 import java.util.List;
-import hse.kpo.domains.Catamaran;
-import hse.kpo.domains.cars.Car;
-import hse.kpo.dto.request.CarRequest;
+import java.util.Objects;
+import hse.kpo.domains.catamarans.Catamaran;
 import hse.kpo.dto.request.CatamaranRequest;
 import hse.kpo.enums.EngineTypes;
 import hse.kpo.facade.Hse;
 import hse.kpo.services.catamarans.HseCatamaranService;
-import hse.kpo.storages.CatamaranStorage;
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -25,14 +26,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Tag(name = "Катамараны", description = "Управление катамаранами")
 public class CatamaranController {
-    private final CatamaranStorage catamaranStorage;
     private final HseCatamaranService catamaranService;
     private final Hse hseFacade;
 
     @GetMapping("/{vin}")
     @Operation(summary = "Получить катамаран по VIN")
     public ResponseEntity<Catamaran> getCatamaranById(@PathVariable int vin) {
-        return catamaranStorage.getCatamarans().stream()
+        return catamaranService.getCatamarans().stream()
             .filter(catamaran -> catamaran.getVin() == vin).findFirst()
             .map(ResponseEntity::ok)
             .orElse(ResponseEntity.notFound().build());
@@ -76,12 +76,12 @@ public class CatamaranController {
     @PostMapping("/sell/{vin}")
     @Operation(summary = "Продать катамаран по VIN")
     public ResponseEntity<Void> sellCatamaran(@PathVariable int vin) {
-        var catamaranOptional = catamaranStorage.getCatamarans().stream()
+        var catamaranOptional = catamaranService.getCatamarans().stream()
             .filter(c -> c.getVin() == vin).findFirst();
 
         if (catamaranOptional.isPresent()) {
             var catamaran = catamaranOptional.get();
-            catamaranStorage.getCatamarans().remove(catamaran);
+            catamaranService.getCatamarans().remove(catamaran);
             hseFacade.sell();
             return ResponseEntity.ok().build();
         }
@@ -91,15 +91,28 @@ public class CatamaranController {
     @DeleteMapping("/{vin}")
     @Operation(summary = "Удалить катамаран")
     public ResponseEntity<Void> deleteCatamaran(@PathVariable int vin) {
-        boolean removed = catamaranStorage.getCatamarans()
+        boolean removed = catamaranService.getCatamarans()
             .removeIf(catamaran -> catamaran.getVin() == vin);
         return removed ? ResponseEntity.noContent().build()
             : ResponseEntity.notFound().build();
     }
 
     @GetMapping
-    @Operation(summary = "Получить все катамараны")
-    public List<Catamaran> getAllCatamarans() {
-        return catamaranStorage.getCatamarans();
+    @Operation(summary = "Получить все катамараны с фильтрацией",
+        parameters = {
+            @Parameter(name = "engineType", description = "Фильтр по типу двигателя"),
+            @Parameter(name = "minVin", description = "Минимальный VIN")
+        })
+    public List<Catamaran> getAllCatamarans(
+        @RequestParam(required = false) String engineType,
+        @RequestParam(required = false) Integer minVin) {
+
+        if (Objects.isNull(minVin)) {
+            minVin = 0;
+        }
+        if (StringUtils.isBlank(engineType)) {
+            return catamaranService.getCatamarans();
+        }
+        return catamaranService.getCatamaransWithFiltration(engineType, minVin);
     }
 }

@@ -1,7 +1,7 @@
 package hse.kpo.factories.catamarans;
 
 
-import hse.kpo.domains.Catamaran;
+import hse.kpo.domains.catamarans.Catamaran;
 import hse.kpo.domains.PedalEngine;
 import hse.kpo.interfaces.catamarans.CatamaranFactory;
 import hse.kpo.params.PedalEngineParams;
@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class PedalCatamaranFactory implements CatamaranFactory<PedalEngineParams> {
     @Override
-    public Catamaran create(PedalEngineParams catamaranParams, int catamaranNumber) {
-        var engine = new PedalEngine(catamaranParams.pedalSize()); // создаем двигатель на основе переданных параметров
+    public Catamaran create(PedalEngineParams catamaranParams) {
+        var engine = new PedalEngine(catamaranParams.pedalSize());
 
-        return new Catamaran(catamaranNumber, engine); // создаем катамаран с педальным приводом
+        return new Catamaran(engine);
     }
 }

@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/cars")
@@ -114,7 +116,12 @@ public class CarController {
     public List<Car> getAllCars(
             @RequestParam(required = false) String engineType,
             @RequestParam(required = false) Integer minVin) {
-
+        if (Objects.isNull(minVin)) {
+            minVin = 0;
+        }
+        if (StringUtils.isBlank(engineType)) {
+            return carService.getCars();
+        }
         return carService.getCarsWithFiltration(engineType, minVin);
     }
 

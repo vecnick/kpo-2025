@@ -1,6 +1,6 @@
 package hse.kpo.interfaces.catamarans;
 
-import hse.kpo.domains.Catamaran;
+import hse.kpo.domains.catamarans.Catamaran;
 
 /**
  * Интерфейс для определения методов фабрик.
@@ -12,8 +12,7 @@ public interface CatamaranFactory<T> {
      * Метод создания катамаранов.
      *
      * @param catamaranParams параметры для создания
-     * @param catamaranNumber номер
      * @return {@link Catamaran}
      */
-    Catamaran create(T catamaranParams, int catamaranNumber);
+    Catamaran create(T catamaranParams);
 }

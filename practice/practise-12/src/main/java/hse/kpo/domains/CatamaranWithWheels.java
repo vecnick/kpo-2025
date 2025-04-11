@@ -1,6 +1,7 @@
 package hse.kpo.domains;
 
 import hse.kpo.domains.cars.Car;
+import hse.kpo.domains.catamarans.Catamaran;
 import hse.kpo.enums.ProductionTypes;
 
 public class CatamaranWithWheels extends Car {
