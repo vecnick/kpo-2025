@@ -9,6 +9,7 @@ databaseChangeLog:
               - column:
                   name: vin
                   type: INTEGER
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
               - column:

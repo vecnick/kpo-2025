@@ -8,6 +8,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
+                  autoIncrement: true
                   type: INT
                   constraints:
                     primaryKey: true
@@ -21,6 +22,7 @@ databaseChangeLog:
               - column:
                   name: vin
                   type: INTEGER
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
               - column:
