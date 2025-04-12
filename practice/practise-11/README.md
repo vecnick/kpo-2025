@@ -1,4 +1,4 @@
-# Занятие 11. БД
+# Занятие 11. Database
 
 ## Цель занятия
 - Научиться работать с базой данных.
@@ -9,6 +9,30 @@
 ## Задание на доработку
 - Доработать хранение сущностей катамаранов и покупателей в бд
 ## Пояснения к реализации
+
+Скачать docker на ноутбук
+Добавьте docker-compose.yml
+```
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: car_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+```
+Запустить через терминал в папке проекта
+docker-compose up
 
 Добавить зависимость в gradle:
 spring-boot-starter-data-jpa — для работы с JPA и Hibernate.
@@ -44,6 +68,10 @@ public class AbstractEngine implements Engine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @Column(name = "engine_type", insertable = false, updatable = false)
+    private String type; // Автоматически заполняется дискриминатором
+    
 
     @Override
     public boolean isCompatible(Customer customer, ProductionTypes type) {
@@ -55,14 +83,20 @@ public class AbstractEngine implements Engine {
 Нужно, чтобы каждый тип двигателя (PedalEngine, HandEngine, LevitationEngine) стал сущностью, 
 унаследованной от AbstractEngine. Пример приведен к PedalEngine
 ```
+@ToString
+@Getter
 @Entity
 @DiscriminatorValue("PEDAL")
+@NoArgsConstructor
 public class PedalEngine extends AbstractEngine {
+    private int size;
 ```
 Настройка связи между Car и Engine
 Класс Car преобразован в сущность JPA со связью @OneToOne к AbstractEngine.
 Конструктор будет выдавать ошибки, исправьте так, чтобы все было работало.
 ```
+@Getter
+@Setter
 @Entity
 @Table(name = "cars")
 @ToString
@@ -108,7 +142,7 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
 В абстрактной фабрике поменять
 ```
 public interface CarFactory<T> {
-    Car createCar(T parameters);
+    Car create(T parameters);
 }
 ```
 А так же все реализации на примере PedalCarFactory
@@ -123,7 +157,7 @@ public class PedalCarFactory implements CarFactory<PedalEngineParams> {
     }
 }
 ```
-Удалить Car Storage и внедрить использование CarRepository вместо хранения данных в памяти.
+Удалить Car Storage и внедрить использование CarRepository в HseCarService вместо хранения данных в памяти.
 ```
 @Component
 @RequiredArgsConstructor
@@ -312,39 +346,24 @@ public class CarController {
     }
 }
 ```
-Добавьте docker-compose.yml
-```
-services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: postgres_db
-    environment:
-      POSTGRES_DB: car_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-```
 Добавьте конфигурацию в application.yml
 ```
 spring:
   application:
-    name: products-api
+    name: kpo-app
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/car_db
+    username: postgres
+    password: postgres
+#    url: ${SPRING_DATASOURCE_URL}
+#    username: ${SPRING_DATASOURCE_USERNAME}
+#    password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
+    show-sql: true
     hibernate:
-      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+      ddl-auto: update
+#      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect

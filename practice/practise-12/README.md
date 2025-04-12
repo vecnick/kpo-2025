@@ -1,0 +1,138 @@
+# Занятие 11. Версионирование БД
+
+## Цель занятия
+- Научиться работать с версионированием базы данных.
+## Требования к реализации
+1. Бд и java приложение подняты в докере.
+2. Хранение покупателей происходит в контейнере.
+3. Связь между покупателями и машинами one-many.
+## Тестирование
+1. Добавить через свагер или постман сущность, получить информацию о ней в ответ.
+## Задание на доработку
+## Пояснения к реализации
+Добавьте репозиторий покупателей, по аналогии с предыдущими.
+Для создания связи one-many между покупателем и машинами изменим сущность Customer
+```
+@Getter
+@Setter
+@ToString
+@Entity
+@Table(name = "customers")
+@NoArgsConstructor
+public class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, unique = true)
+    private String name;
+
+    @Column(nullable = false)
+    private int legPower;
+
+    @Column(nullable = false)
+    private int handPower;
+
+    @Column(nullable = false)
+    private int iq;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Car> cars;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "catamaran_id")
+    private Catamaran catamaran;
+
+    public Customer(String name, int legPower, int handPower, int iq) {
+        this.name = name;
+        this.legPower = legPower;
+        this.handPower = handPower;
+        this.iq = iq;
+    }
+}
+```
+А так же добавим поле покупателя в машину
+```
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer; // Ссылка на владельца
+```
+Удалите CustomerStorage и создайте CustomerService
+```
+package hse.kpo.services;
+
+import java.util.List;
+import hse.kpo.domains.Customer;
+import hse.kpo.interfaces.CustomerProvider;
+import hse.kpo.repositories.CustomerRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@RequiredArgsConstructor
+@Service
+public class CustomerService implements CustomerProvider {
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Override
+    public List<Customer> getCustomers() {
+        return customerRepository.findAll();
+    }
+
+    @Override
+    public void addCustomer(Customer customer) {
+        customerRepository.save(customer);
+    }
+
+    @Override
+    public boolean updateCustomer(Customer updatedCustomer) {
+        if (customerRepository.existsById(updatedCustomer.getId())) {
+            customerRepository.save(updatedCustomer);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteCustomer(String name) {
+        customerRepository.deleteByName(name); // Добавьте метод в CustomerRepository
+        return true;
+    }
+}
+```
+Обновите метод продажи машин
+```
+    @Sales
+    public void sellCars() {
+        customerProvider.getCustomers().stream()
+            .filter(customer -> customer.getCars() == null || customer.getCars().isEmpty())
+            .forEach(customer -> {
+                Car car = takeCar(customer);
+                if (Objects.nonNull(car)) {
+                    customer.getCars().add(car); // Добавляем автомобиль в список клиента
+                    car.setCustomer(customer);   // Устанавливаем ссылку на клиента в автомобиле
+                    carRepository.save(car);     // Сохраняем изменения
+                    notifyObserversForSale(customer, ProductionTypes.CAR, car.getVin());
+                } else {
+                    log.warn("No car in CarService");
+                }
+            });
+    }
+```
+Нужно самостоятельно исправить все остальные ошибки, которые мешают запуску.
+
+Для запуска java приложения с бд в докере в папке проекта выполните сборку проекта
+```bash
+docker-compose build
+```
+После этого запустите приложение
+```bash
+docker-compose up
+```
+Теперь приложение доступно по стандартному порту в браузере
+<details> 
+<summary>Ссылки</summary>
+1. 
+</details>
