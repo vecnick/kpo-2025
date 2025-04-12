@@ -123,6 +123,36 @@ public class CustomerService implements CustomerProvider {
 ```
 Нужно самостоятельно исправить все остальные ошибки, которые мешают запуску.
 
+Для включения версионирования обновите application.yml:
+```
+spring:
+  application:
+    name: kpo-app
+  datasource:
+    url: jdbc:postgresql://localhost:5432/car_db
+    username: postgres
+    password: postgres
+#    url: ${SPRING_DATASOURCE_URL}
+#    username: ${SPRING_DATASOURCE_USERNAME}
+#    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+#      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+server:
+  port: 8080
+
+```
+
 Для запуска java приложения с бд в докере в папке проекта выполните сборку проекта
 ```bash
 docker-compose build
@@ -131,7 +161,6 @@ docker-compose build
 ```bash
 docker-compose up
 ```
-
 
 Теперь приложение доступно по стандартному порту в браузере
 <details> 
