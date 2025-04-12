@@ -131,6 +131,8 @@ docker-compose build
 ```bash
 docker-compose up
 ```
+
+
 Теперь приложение доступно по стандартному порту в браузере
 <details> 
 <summary>Ссылки</summary>
