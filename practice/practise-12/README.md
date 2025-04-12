@@ -152,6 +152,17 @@ server:
   port: 8080
 
 ```
+и build.gradle
+```
+plugins {
+	id("org.liquibase.gradle") version "2.0.4"
+}
+
+dependencies {
+	implementation("org.liquibase:liquibase-core")
+	liquibaseRuntime("org.liquibase:liquibase-core")
+	liquibaseRuntime("org.liquibase.ext:liquibase-hibernate6:5.0.0")
+```
 
 Для запуска java приложения с бд в докере в папке проекта выполните сборку проекта
 ```bash
