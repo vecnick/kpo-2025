@@ -12,10 +12,12 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-
               - column:
                   name: name
                   type: VARCHAR(255)
+                  constraints:
+                    unique: true
+                    nullable: false
               - column:
                   name: leg_power
                   type: INTEGER
