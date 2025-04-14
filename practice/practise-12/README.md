@@ -86,15 +86,22 @@ public class CustomerService implements CustomerProvider {
         customerRepository.save(customer);
     }
 
+    @Transactional
     @Override
-    public boolean updateCustomer(Customer updatedCustomer) {
-        if (customerRepository.existsById(updatedCustomer.getId())) {
-            customerRepository.save(updatedCustomer);
-            return true;
+    public Customer updateCustomer(CustomerRequest request) {
+        var customerOptional = customerRepository.findByName(request.getName());
+
+        if (customerOptional.isPresent()) {
+            var customer = customerOptional.get();
+            customer.setIq(request.getIq());
+            customer.setHandPower(request.getHandPower());
+            customer.setLegPower(request.getLegPower());
+            return customerRepository.save(customer);
         }
-        return false;
+        throw new KpoException(HttpStatus.NOT_FOUND.value(), String.format("no customer with name: %s", request.getName()));
     }
 
+    @Transactional
     @Override
     public boolean deleteCustomer(String name) {
         customerRepository.deleteByName(name); // Добавьте метод в CustomerRepository
