@@ -13,8 +13,11 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
-                  name: type
+                  name: engine_type
                   type: VARCHAR(50)
+              - column:
+                  name: size
+                  type: INT
 
         - createTable:
             tableName: cars
