@@ -112,7 +112,7 @@ public class TelegramConfig {
     }
 }
 ```
-Так же нужно создать внутреннюю сущность для обработки отчетаё
+ Нужно создать внутреннюю сущность для обработки отчета
 ```
 package hse.kpo.service;
 
@@ -148,22 +148,22 @@ public record CustomerData(
 }
 
 ```
-и сервис который будет все это делать
+И сервис, который будет получать данные из основного приложения, парсить отчет и скидывать в тг
 ```
 package hse.kpo.service;
 
 import static java.lang.Integer.parseInt;
 
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Comparator;
+import java.util.IntSummaryStatistics;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import hse.kpo.grpc.ReportResponse;
 import hse.kpo.grpc.ReportServiceGrpc;
 import hse.kpo.tg.NotificationBot;
@@ -220,15 +220,96 @@ public class NotificationService {
             }
         }
 
+        IntSummaryStatistics legStats = customers.stream()
+            .filter(CustomerData::isValid)
+            .mapToInt(CustomerData::legPower)
+            .summaryStatistics();
+
+        IntSummaryStatistics handStats = customers.stream()
+            .filter(CustomerData::isValid)
+            .mapToInt(CustomerData::handPower)
+            .summaryStatistics();
+
+        IntSummaryStatistics iqStats = customers.stream()
+            .filter(CustomerData::isValid)
+            .mapToInt(CustomerData::iq)
+            .summaryStatistics();
+
+        long totalCars = customers.stream()
+            .filter(CustomerData::isValid)
+            .mapToInt(CustomerData::carsCount)
+            .sum();
+
+        long totalCatamarans = customers.stream()
+            .filter(CustomerData::isValid)
+            .mapToInt(CustomerData::catamaransCount)
+            .sum();
+
+        long totalTransport = totalCars +totalCatamarans;
+
+        List<CustomerData> suspicious = customers.stream()
+            .filter(c -> c.legPower() > 1000 || c.handPower() > 1000 || c.iq() > 300)
+            .toList();
+
+        var topByTransport = customers.stream().sorted(Comparator.comparing(CustomerData::carsCount).reversed()).toList();
+
         // Формируем сообщение
         StringBuilder message = new StringBuilder()
-            .append("🏪 *Отчет о продажах*\n")
+            .append("🏪 *Детальный отчет о продажах*\n")
             .append(String.format("📅 %s%n%n", LocalDate.now()))
+
+            // Основная статистика
+            .append("📊 *Основные показатели:*\n")
             .append(String.format("💰 Всего продаж: %d%n", totalSales))
             .append(String.format("👤 Уникальных клиентов: %d%n", customerMap.size()))
+            .append(String.format("🚘 Всего транспорта: %d%n", totalTransport))
             .append(String.format("✅ Корректные записи: %d%n", validCount))
             .append(String.format("⚠️ Некорректные записи: %d%n%n", invalidCount))
-            .append("🚘 *Статистика транспорта:*\n");
+
+            // Физические показатели
+            .append("🏋️ *Физические характеристики:*\n")
+            .append(String.format("🦵 Сила ног: Ø%.1f (min: %d, max: %d)%n",
+                legStats.getAverage(), legStats.getMin(), legStats.getMax()))
+            .append(String.format("💪 Сила рук: Ø%.1f (min: %d, max: %d)%n",
+                handStats.getAverage(), handStats.getMin(), handStats.getMax()))
+            .append(String.format("🧠 IQ: Ø%.1f (min: %d, max: %d)%n%n",
+                iqStats.getAverage(), iqStats.getMin(), iqStats.getMax()))
+
+            // Распределение транспорта
+            .append("🚘 *Распределение транспорта:*\n")
+            .append(String.format("🚗 Автомобили: %d (%.1f%%)%n",
+                totalCars, (totalCars * 100.0) / totalTransport))
+            .append(String.format("🚤 Катамараны: %d (%.1f%%)%n%n",
+                totalCatamarans, (totalCatamarans * 100.0) / totalTransport))
+
+            // Топы
+            .append("🏆 *Топ клиентов:*\n")
+            .append("🥇 Лучший покупатель: ")
+            .append(!topByTransport.isEmpty()
+                ? topByTransport.getFirst().name()
+                : "No customers")
+            .append("\n")
+            .append("🔝 Топ-3 по авто:\n")
+            .append(topByTransport.stream()
+                .limit(3)
+                .map(c -> String.format("▫ %s: %d авто", c.name(), c.carsCount()))
+                .collect(Collectors.joining("\n")))
+            .append("\n\n")
+
+            // Аномалии
+            .append("🚨 *Подозрительные записи:*\n")
+            .append(suspicious.isEmpty() ? "ℹ️ Нет аномалий" :
+                suspicious.stream()
+                    .map(c -> String.format(
+                        "▫ %s (🚩Ноги:%d 🚩Руки:%d 🚩IQ:%d)",
+                        c.name(), c.legPower(), c.handPower(), c.iq()))
+                    .collect(Collectors.joining("\n")))
+            .append("\n\n")
+
+            // Заключение
+            .append("📈 *Эффективность продаж:*\n")
+            .append(String.format("📦 Продаж/клиент: Ø%.1f",
+                (double) totalSales / customerMap.size()));
 
         sendToTelegram(message.toString());
     }
