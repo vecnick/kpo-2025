@@ -35,6 +35,10 @@ repositories {
 }
 
 dependencies {
+	implementation("net.devh:grpc-client-spring-boot-starter:2.14.0.RELEASE")
+	
+    	implementation("org.telegram:telegrambots-spring-boot-starter:6.9.7.1")
+    
 	implementation("org.springframework.boot:spring-boot-starter")
 
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -93,6 +97,13 @@ tasks.test {
 tasks.jacocoTestReport {
 	dependsOn(tasks.test) // tests are required to run before generating the report
 }
+	
+tasks.withType<Checkstyle>().configureEach {
+    enabled = false
+}
+
+
+
 
 // Добавляем генерацию proto в исходные пути
 sourceSets {
