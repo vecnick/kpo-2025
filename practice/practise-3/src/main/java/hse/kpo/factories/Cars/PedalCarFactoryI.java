@@ -16,14 +16,13 @@ public class PedalCarFactoryI implements CarFactoryI<PedalEngineParams> {
      * Метод, позволяющий создать машину с данными параметрами.
      *
      * @param carParams - параметры новой машины
-     * @param carNumber - номер новой машины
      * @return экземпляр класса car новой машины
      */
     @Override
-    public Car createCar(PedalEngineParams carParams, int carNumber) {
+    public Car createCar(PedalEngineParams carParams) {
         var engine = new PedalEngineI(carParams.pedalSize());
 
-        return new Car(carNumber, engine);
+        return new Car(engine);
     }
 }
 

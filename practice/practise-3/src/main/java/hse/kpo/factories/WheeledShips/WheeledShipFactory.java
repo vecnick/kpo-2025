@@ -12,18 +12,17 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class WheeledShipFactory implements CarFactoryI<EmptyEngineParams> {
     final ShipFactory shipFactory;
-    //TODO: inner vins for ships
 
     /**
      * Метод, создающий машину.
      *
      * @param carParams - параметры новой машины
-     * @param carNumber - номер новой машины
      * @return экземпляр класса Car - новая машина
      */
     @Override
-    public Car createCar(EmptyEngineParams carParams, int carNumber) {
-        var ship = shipFactory.createShip(carParams, carNumber);
+    public Car createCar(EmptyEngineParams carParams) {
+        var ship = shipFactory.createShip(carParams);
         return new WheeledShip(ship);
     }
+
 }

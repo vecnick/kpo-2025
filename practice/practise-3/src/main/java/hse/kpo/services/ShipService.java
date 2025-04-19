@@ -60,8 +60,7 @@ public class ShipService {
     public Ship addCar(ShipFactory shipFactory, EmptyEngineParams carParams) {
         // создаем автомобиль из переданной фабрики
         var car = shipFactory.createShip(
-                carParams, // передаем параметры
-                ++carNumberCounter // передаем номер - номер будет начинаться с 1
+                carParams // передаем номер - номер будет начинаться с 1
         );
         notifyObserversForSale(Types.SHIP, car.getVin());
         ships.add(car); // добавляем автомобиль

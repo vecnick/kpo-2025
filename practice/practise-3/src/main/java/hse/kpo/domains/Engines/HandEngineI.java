@@ -1,17 +1,19 @@
 package hse.kpo.domains.Engines;
 
 import hse.kpo.Enums.Types;
+import hse.kpo.domains.AbstractEngine;
 import hse.kpo.domains.Customers.Customer;
 import hse.kpo.interfaces.EngineI;
 import lombok.Getter;
 import lombok.ToString;
+import org.apache.catalina.Engine;
 
 /**
  * Класс ручного двигателя.
  */
 @ToString
 @Getter
-public class HandEngineI implements EngineI {
+public class HandEngineI extends AbstractEngine {
     /**
      * Метод, проверяющий, подходит ли ручной двигатель пользователю.
      *

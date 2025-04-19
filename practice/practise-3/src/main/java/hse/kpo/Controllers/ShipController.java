@@ -4,6 +4,7 @@ import hse.kpo.Enums.EngineTypes;
 import hse.kpo.Facades.Hse;
 import hse.kpo.Requests.CarRequest;
 import hse.kpo.Requests.ShipRequest;
+import hse.kpo.domains.AbstractEngine;
 import hse.kpo.domains.Cars.Car;
 import hse.kpo.domains.Engines.HandEngineI;
 import hse.kpo.domains.Engines.LevitatingEngineI;
@@ -43,7 +44,7 @@ public class ShipController {
     private final HseShipService hseShipService;
 
     private Ship createShipFromRequest(ShipRequest request, int vin) {
-        EngineI engine = new HandEngineI();
+        AbstractEngine engine = new HandEngineI();
         return new Ship(vin, engine);
     }
 

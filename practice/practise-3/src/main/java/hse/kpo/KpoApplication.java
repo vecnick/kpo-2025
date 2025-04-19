@@ -26,10 +26,10 @@ public class KpoApplication {
 
         final Hse hse = context.getBean(Hse.class);
 
-        hse.addCustomer("Ivan1",6,4, 1500);
-        hse.addCustomer("Maksim", 4, 6, 800);
-        hse.addCustomer("Petya", 6, 6, 250);
-        hse.addCustomer("Nikita", 4, 4, 300);
+//        hse.addCustomer("Ivan1",6,4, 1500);
+//        hse.addCustomer("Maksim", 4, 6, 800);
+//        hse.addCustomer("Petya", 6, 6, 250);
+//        hse.addCustomer("Nikita", 4, 4, 300);
 
         try (BufferedReader reader = new BufferedReader(new FileReader("cars.csv"))) {
             hse.importTransportFromCSV(reader);

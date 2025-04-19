@@ -1,10 +1,13 @@
 package hse.kpo.services;
 
+import hse.kpo.Repository.CustomerRepository;
 import hse.kpo.domains.Customers.Customer;
 import hse.kpo.interfaces.CustomerProviderI;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
@@ -14,24 +17,28 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class CustomerStorageI implements CustomerProviderI {
-    private List<Customer> customers = new ArrayList<>();
+    @Autowired
+    private CustomerRepository customerRepository;
 
-    /**
-     * Метод, возвращающий список покупателей.
-     *
-     * @return список покупателей
-     */
     @Override
     public List<Customer> getCustomers() {
-        return customers;
+        return customerRepository.findAll();
     }
 
-    /**
-     * Метод, добавляющий покупателя.
-     *
-     * @param customer - новый покупатель
-     */
     public void addCustomer(Customer customer) {
-        customers.add(customer); // просто добавляем покупателя в список
+        customerRepository.save(customer);
+    }
+
+    public boolean updateCustomer(Customer updatedCustomer) {
+        if (customerRepository.existsById(updatedCustomer.getId())) {
+            customerRepository.save(updatedCustomer);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteCustomer(String name) {
+        customerRepository.deleteByName(name); // Добавьте метод в CustomerRepository
+        return true;
     }
 }

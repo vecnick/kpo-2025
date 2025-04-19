@@ -17,4 +17,5 @@ public interface EngineI {
      * @return true, если двигатель подходит покупателю
      */
     boolean isCompatible(Customer customer, Types type);
+
 }

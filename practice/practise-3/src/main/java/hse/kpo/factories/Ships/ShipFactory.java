@@ -14,12 +14,11 @@ public class ShipFactory {
      * Метод, создающий машину.
      *
      * @param carParams - параметры новой машины
-     * @param carNumber - номер новой машины
      * @return экземпляр класса Car - новая машина
      */
-    public Ship createShip(EmptyEngineParams carParams, int carNumber) {
+    public Ship createShip(EmptyEngineParams carParams) {
         var engine = new HandEngineI(); // Создаем двигатель без каких-либо параметров
 
-        return new Ship(carNumber, engine); // создаем автомобиль с ручным приводом
+        return new Ship(engine); // создаем автомобиль с ручным приводом
     }
 }

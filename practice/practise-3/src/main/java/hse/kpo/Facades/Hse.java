@@ -55,7 +55,7 @@ public class Hse {
     private void setUp() {
         hseCarService.addObserver(reportSalesObserver);
         hseShipService.addObserver(reportSalesObserver);
-        carService.addObserver(reportSalesObserver);
+        hseCarService.addObserver(reportSalesObserver);
     }
 
     public void addCustomer(String name, int legPower, int handPower, int iq) {
@@ -76,7 +76,7 @@ public class Hse {
     }
 
     public void addWheeledShip() {
-        carService.addCar(wheeledShipFactory, new EmptyEngineParams());
+        hseCarService.addCar(wheeledShipFactory, new EmptyEngineParams());
     }
 
     public String generateReport() {
@@ -123,20 +123,20 @@ public class Hse {
      * @param pedalSize размер педалей (1-15)
      */
     public Car addPedalCar(int pedalSize) {
-        return carService.addCar(pedalCarFactory, new PedalEngineParams(pedalSize));
+        return hseCarService.addCar(pedalCarFactory, new PedalEngineParams(pedalSize));
     }
 
     /**
      * Добавляет автомобиль с ручным приводом.
      */
     public Car addHandCar() {
-        return carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
+        return hseCarService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
     }
 
     /**
      * Добавляет левитирующий автомобиль.
      */
     public Car addLevitationCar() {
-        return carService.addCar(levitationCarFactory, EmptyEngineParams.DEFAULT);
+        return hseCarService.addCar(levitationCarFactory, EmptyEngineParams.DEFAULT);
     }
 }

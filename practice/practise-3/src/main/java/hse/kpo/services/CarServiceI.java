@@ -1,6 +1,7 @@
 package hse.kpo.services;
 
 import hse.kpo.Enums.Types;
+import hse.kpo.Repository.CarRepository;
 import hse.kpo.domains.Cars.Car;
 import hse.kpo.domains.Customers.Customer;
 import hse.kpo.interfaces.CarFactoryI;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Component;
 public class CarServiceI implements CarProviderI {
     @Getter
     private final List<Car> cars = new ArrayList<>();
-
+    private final CarRepository carRepository;
     private int carNumberCounter = 0;
 
     final List<CreationObserver> observers = new ArrayList<>();
@@ -59,8 +60,7 @@ public class CarServiceI implements CarProviderI {
     public <T> Car addCar(CarFactoryI<T> carFactory, T carParams) {
         // создаем автомобиль из переданной фабрики
         var car = carFactory.createCar(
-                carParams, // передаем параметры
-                ++carNumberCounter // передаем номер - номер будет начинаться с 1
+                carParams // передаем номер - номер будет начинаться с 1
         );
         notifyObserversForSale(Types.CAR, car.getVin());
         cars.add(car); // добавляем автомобиль

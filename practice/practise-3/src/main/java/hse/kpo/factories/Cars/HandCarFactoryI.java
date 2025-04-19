@@ -15,13 +15,12 @@ public class HandCarFactoryI implements CarFactoryI<EmptyEngineParams> {
      * Метод, создающий машину.
      *
      * @param carParams - параметры новой машины
-     * @param carNumber - номер новой машины
      * @return экземпляр класса Car - новая машина
      */
     @Override
-    public Car createCar(EmptyEngineParams carParams, int carNumber) {
+    public Car createCar(EmptyEngineParams carParams) {
         var engine = new HandEngineI(); // Создаем двигатель без каких-либо параметров
 
-        return new Car(carNumber, engine); // создаем автомобиль с ручным приводом
+        return new Car(engine); // создаем автомобиль с ручным приводом
     }
 }

@@ -16,13 +16,12 @@ public class LevitatingCarFactoryI implements CarFactoryI<EmptyEngineParams> {
      * Метод, создающий новую летающую машину.
      *
      * @param carParams - параметры новой машины
-     * @param carNumber - номер новой машины
      * @return экземпляр класса Car - новую машину
      */
     @Override
-    public Car createCar(EmptyEngineParams carParams, int carNumber) {
+    public Car createCar(EmptyEngineParams carParams) {
         var engine = new LevitatingEngineI();
 
-        return new Car(carNumber, engine);
+        return new Car(engine);
     }
 }
