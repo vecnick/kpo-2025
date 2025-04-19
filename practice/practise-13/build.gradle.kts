@@ -5,6 +5,7 @@ plugins {
 	id("org.springframework.boot") version "3.4.2"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("org.liquibase.gradle") version "2.0.4"
+	id("com.google.protobuf") version "0.9.4"
 }
 
 group = "hse"
@@ -56,6 +57,30 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 
 	implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+
+	// gRPC dependencies
+	implementation("net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE")
+	implementation("io.grpc:grpc-protobuf:1.54.0")
+	implementation("io.grpc:grpc-stub:1.54.0")
+	compileOnly("org.apache.tomcat:annotations-api:6.0.53")
+}
+
+protobuf {
+	protoc {
+		artifact = "com.google.protobuf:protoc:3.22.0"
+	}
+	plugins {
+		create("grpc") {
+			artifact = "io.grpc:protoc-gen-grpc-java:1.54.0"
+		}
+	}
+	generateProtoTasks {
+		all().forEach { task ->
+			task.plugins {
+				create("grpc")
+			}
+		}
+	}
 }
 
 tasks.withType<Test> {
@@ -67,4 +92,20 @@ tasks.test {
 }
 tasks.jacocoTestReport {
 	dependsOn(tasks.test) // tests are required to run before generating the report
+}
+
+// Добавляем генерацию proto в исходные пути
+sourceSets {
+	main {
+		java {
+			srcDirs(
+				"build/generated/source/proto/main/java",
+				"build/generated/source/proto/main/grpc"
+			)
+		}
+	}
+}
+
+tasks.named("compileJava").configure {
+	dependsOn("generateProto")
 }

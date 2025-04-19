@@ -24,7 +24,6 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "customers")
 @NoArgsConstructor
@@ -58,5 +57,18 @@ public class Customer {
         this.legPower = legPower;
         this.handPower = handPower;
         this.iq = iq;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", legPower=" + legPower +
+            ", handPower=" + handPower +
+            ", iq=" + iq +
+            ", cars=" + cars.stream().map(Car::getVin).toList().toString() +
+            ", catamaran=" + catamaran +
+            '}';
     }
 }

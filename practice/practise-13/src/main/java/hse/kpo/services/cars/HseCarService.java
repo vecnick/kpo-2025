@@ -17,6 +17,7 @@ import hse.kpo.repositories.CarRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Сервис продажи машин.
@@ -45,7 +46,7 @@ public class HseCarService implements CarProvider{
     @Sales
     public void sellCars() {
         customerProvider.getCustomers().stream()
-            .filter(customer -> customer.getCars() == null && customer.getCars().isEmpty())
+            .filter(customer -> customer.getCars() == null || customer.getCars().isEmpty())
             .forEach(customer -> {
                 Car car = takeCar(customer);
                 if (Objects.nonNull(car)) {
@@ -65,8 +66,6 @@ public class HseCarService implements CarProvider{
         var filteredCars = carRepository.findAll().stream().filter(car -> car.isCompatible(customer)).toList();
 
         var firstCar = filteredCars.stream().findFirst();
-
-        firstCar.ifPresent(carRepository::delete);
 
         return firstCar.orElse(null);
     }
