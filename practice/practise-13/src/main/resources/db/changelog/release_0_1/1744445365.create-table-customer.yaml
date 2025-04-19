@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1744444970
+      author: Nikita
+      changes:
+        - createTable:
+            tableName: customers
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: leg_power
+                  type: INTEGER
+              - column:
+                  name: hand_power
+                  type: INTEGER
+              - column:
+                  name: iq
+                  type: INTEGER
+              - column:
+                  name: catamaran_id
+                  type: INTEGER # Связь с customer
+
+        - addForeignKeyConstraint:
+            baseTableName: cars
+            baseColumnNames: customer_id # Связь с customers.id
+            referencedTableName: customers
+            referencedColumnNames: id
+            constraintName: fk_car_customer
+
+        - addForeignKeyConstraint:
+            baseTableName: catamarans
+            baseColumnNames: customer_id # Связь с customers.id
+            referencedTableName: customers
+            referencedColumnNames: id
+            constraintName: fk_catamaran_customer

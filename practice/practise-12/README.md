@@ -1,4 +1,4 @@
-# Занятие 11. Версионирование БД
+# Занятие 12. Версионирование БД
 
 ## Цель занятия
 - Научиться работать с версионированием базы данных.
@@ -9,6 +9,10 @@
 ## Тестирование
 1. Добавить через свагер или постман сущность, получить информацию о ней в ответ.
 ## Задание на доработку
+1. Добиться работы версионирования
+   - В application.yaml поле ddl-auto: none
+   - При удалении всех таблиц из бд и старте приложения, они создаются
+   - В бд есть таблицы databasechangelog и databasechangeloglock
 ## Пояснения к реализации
 Добавьте репозиторий покупателей, по аналогии с предыдущими.
 Для создания связи one-many между покупателем и машинами изменим сущность Customer
@@ -86,15 +90,22 @@ public class CustomerService implements CustomerProvider {
         customerRepository.save(customer);
     }
 
+    @Transactional
     @Override
-    public boolean updateCustomer(Customer updatedCustomer) {
-        if (customerRepository.existsById(updatedCustomer.getId())) {
-            customerRepository.save(updatedCustomer);
-            return true;
+    public Customer updateCustomer(CustomerRequest request) {
+        var customerOptional = customerRepository.findByName(request.getName());
+
+        if (customerOptional.isPresent()) {
+            var customer = customerOptional.get();
+            customer.setIq(request.getIq());
+            customer.setHandPower(request.getHandPower());
+            customer.setLegPower(request.getLegPower());
+            return customerRepository.save(customer);
         }
-        return false;
+        throw new KpoException(HttpStatus.NOT_FOUND.value(), String.format("no customer with name: %s", request.getName()));
     }
 
+    @Transactional
     @Override
     public boolean deleteCustomer(String name) {
         customerRepository.deleteByName(name); // Добавьте метод в CustomerRepository
@@ -123,6 +134,47 @@ public class CustomerService implements CustomerProvider {
 ```
 Нужно самостоятельно исправить все остальные ошибки, которые мешают запуску.
 
+Для включения версионирования обновите application.yml:
+```
+spring:
+  application:
+    name: kpo-app
+  datasource:
+    url: jdbc:postgresql://localhost:5432/car_db
+    username: postgres
+    password: postgres
+#    url: ${SPRING_DATASOURCE_URL}
+#    username: ${SPRING_DATASOURCE_USERNAME}
+#    password: ${SPRING_DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+#      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+server:
+  port: 8080
+
+```
+и build.gradle
+```
+plugins {
+	id("org.liquibase.gradle") version "2.0.4"
+}
+
+dependencies {
+	implementation("org.liquibase:liquibase-core")
+	liquibaseRuntime("org.liquibase:liquibase-core")
+	liquibaseRuntime("org.liquibase.ext:liquibase-hibernate6:5.0.0")
+```
+
 Для запуска java приложения с бд в докере в папке проекта выполните сборку проекта
 ```bash
 docker-compose build
@@ -131,6 +183,7 @@ docker-compose build
 ```bash
 docker-compose up
 ```
+
 Теперь приложение доступно по стандартному порту в браузере
 <details> 
 <summary>Ссылки</summary>
