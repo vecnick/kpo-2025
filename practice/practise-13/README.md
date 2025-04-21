@@ -369,6 +369,7 @@ public class NotificationService {
     }
 }
 ```
+Не забудьте добавить класс старта приложения, там необходимо включить scheduler.
 <details> 
 <summary>Ссылки</summary>
 1. 
