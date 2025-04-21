@@ -1,4 +1,4 @@
-package erp.domains;
+package erp.domains.animalType;
 
 import erp.enums.FoodType;
 import erp.interfaces.IAnimalType;

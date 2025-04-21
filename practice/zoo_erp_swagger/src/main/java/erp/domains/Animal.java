@@ -5,7 +5,10 @@ import erp.enums.Health;
 import erp.enums.Hunger;
 import erp.interfaces.IAlive;
 import erp.interfaces.IAnimalType;
+import erp.interfaces.IEnclosure;
 import lombok.ToString;
+
+import java.util.Optional;
 
 @ToString
 public class Animal implements IAlive {
@@ -15,6 +18,7 @@ public class Animal implements IAlive {
     private final Gender gender;
     private String favoriteFood;
 
+    private Optional<IEnclosure> currentEnclosure = Optional.empty();
     private Health health = Health.HEALTHY;
     private Hunger hunger= Hunger.FED;
 
@@ -26,6 +30,20 @@ public class Animal implements IAlive {
         hunger = Hunger.HUNGRY;
     }
 
+    @Override
+    public IAnimalType getAnimalType() {
+        return animalType;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public Optional<IEnclosure> getCurrentEnclosure() {
+        return currentEnclosure;
+    }
 
     public Animal(IAnimalType animalType, String name, String date, Gender gender, String favoriteFood) {
         this.animalType = animalType;
@@ -46,6 +64,7 @@ public class Animal implements IAlive {
     }
 
     @Override
-    public void moveToEnclosure() {
+    public void moveToEnclosure(IEnclosure enclosure) {
+        currentEnclosure = Optional.of(enclosure);
     }
 }

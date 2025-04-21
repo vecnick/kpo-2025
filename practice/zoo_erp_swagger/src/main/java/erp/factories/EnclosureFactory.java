@@ -5,6 +5,7 @@ import erp.interfaces.IAnimalType;
 import erp.interfaces.IEnclosureFactory;
 
 public class EnclosureFactory implements IEnclosureFactory {
+    private int lastId = 0;
 
     @Override
     public Enclosure create(IAnimalType animalType, int size, int maxAnimalsCount) {
@@ -14,6 +15,6 @@ public class EnclosureFactory implements IEnclosureFactory {
         if (maxAnimalsCount < 0) {
             throw new IllegalArgumentException("Максимальное количество животных не может быть отрицательным");
         }
-        return new Enclosure(animalType, size, maxAnimalsCount);
+        return new Enclosure(lastId++, animalType, size, maxAnimalsCount);
     }
 }
