@@ -1,0 +1,11 @@
+grpc:
+  client:
+    report-service:
+      address: 'static://localhost:9090' # Порт основного приложения
+      negotiation-type: plaintext
+
+telegram:
+  bot:
+    username: ${USERNAME}
+    token: ${TELEGRAM_BOT_TOKEN}
+    chat-id: ${TELEGRAM_CHAT_ID}
