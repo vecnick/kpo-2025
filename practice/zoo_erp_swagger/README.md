@@ -8,8 +8,16 @@
 
 Запуск
 ```
-java -jar build/libs/bank_system-1.0.0.jar
+java -jar build/libs/zoo_erp_swagger-1.0.0.jar
 ```
+
+- или через функцию main класса Main
+
+Web-api
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
 - или через функцию main класса Main
 
 
@@ -40,4 +48,14 @@ java -jar build/libs/bank_system-1.0.0.jar
 - Value Objects: ответы сервера /presentation/responses и доменные события /domain/events
 
 - Инкапсуляция бизнес-правил внутри доменных объектов: canEat() в типах животных /domain/models/animalType (еда которую ест животное, зависит от его типа), логики состояния объектов в самих доменах: isSick(), isHungry(), isDirty()... в /domain/models
+
+# Запросы
+
+- "GET/модель" - получить список всех созданных моеделй
+
+- "POST/модель" - создание объекта
+
+- "DELETE/модель" - удаление объекта
+
+- прочие запросы дополнительно уточнены
 
