@@ -20,14 +20,10 @@ public record FeedingTimeEvent(
         String datetime
 ) {
     public FeedingTimeEvent(IFeedingSchedule feedingSchedule) {
-        IAnimal animal = feedingSchedule.getAnimal();
-        Optional<IEnclosure> enclosure = animal.getCurrentEnclosure();
-        int enclosureId = enclosure.isPresent() ? enclosure.get().getId() : -1;
-
-        this(animal.getId(),
-            animal.getName(),
-            animal.getAnimalType(),
-            enclosureId,
+        this(feedingSchedule.getAnimal().getId(),
+            feedingSchedule.getAnimal().getName(),
+            feedingSchedule.getAnimal().getAnimalType(),
+            feedingSchedule.getAnimal().getCurrentEnclosure().isPresent() ? feedingSchedule.getAnimal().getCurrentEnclosure().get().getId() : -1,
             feedingSchedule.getId(),
             feedingSchedule.getFoodType(),
             getLocalDateTimeStr());

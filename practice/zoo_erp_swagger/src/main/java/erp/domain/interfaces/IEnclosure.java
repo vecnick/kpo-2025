@@ -18,6 +18,6 @@ public interface IEnclosure {
     boolean isDirty();
 
     void add(IAnimal animal);
-    void remove(String name);
+    boolean remove(int animalId);
     void clean();
 }

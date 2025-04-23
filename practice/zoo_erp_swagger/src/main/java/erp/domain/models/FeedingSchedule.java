@@ -4,6 +4,8 @@ import erp.domain.enums.FoodType;
 import erp.domain.interfaces.IAnimal;
 import erp.domain.interfaces.IFeedingSchedule;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FeedingSchedule implements IFeedingSchedule {
@@ -12,7 +14,7 @@ public class FeedingSchedule implements IFeedingSchedule {
     private final FoodType foodType;
 
     private final int id;
-    private List<String> completedDates;
+    private List<String> completedDates = new ArrayList<>();
 
     @Override
     public IAnimal getAnimal() { return animal; }

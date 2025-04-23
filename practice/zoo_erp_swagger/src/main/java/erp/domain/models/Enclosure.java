@@ -5,6 +5,8 @@ import erp.domain.interfaces.IAnimal;
 import erp.domain.interfaces.IAnimalType;
 import erp.domain.interfaces.IEnclosure;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +17,7 @@ public class Enclosure implements IEnclosure {
     private final int maxAnimalsCount;
 
     private final int id;
-    private List<IAnimal> animals;
+    private List<IAnimal> animals = new ArrayList<>();
     private Cleanness cleanness = Cleanness.CLEAN;
 
     @Override
@@ -49,7 +51,6 @@ public class Enclosure implements IEnclosure {
         return cleanness == Cleanness.DIRTY;
     }
 
-
     public Enclosure(int id, IAnimalType animalType, int size, int maxAnimalsCount) {
         this.id = id;
         this.allowedAnimalType = animalType;
@@ -64,14 +65,15 @@ public class Enclosure implements IEnclosure {
     }
 
     @Override
-    public void remove(String animalName) {
+    public boolean remove(int animalId) {
         Optional<IAnimal> match = animals.stream()
-                .filter(animal -> animal.getName().equals(animalName)).findFirst();
-        if (match.isPresent()) {
-            throw new IllegalArgumentException("Животного с таким именем нет в вольере");
+                .filter(animal -> animal.getId() == animalId).findFirst();
+        if (match.isEmpty()) {
+            return false; // skip
         }
         animals.remove(match.get());
         animalsCount--;
+        return true;
     }
 
     @Override

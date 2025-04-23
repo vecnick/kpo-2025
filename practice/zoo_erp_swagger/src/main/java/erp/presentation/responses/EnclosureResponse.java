@@ -18,15 +18,12 @@ public record EnclosureResponse(
     List<AnimalResponse> animals
 ) {
     public EnclosureResponse(IEnclosure enclosure) {
-        List<AnimalResponse> animalResponses = enclosure.getAnimals().stream()
-                .map(AnimalResponse::new).collect(Collectors.toList());
-
         this(enclosure.getId(),
             new AnimalTypeResponse(enclosure.getAllowedAnimalType()),
             enclosure.getSize(),
             enclosure.getAnimalsCount(),
             enclosure.getMaxAnimalsCount(),
             enclosure.getCleanness(),
-            animalResponses);
+            enclosure.getAnimals().stream().map(AnimalResponse::new).collect(Collectors.toList()));
     }
 }

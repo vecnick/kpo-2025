@@ -26,6 +26,10 @@ repositories {
 }
 
 dependencies {
+	implementation ("org.assertj:assertj-core:3.24.2")
+	implementation ("org.springframework.boot:spring-boot-starter-web")
+	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+	implementation ("jakarta.validation:jakarta.validation-api:3.0.2")
 	implementation("org.apache.commons:commons-lang3:3.12.0")
 	implementation("de.danielbechler:java-object-diff:0.93.1")
 	implementation("org.springframework.boot:spring-boot-starter")

@@ -22,6 +22,7 @@ public interface IAnimal {
     void hungry();
     boolean isSick();
     boolean isHungry();
+    void clearCurrentEnclosure();
 
     void feed();
     void heal();

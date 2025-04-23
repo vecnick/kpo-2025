@@ -1,6 +1,7 @@
 package erp.shared.utils;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
@@ -10,7 +11,7 @@ public class Time {
 
     public static boolean isTimeFormat(String time) {
         try {
-            LocalDateTime.parse(time, FORMATTER);
+            LocalTime.parse(time, FORMATTER);
             return true;
         } catch (DateTimeParseException e) {
             return false;

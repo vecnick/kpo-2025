@@ -21,15 +21,13 @@ public record AnimalResponse(
     Hunger hunger
 ) {
     public AnimalResponse(IAnimal animal) {
-        Optional<IEnclosure> enclosure = animal.getCurrentEnclosure();
-
         this(animal.getId(),
             new AnimalTypeResponse(animal.getAnimalType()),
             animal.getName(),
             animal.getDate(),
             animal.getGender(),
             animal.getFavoriteFood(),
-            enclosure.isPresent() ? enclosure.get().getId() : -1,
+            animal.getCurrentEnclosure().isPresent() ? animal.getCurrentEnclosure().get().getId() : -1,
             animal.getHealth(),
             animal.getHunger());
     }

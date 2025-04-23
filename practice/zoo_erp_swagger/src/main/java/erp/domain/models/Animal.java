@@ -30,7 +30,7 @@ public class Animal implements IAnimal {
     public String getName() { return name; }
 
     @Override
-    public String getDate() { return name; }
+    public String getDate() { return date; }
 
     @Override
     public Gender getGender() { return gender; }
@@ -68,6 +68,11 @@ public class Animal implements IAnimal {
     @Override
     public boolean isHungry() {
         return hunger == Hunger.HUNGRY;
+    }
+
+    @Override
+    public void clearCurrentEnclosure() {
+        currentEnclosure = Optional.empty();
     }
 
 
