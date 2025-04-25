@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1744444970
+      author: Nikita
+      changes:
+        - createTable:
+            tableName: catamarans
+            columns:
+              - column:
+                  name: vin
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: engine_id
+                  type: INTEGER # Связь с engine
+              - column:
+                  name: customer_id
+                  type: INTEGER # Связь с customer
+
+        - addForeignKeyConstraint:
+            baseTableName: catamarans
+            baseColumnNames: engine_id # Связь с engines.id
+            referencedTableName: engines
+            referencedColumnNames: id
+            constraintName: fk_catamaran_engine

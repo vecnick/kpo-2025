@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "hse.kpo.grpc";
+option java_outer_classname = "ReportProto";
+
+service ReportService {
+  rpc GetLatestReport (ReportRequest) returns (ReportResponse);
+}
+
+message ReportRequest {}
+
+message ReportResponse {
+  string title = 1;
+  string content = 2;
+}
