@@ -63,6 +63,12 @@ dependencies {
 	implementation("io.grpc:grpc-protobuf:1.54.0")
 	implementation("io.grpc:grpc-stub:1.54.0")
 	compileOnly("org.apache.tomcat:annotations-api:6.0.53")
+
+	// Для работы с Kafka в Spring Boot
+	implementation("org.springframework.kafka:spring-kafka")
+	// Для подключения к брокеру Kafka
+	implementation("org.apache.kafka:kafka-clients")
+	testImplementation("org.springframework.kafka:spring-kafka-test")
 }
 
 protobuf {

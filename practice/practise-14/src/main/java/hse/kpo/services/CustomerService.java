@@ -1,10 +1,12 @@
 package hse.kpo.services;
 
 import java.util.List;
+import java.util.Optional;
 import hse.kpo.domains.Customer;
 import hse.kpo.dto.request.CustomerRequest;
 import hse.kpo.exception.KpoException;
 import hse.kpo.interfaces.CustomerProvider;
+import hse.kpo.kafka.KafkaProducerService;
 import hse.kpo.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class CustomerService implements CustomerProvider {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
+
     @Override
     public List<Customer> getCustomers() {
         return customerRepository.findAll();
@@ -25,7 +30,8 @@ public class CustomerService implements CustomerProvider {
 
     @Override
     public void addCustomer(Customer customer) {
-        customerRepository.save(customer);
+        var savedCustomer = customerRepository.save(customer);
+        kafkaProducerService.sendCustomerToTraining(customer);
     }
 
     @Transactional
@@ -48,5 +54,13 @@ public class CustomerService implements CustomerProvider {
     public boolean deleteCustomer(String name) {
         customerRepository.deleteByName(name); // Добавьте метод в CustomerRepository
         return true;
+    }
+
+    public Optional<Customer> findById(int id) {
+        return customerRepository.findById(id);
+    }
+
+    public Customer save(Customer customer) {
+        return customerRepository.save(customer);
     }
 }
