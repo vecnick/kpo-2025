@@ -2,19 +2,36 @@ package hse.kpo.services;
 
 import hse.kpo.interfaces.ICarProvider;
 import hse.kpo.interfaces.ICustomerProvider;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-@Component
-@RequiredArgsConstructor
+/**
+ * Класс, управляющий продажами автомобилей покупателям
+ * имеет экземпляр класса, управляющего автомобилями (carProvider), и экземпляр класса, управляющего покупателями (customersProvider)
+ */
+@Component // Чтобы сделать сервис видимым контексту spring, нужно добавить аннотацию Component
 public class HseCarService {
 
     private final ICarProvider carProvider;
 
     private final ICustomerProvider customerProvider;
 
+    /**
+     * Конструктор для создания экземпляр класса, управляющего продажами автомобилей
+     *
+     * @param carProvider - экземпляр класса, управляющего автомобилями
+     * @param customersProvider - экземпляр класса, управляющего покупателями
+     */
+    public HseCarService(ICarProvider carProvider, ICustomerProvider customersProvider)
+    {
+        this.carProvider = carProvider;
+        this.customerProvider = customersProvider;
+    }
+
+    /**
+     * Назначение подходящей машины для покупателя
+     */
     public void sellCars()
     {
         // получаем список покупателей
