@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class PedalCarFactory implements CarFactory<PedalEngineParams> {
     @Override
-    public Car create(PedalEngineParams carParams, int carNumber) {
+    public Car create(PedalEngineParams carParams) {
         var engine = new PedalEngine(carParams.pedalSize());
 
-        return new Car(carNumber, engine);
+        return new Car(engine);
     }
 }

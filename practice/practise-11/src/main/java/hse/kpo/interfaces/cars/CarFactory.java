@@ -8,12 +8,5 @@ import hse.kpo.domains.cars.Car;
  * @param <T> параметры для фабрик
  */
 public interface CarFactory<T> {
-    /**
-     * Метод создания машин.
-     *
-     * @param carParams параметры для создания
-     * @param carNumber номер
-     * @return {@link Car}
-     */
-    Car create(T carParams, int carNumber);
+    Car create(T parameters);
 }
