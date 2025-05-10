@@ -1,6 +1,5 @@
 package hse.kpo.kafka;
 
-import hse.kpo.domains.Customer;
 import hse.kpo.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
