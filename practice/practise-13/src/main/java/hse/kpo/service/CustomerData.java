@@ -1,4 +1,4 @@
-package hse.kpo.services;
+package hse.kpo.service;
 
 public record CustomerData(
         String name,
