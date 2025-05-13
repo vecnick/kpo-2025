@@ -28,6 +28,9 @@ dependencies {
 	// для работы с бд
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	runtimeOnly("org.postgresql:postgresql")
+		
+	// для обработки расширения файла
+	implementation("commons-io:commons-io:2.15.1")
 
 	implementation ("org.assertj:assertj-core:3.24.2")
 	implementation ("org.springframework.boot:spring-boot-starter-web")

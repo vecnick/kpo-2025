@@ -25,6 +25,6 @@ files_storing_service
 * файлы хранятся локально в директории  UPLOADED_FILES
 
 Поднять базу данных: docker-compose up -d
-Отключить: docker-compose down -v
+Отключить + удалить данные: docker-compose down -v
 
 
