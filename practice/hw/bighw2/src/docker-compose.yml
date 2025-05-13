@@ -1,0 +1,56 @@
+services:
+#  postgres-storage:
+#    image: postgres:15-alpine
+#    container_name: postgres-db-storage
+#    environment:
+#      POSTGRES_DB: postgres-db
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#    volumes:
+#      - postgres_data_stor:/var/lib/postgresql/data
+#    ports:
+#      - "5430:5432"
+#    healthcheck:
+#      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+#      interval: 5s
+#      timeout: 5s
+#      retries: 5
+#
+#  postgres-analysis:
+#    image: postgres:15-alpine
+#    container_name: postgres-db-analysis
+#    environment:
+#      POSTGRES_DB: postgres-db
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#    volumes:
+#      - postgres_data_anal:/var/lib/postgresql/data
+#    ports:
+#      - "5431:5432"
+#    healthcheck:
+#      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+#      interval: 5s
+#      timeout: 5s
+#      retries: 5
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    depends_on:
+      - storage
+    ports:
+      - "8080:8080"
+
+  storage:
+    build:
+      context: ./storage
+      dockerfile: Dockerfile
+    container_name: storage_service
+    ports:
+      - "8081:8080"
+
+volumes:
+  postgres_data_stor:
+  postgres_data_anal:
