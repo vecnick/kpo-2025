@@ -52,18 +52,4 @@ public class FileInfoController {
                 location -> ResponseEntity.ok(location))
                 .orElse(ResponseEntity.notFound().build());
     }
-
-    @Operation(summary = "Добавить описание файла")
-    @PutMapping("/files")
-    public ResponseEntity<Integer> save(FileInfoParams request) {
-        return ResponseEntity.ok(fileInfoService.save(request));
-    }
-
-    @Operation(summary = "Удалить описание файла")
-    @DeleteMapping("/enclosures/{id}")
-    public ResponseEntity<Void> deleteById(int id) {
-        return fileInfoService.deleteById(id) ?
-                ResponseEntity.noContent().build() :
-                ResponseEntity.notFound().build();
-    }
 }

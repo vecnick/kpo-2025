@@ -32,7 +32,7 @@ public class FileInfoService {
         return fileInfoRepository.getLocationById(id);
     }
 
-    public int save(FileInfoParams request) {
+    public int saveFileInfo(FileInfoParams request) {
         Optional<Integer> existedFileId = getIdByHash(request.hash());
         if (existedFileId.isPresent()) { return existedFileId.get(); }
 
@@ -44,7 +44,7 @@ public class FileInfoService {
         return fileInfoRepository.save(fileInfo).getId();
     }
 
-    public boolean deleteById(int id) {
+    public boolean deleteFileInfoById(int id) {
         boolean inStorage = fileInfoRepository.existsById(id);
         fileInfoRepository.deleteById(id);
         return inStorage;
