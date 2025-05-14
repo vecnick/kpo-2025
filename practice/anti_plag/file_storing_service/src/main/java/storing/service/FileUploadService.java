@@ -2,8 +2,9 @@ package storing.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import storing.interfaces.IFileUploadService;
 import storing.record.FileUploadParams;
-import storing.util.DateUtil;
+import storing.util.FileDateUtil;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +14,7 @@ import java.nio.file.Paths;
 import org.apache.commons.io.FilenameUtils;
 
 @Service
-public class FileUploadService {
+public class FileUploadService implements IFileUploadService {
 
     private final Path filesDir;
 
@@ -21,6 +22,7 @@ public class FileUploadService {
         this.filesDir = filesDir;
     }
 
+    @Override
     public FileUploadParams saveFile(MultipartFile file) {
         try {
             // Создаём папку, если её нет
@@ -30,7 +32,7 @@ public class FileUploadService {
             String filename = file.getOriginalFilename();
             String dateFilename = FilenameUtils.getBaseName(filename)
                     + "_"
-                    + DateUtil.getLocalDateTimeStr();
+                    + FileDateUtil.getLocalDateTimeStr();
             dateFilename += (FilenameUtils.getExtension(filename) != "")
                     ? ("." + FilenameUtils.getExtension(filename)) // у файла есть расширение
                     : (""); // у файла нет расширения
@@ -45,6 +47,7 @@ public class FileUploadService {
         }
     }
 
+    @Override
     public boolean deleteFile(String filePath) {
         try {
             return Files.deleteIfExists(Paths.get(filePath));

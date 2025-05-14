@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
+import storing.interfaces.IFileInfoService;
 import storing.record.FileInfoParams;
 import storing.service.FileInfoService;
 
@@ -15,9 +16,9 @@ import java.util.List;
 
 @RestController
 public class FileInfoController {
-    private final FileInfoService fileInfoService;
+    private final IFileInfoService fileInfoService;
 
-    public  FileInfoController(FileInfoService fileInfoService) {
+    public  FileInfoController(IFileInfoService fileInfoService) {
         this.fileInfoService = fileInfoService;
     }
 

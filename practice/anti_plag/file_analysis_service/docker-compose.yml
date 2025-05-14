@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: file_analysis_db
+    environment:
+      POSTGRES_DB: file_analysis
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - analysis_postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  analysis_postgres_data:
+

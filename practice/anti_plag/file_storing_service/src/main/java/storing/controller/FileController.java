@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import storing.interfaces.IFileService;
 import storing.service.FileService;
 
 @RestController
 public class FileController {
-    private final FileService fileService;
+    private final IFileService fileService;
 
-    public FileController(FileService fileService) {
+    public FileController(IFileService fileService) {
         this.fileService = fileService;
     }
 

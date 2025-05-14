@@ -20,9 +20,16 @@ public interface FileInfoRepository extends JpaRepository<FileInfo, Integer> {
     Optional<Integer> getIdByHash(@Param("hash") String hash);
 
     @Query("""
+            SELECT fi.hash FROM FileInfo fi 
+            WHERE fi.id = :id
+            """)
+    Optional<String> getHashById(@Param("id") Integer id);
+
+    @Query("""
             SELECT fi.location FROM FileInfo fi 
             WHERE fi.id = :id
             """)
     Optional<String> getLocationById(@Param("id") Integer id);
+
 
 }

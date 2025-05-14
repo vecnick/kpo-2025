@@ -4,7 +4,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "analisys"
+group = "analysis"
 version = "1.0.0"
 
 java {

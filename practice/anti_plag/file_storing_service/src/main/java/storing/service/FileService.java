@@ -3,6 +3,9 @@ package storing.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import storing.entity.FileInfo;
+import storing.interfaces.IFileInfoService;
+import storing.interfaces.IFileService;
+import storing.interfaces.IFileUploadService;
 import storing.record.FileInfoParams;
 import storing.record.FileUploadParams;
 import storing.util.FileHashUtil;
@@ -10,15 +13,16 @@ import storing.util.FileHashUtil;
 import java.util.Optional;
 
 @Service
-public class FileService {
-    private final FileInfoService fileInfoService;
-    private final FileUploadService fileUploadService;
+public class FileService implements IFileService {
+    private final IFileInfoService fileInfoService;
+    private final IFileUploadService fileUploadService;
 
-    public FileService(FileInfoService fileInfoService, FileUploadService fileUploadService) {
+    public FileService(IFileInfoService fileInfoService, IFileUploadService fileUploadService) {
         this.fileInfoService = fileInfoService;
         this.fileUploadService = fileUploadService;
     }
 
+    @Override
     public int save(MultipartFile file) {
         // Вычисляем хэш файла
         String fileHash = FileHashUtil.calculateSha256(file);
@@ -41,6 +45,7 @@ public class FileService {
         return fileInfoService.saveFileInfo(fileInfoParams);
     }
 
+    @Override
     public boolean deleteById(int id) {
 
         // Получаем информацию о файле
