@@ -25,6 +25,10 @@ repositories {
 }
 
 dependencies {
+	// для работы с бд
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	runtimeOnly("org.postgresql:postgresql")
+	
 	implementation ("org.assertj:assertj-core:3.24.2")
 	implementation ("org.springframework.boot:spring-boot-starter-web")
 	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")

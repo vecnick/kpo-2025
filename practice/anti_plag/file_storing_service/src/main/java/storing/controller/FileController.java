@@ -22,7 +22,9 @@ public class FileController {
     @Operation(summary = "Добавить файл")
     @PutMapping(value = "/files", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Integer> save(@RequestPart("file") MultipartFile file) {
-        return ResponseEntity.ok(fileService.save(file));
+        return fileService.save(file).map(
+            id -> ResponseEntity.ok(id))
+            .orElse(ResponseEntity.badRequest().build());
     }
 
     @Operation(summary = "Удалить файл")

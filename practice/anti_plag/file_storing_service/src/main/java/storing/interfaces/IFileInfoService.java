@@ -19,5 +19,5 @@ public interface IFileInfoService {
     int saveFileInfo(FileInfoParams request);
     boolean deleteFileInfoById(int id);
 
-    Optional<String> getFileTextById(int id) throws IOException;
+    Optional<String> getFileTextById(int id);
 }

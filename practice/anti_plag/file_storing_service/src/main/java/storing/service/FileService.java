@@ -23,16 +23,21 @@ public class FileService implements IFileService {
     }
 
     @Override
-    public int save(MultipartFile file) {
+    public Optional<Integer> save(MultipartFile file) {
         // Вычисляем хэш файла
         String fileHash = FileHashUtil.calculateSha256(file);
 
         // Проверяем существует ли уже файл с таким хэшем
         Optional<Integer> existedFileId = fileInfoService.getIdByHash(fileHash);
-        if (existedFileId.isPresent()) { return existedFileId.get(); }
+        if (existedFileId.isPresent()) { return Optional.of(existedFileId.get()); }
 
         // Загружаем файл в локальное хранилище
-        FileUploadParams fileUploadParams = fileUploadService.saveFile(file);
+        Optional<FileUploadParams> optFileUploadParams = fileUploadService.saveFile(file);
+        if (optFileUploadParams.isEmpty()) {
+            return Optional.empty();
+        }
+        FileUploadParams fileUploadParams = optFileUploadParams.get();
+
 
         // Получаем информацию о файле
         FileInfoParams fileInfoParams = FileInfoParams.builder()
@@ -42,7 +47,7 @@ public class FileService implements IFileService {
                 .build();
 
         // Сохраняем информацию в базу данных и возвращаем её id
-        return fileInfoService.saveFileInfo(fileInfoParams);
+        return Optional.of(fileInfoService.saveFileInfo(fileInfoParams));
     }
 
     @Override

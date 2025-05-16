@@ -71,17 +71,23 @@ public class FileInfoService implements IFileInfoService {
     }
 
     @Override
-    public Optional<String> getFileTextById(int id) throws IOException {
-        // Получаем информацию о файле
-        Optional<FileInfo> existedFile = getById(id);
-        if (existedFile.isEmpty()) {
+    public Optional<String> getFileTextById(int id) {
+
+        // Получаем расположение файла
+        Optional<String> location = getLocationById(id);
+        if (location.isEmpty()) {
             return Optional.empty();
         }
-        FileInfoParams fileInfoParams = new FileInfoParams(existedFile.get());
 
         // Читаем содержимое файла
-        Path filePath = Path.of(fileInfoParams.location());
-        String content = Files.readString(filePath, StandardCharsets.UTF_8);
-        return Optional.of(content);
+        Path filePath = Path.of(location.get());
+
+        try {
+            String content = Files.readString(filePath, StandardCharsets.UTF_8);
+            return Optional.of(content);
+        } catch (Exception e) {
+            System.out.println("Не удалось получить содержимое файла - FileInfoService");
+            return Optional.empty();
+        }
     }
 }

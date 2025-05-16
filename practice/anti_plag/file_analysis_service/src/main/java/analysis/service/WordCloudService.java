@@ -15,6 +15,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 
 @Service
 public class WordCloudService implements IWordCloudService {
@@ -29,7 +30,13 @@ public class WordCloudService implements IWordCloudService {
     }
 
     @Override
-    public WordCloudPicParams getWordCloud(String text) throws IOException, InterruptedException {
+    public Optional<WordCloudPicParams> getWordCloud(int id) {
+
+        Optional<String> optText = fileInfoServiceMediator.getFileTextById(id);
+        if (optText.isEmpty()) {
+            return Optional.empty();
+        }
+        String text = optText.get();
 
         WordCloudRequestParams wordCloudRequestParams = WordCloudRequestParams.builder()
                 .format("png")
@@ -42,15 +49,30 @@ public class WordCloudService implements IWordCloudService {
                 .text(text)
                 .build();
 
-        String jsonParams = new ObjectMapper().writeValueAsString(wordCloudRequestParams);
+        // Получем json с заголовками параметров api
+        String jsonParams = "";
+        try {
+            jsonParams = new ObjectMapper().writeValueAsString(wordCloudRequestParams);
+        } catch (Exception e) {
+            System.out.println("Не удалось сконвертировать параметры в json.");
+            return Optional.empty();
+        }
 
+        // Формируем post запрос
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://quickchart.io/wordcloud"))
                 .POST(HttpRequest.BodyPublishers.ofString(jsonParams))
                 .setHeader("Content-Type", "application/json")
                 .build();
 
-        HttpResponse<byte[]> response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
+        // Отправляем запрос
+        HttpResponse<byte[]> response;
+        try {
+            response = client.send(request, HttpResponse.BodyHandlers.ofByteArray());
+        } catch (Exception e) {
+            System.out.println("Не удалось отправить запрос WordCloud.");
+            return Optional.empty();
+        }
 
         String filename = "wordcloud"
                 + "_"
@@ -60,8 +82,13 @@ public class WordCloudService implements IWordCloudService {
         // Записываем полученные байты в файл
         byte[] imageBytes = response.body();
         Path path = filesDir.resolve(filename);
-        Files.write(path, imageBytes);
+        try {
+            Files.write(path, imageBytes);
+        } catch (Exception e) {
+            System.out.println("Не удалось записать в файл картинку WordCloud.");
+            return Optional.empty();
+        }
 
-        return new WordCloudPicParams(path.toString(), filename);
+        return Optional.of(new WordCloudPicParams(path.toString(), filename));
     }
 }

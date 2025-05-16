@@ -38,19 +38,19 @@ public class FileInfoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Получить id файла по его хэшу")
-    @GetMapping("/files/{hash}/id")
-    public ResponseEntity<Integer> getIdByHash(String hash) {
-        return fileInfoService.getIdByHash(hash).map(
-                id -> ResponseEntity.ok(id))
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @Operation(summary = "Получить путь до файла по его id")
     @GetMapping("/files/{id}/location")
     public ResponseEntity<String> getLocationById(int id) {
         return fileInfoService.getLocationById(id).map(
                 location -> ResponseEntity.ok(location))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @Operation(summary = "Получить содержимое файла по его id")
+    @GetMapping("/files/{id}/text")
+    public ResponseEntity<String> getFileTextById(int id) {
+        return fileInfoService.getFileTextById(id).map(
+            text -> ResponseEntity.ok(text))
+            .orElse(ResponseEntity.badRequest().build());
     }
 }
