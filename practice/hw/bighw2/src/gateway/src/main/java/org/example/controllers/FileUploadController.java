@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Tag(name = "Загрузка", description = "Загрузка файлов в систему")
 public class FileUploadController {
 
-    @Value("http://storage:8080")
+    @Value("http://host.docker.internal:8081")
     private String fileServiceUrl;
 
     private final RestTemplate restTemplate;

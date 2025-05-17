@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @RestController
-@RequestMapping("/process")
+@RequestMapping("/store")
 public class AnalysisController {
 
     @PostMapping
