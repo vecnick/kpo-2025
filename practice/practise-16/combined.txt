@@ -1,0 +1,3678 @@
+package hse.kpo.grpc;
+
+import static io.grpc.MethodDescriptor.generateFullMethodName;
+
+/**
+ */
+@javax.annotation.Generated(
+    value = "by gRPC proto compiler (version 1.54.0)",
+    comments = "Source: report.proto")
+@io.grpc.stub.annotations.GrpcGenerated
+public final class ReportServiceGrpc {
+
+  private ReportServiceGrpc() {}
+
+  public static final String SERVICE_NAME = "ReportService";
+
+  // Static method descriptors that strictly reflect the proto.
+  private static volatile io.grpc.MethodDescriptor<hse.kpo.grpc.ReportRequest,
+      hse.kpo.grpc.ReportResponse> getGetLatestReportMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GetLatestReport",
+      requestType = hse.kpo.grpc.ReportRequest.class,
+      responseType = hse.kpo.grpc.ReportResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<hse.kpo.grpc.ReportRequest,
+      hse.kpo.grpc.ReportResponse> getGetLatestReportMethod() {
+    io.grpc.MethodDescriptor<hse.kpo.grpc.ReportRequest, hse.kpo.grpc.ReportResponse> getGetLatestReportMethod;
+    if ((getGetLatestReportMethod = ReportServiceGrpc.getGetLatestReportMethod) == null) {
+      synchronized (ReportServiceGrpc.class) {
+        if ((getGetLatestReportMethod = ReportServiceGrpc.getGetLatestReportMethod) == null) {
+          ReportServiceGrpc.getGetLatestReportMethod = getGetLatestReportMethod =
+              io.grpc.MethodDescriptor.<hse.kpo.grpc.ReportRequest, hse.kpo.grpc.ReportResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetLatestReport"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  hse.kpo.grpc.ReportRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  hse.kpo.grpc.ReportResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new ReportServiceMethodDescriptorSupplier("GetLatestReport"))
+              .build();
+        }
+      }
+    }
+    return getGetLatestReportMethod;
+  }
+
+  /**
+   * Creates a new async stub that supports all call types for the service
+   */
+  public static ReportServiceStub newStub(io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory<ReportServiceStub> factory =
+      new io.grpc.stub.AbstractStub.StubFactory<ReportServiceStub>() {
+        @java.lang.Override
+        public ReportServiceStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+          return new ReportServiceStub(channel, callOptions);
+        }
+      };
+    return ReportServiceStub.newStub(factory, channel);
+  }
+
+  /**
+   * Creates a new blocking-style stub that supports unary and streaming output calls on the service
+   */
+  public static ReportServiceBlockingStub newBlockingStub(
+      io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory<ReportServiceBlockingStub> factory =
+      new io.grpc.stub.AbstractStub.StubFactory<ReportServiceBlockingStub>() {
+        @java.lang.Override
+        public ReportServiceBlockingStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+          return new ReportServiceBlockingStub(channel, callOptions);
+        }
+      };
+    return ReportServiceBlockingStub.newStub(factory, channel);
+  }
+
+  /**
+   * Creates a new ListenableFuture-style stub that supports unary calls on the service
+   */
+  public static ReportServiceFutureStub newFutureStub(
+      io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory<ReportServiceFutureStub> factory =
+      new io.grpc.stub.AbstractStub.StubFactory<ReportServiceFutureStub>() {
+        @java.lang.Override
+        public ReportServiceFutureStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+          return new ReportServiceFutureStub(channel, callOptions);
+        }
+      };
+    return ReportServiceFutureStub.newStub(factory, channel);
+  }
+
+  /**
+   */
+  public interface AsyncService {
+
+    /**
+     */
+    default void getLatestReport(hse.kpo.grpc.ReportRequest request,
+        io.grpc.stub.StreamObserver<hse.kpo.grpc.ReportResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetLatestReportMethod(), responseObserver);
+    }
+  }
+
+  /**
+   * Base class for the server implementation of the service ReportService.
+   */
+  public static abstract class ReportServiceImplBase
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+      return ReportServiceGrpc.bindService(this);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service ReportService.
+   */
+  public static final class ReportServiceStub
+      extends io.grpc.stub.AbstractAsyncStub<ReportServiceStub> {
+    private ReportServiceStub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      super(channel, callOptions);
+    }
+
+    @java.lang.Override
+    protected ReportServiceStub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      return new ReportServiceStub(channel, callOptions);
+    }
+
+    /**
+     */
+    public void getLatestReport(hse.kpo.grpc.ReportRequest request,
+        io.grpc.stub.StreamObserver<hse.kpo.grpc.ReportResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGetLatestReportMethod(), getCallOptions()), request, responseObserver);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do synchronous rpc calls to service ReportService.
+   */
+  public static final class ReportServiceBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub<ReportServiceBlockingStub> {
+    private ReportServiceBlockingStub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      super(channel, callOptions);
+    }
+
+    @java.lang.Override
+    protected ReportServiceBlockingStub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      return new ReportServiceBlockingStub(channel, callOptions);
+    }
+
+    /**
+     */
+    public hse.kpo.grpc.ReportResponse getLatestReport(hse.kpo.grpc.ReportRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGetLatestReportMethod(), getCallOptions(), request);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service ReportService.
+   */
+  public static final class ReportServiceFutureStub
+      extends io.grpc.stub.AbstractFutureStub<ReportServiceFutureStub> {
+    private ReportServiceFutureStub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      super(channel, callOptions);
+    }
+
+    @java.lang.Override
+    protected ReportServiceFutureStub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      return new ReportServiceFutureStub(channel, callOptions);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<hse.kpo.grpc.ReportResponse> getLatestReport(
+        hse.kpo.grpc.ReportRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGetLatestReportMethod(), getCallOptions()), request);
+    }
+  }
+
+  private static final int METHODID_GET_LATEST_REPORT = 0;
+
+  private static final class MethodHandlers<Req, Resp> implements
+      io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
+      io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
+      io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
+      io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
+    private final AsyncService serviceImpl;
+    private final int methodId;
+
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
+      this.serviceImpl = serviceImpl;
+      this.methodId = methodId;
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings("unchecked")
+    public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
+      switch (methodId) {
+        case METHODID_GET_LATEST_REPORT:
+          serviceImpl.getLatestReport((hse.kpo.grpc.ReportRequest) request,
+              (io.grpc.stub.StreamObserver<hse.kpo.grpc.ReportResponse>) responseObserver);
+          break;
+        default:
+          throw new AssertionError();
+      }
+    }
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings("unchecked")
+    public io.grpc.stub.StreamObserver<Req> invoke(
+        io.grpc.stub.StreamObserver<Resp> responseObserver) {
+      switch (methodId) {
+        default:
+          throw new AssertionError();
+      }
+    }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getGetLatestReportMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              hse.kpo.grpc.ReportRequest,
+              hse.kpo.grpc.ReportResponse>(
+                service, METHODID_GET_LATEST_REPORT)))
+        .build();
+  }
+
+  private static abstract class ReportServiceBaseDescriptorSupplier
+      implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
+    ReportServiceBaseDescriptorSupplier() {}
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
+      return hse.kpo.grpc.ReportProto.getDescriptor();
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.ServiceDescriptor getServiceDescriptor() {
+      return getFileDescriptor().findServiceByName("ReportService");
+    }
+  }
+
+  private static final class ReportServiceFileDescriptorSupplier
+      extends ReportServiceBaseDescriptorSupplier {
+    ReportServiceFileDescriptorSupplier() {}
+  }
+
+  private static final class ReportServiceMethodDescriptorSupplier
+      extends ReportServiceBaseDescriptorSupplier
+      implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
+    private final String methodName;
+
+    ReportServiceMethodDescriptorSupplier(String methodName) {
+      this.methodName = methodName;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.MethodDescriptor getMethodDescriptor() {
+      return getServiceDescriptor().findMethodByName(methodName);
+    }
+  }
+
+  private static volatile io.grpc.ServiceDescriptor serviceDescriptor;
+
+  public static io.grpc.ServiceDescriptor getServiceDescriptor() {
+    io.grpc.ServiceDescriptor result = serviceDescriptor;
+    if (result == null) {
+      synchronized (ReportServiceGrpc.class) {
+        result = serviceDescriptor;
+        if (result == null) {
+          serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
+              .setSchemaDescriptor(new ReportServiceFileDescriptorSupplier())
+              .addMethod(getGetLatestReportMethod())
+              .build();
+        }
+      }
+    }
+    return result;
+  }
+}
+// Generated by the protocol buffer compiler.  DO NOT EDIT!
+// source: report.proto
+
+package hse.kpo.grpc;
+
+public final class ReportProto {
+  private ReportProto() {}
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistryLite registry) {
+  }
+
+  public static void registerAllExtensions(
+      com.google.protobuf.ExtensionRegistry registry) {
+    registerAllExtensions(
+        (com.google.protobuf.ExtensionRegistryLite) registry);
+  }
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ReportRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ReportRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ReportResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_ReportResponse_fieldAccessorTable;
+
+  public static com.google.protobuf.Descriptors.FileDescriptor
+      getDescriptor() {
+    return descriptor;
+  }
+  private static  com.google.protobuf.Descriptors.FileDescriptor
+      descriptor;
+  static {
+    java.lang.String[] descriptorData = {
+      "\n\014report.proto\"\017\n\rReportRequest\"0\n\016Repor" +
+      "tResponse\022\r\n\005title\030\001 \001(\t\022\017\n\007content\030\002 \001(" +
+      "\t2C\n\rReportService\0222\n\017GetLatestReport\022\016." +
+      "ReportRequest\032\017.ReportResponseB\035\n\014hse.kp" +
+      "o.grpcB\013ReportProtoP\001b\006proto3"
+    };
+    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+      .internalBuildGeneratedFileFrom(descriptorData,
+        new com.google.protobuf.Descriptors.FileDescriptor[] {
+        });
+    internal_static_ReportRequest_descriptor =
+      getDescriptor().getMessageTypes().get(0);
+    internal_static_ReportRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ReportRequest_descriptor,
+        new java.lang.String[] { });
+    internal_static_ReportResponse_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_ReportResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_ReportResponse_descriptor,
+        new java.lang.String[] { "Title", "Content", });
+  }
+
+  // @@protoc_insertion_point(outer_class_scope)
+}
+// Generated by the protocol buffer compiler.  DO NOT EDIT!
+// source: report.proto
+
+package hse.kpo.grpc;
+
+public interface ReportRequestOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:ReportRequest)
+    com.google.protobuf.MessageOrBuilder {
+}
+// Generated by the protocol buffer compiler.  DO NOT EDIT!
+// source: report.proto
+
+package hse.kpo.grpc;
+
+public interface ReportResponseOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:ReportResponse)
+    com.google.protobuf.MessageOrBuilder {
+
+  /**
+   * <code>string title = 1;</code>
+   * @return The title.
+   */
+  java.lang.String getTitle();
+  /**
+   * <code>string title = 1;</code>
+   * @return The bytes for title.
+   */
+  com.google.protobuf.ByteString
+      getTitleBytes();
+
+  /**
+   * <code>string content = 2;</code>
+   * @return The content.
+   */
+  java.lang.String getContent();
+  /**
+   * <code>string content = 2;</code>
+   * @return The bytes for content.
+   */
+  com.google.protobuf.ByteString
+      getContentBytes();
+}
+// Generated by the protocol buffer compiler.  DO NOT EDIT!
+// source: report.proto
+
+package hse.kpo.grpc;
+
+/**
+ * Protobuf type {@code ReportRequest}
+ */
+public final class ReportRequest extends
+    com.google.protobuf.GeneratedMessageV3 implements
+    // @@protoc_insertion_point(message_implements:ReportRequest)
+    ReportRequestOrBuilder {
+private static final long serialVersionUID = 0L;
+  // Use ReportRequest.newBuilder() to construct.
+  private ReportRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    super(builder);
+  }
+  private ReportRequest() {
+  }
+
+  @java.lang.Override
+  @SuppressWarnings({"unused"})
+  protected java.lang.Object newInstance(
+      UnusedPrivateParameter unused) {
+    return new ReportRequest();
+  }
+
+  public static final com.google.protobuf.Descriptors.Descriptor
+      getDescriptor() {
+    return hse.kpo.grpc.ReportProto.internal_static_ReportRequest_descriptor;
+  }
+
+  @java.lang.Override
+  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internalGetFieldAccessorTable() {
+    return hse.kpo.grpc.ReportProto.internal_static_ReportRequest_fieldAccessorTable
+        .ensureFieldAccessorsInitialized(
+            hse.kpo.grpc.ReportRequest.class, hse.kpo.grpc.ReportRequest.Builder.class);
+  }
+
+  private byte memoizedIsInitialized = -1;
+  @java.lang.Override
+  public final boolean isInitialized() {
+    byte isInitialized = memoizedIsInitialized;
+    if (isInitialized == 1) return true;
+    if (isInitialized == 0) return false;
+
+    memoizedIsInitialized = 1;
+    return true;
+  }
+
+  @java.lang.Override
+  public void writeTo(com.google.protobuf.CodedOutputStream output)
+                      throws java.io.IOException {
+    getUnknownFields().writeTo(output);
+  }
+
+  @java.lang.Override
+  public int getSerializedSize() {
+    int size = memoizedSize;
+    if (size != -1) return size;
+
+    size = 0;
+    size += getUnknownFields().getSerializedSize();
+    memoizedSize = size;
+    return size;
+  }
+
+  @java.lang.Override
+  public boolean equals(final java.lang.Object obj) {
+    if (obj == this) {
+     return true;
+    }
+    if (!(obj instanceof hse.kpo.grpc.ReportRequest)) {
+      return super.equals(obj);
+    }
+    hse.kpo.grpc.ReportRequest other = (hse.kpo.grpc.ReportRequest) obj;
+
+    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    return true;
+  }
+
+  @java.lang.Override
+  public int hashCode() {
+    if (memoizedHashCode != 0) {
+      return memoizedHashCode;
+    }
+    int hash = 41;
+    hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (29 * hash) + getUnknownFields().hashCode();
+    memoizedHashCode = hash;
+    return hash;
+  }
+
+  public static hse.kpo.grpc.ReportRequest parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static hse.kpo.grpc.ReportRequest parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
+  public static hse.kpo.grpc.ReportRequest parseFrom(
+      com.google.protobuf.ByteString data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static hse.kpo.grpc.ReportRequest parseFrom(
+      com.google.protobuf.ByteString data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
+  public static hse.kpo.grpc.ReportRequest parseFrom(byte[] data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static hse.kpo.grpc.ReportRequest parseFrom(
+      byte[] data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
+  public static hse.kpo.grpc.ReportRequest parseFrom(java.io.InputStream input)
+      throws java.io.IOException {
+    return com.google.protobuf.GeneratedMessageV3
+        .parseWithIOException(PARSER, input);
+  }
+  public static hse.kpo.grpc.ReportRequest parseFrom(
+      java.io.InputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws java.io.IOException {
+    return com.google.protobuf.GeneratedMessageV3
+        .parseWithIOException(PARSER, input, extensionRegistry);
+  }
+  public static hse.kpo.grpc.ReportRequest parseDelimitedFrom(java.io.InputStream input)
+      throws java.io.IOException {
+    return com.google.protobuf.GeneratedMessageV3
+        .parseDelimitedWithIOException(PARSER, input);
+  }
+  public static hse.kpo.grpc.ReportRequest parseDelimitedFrom(
+      java.io.InputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws java.io.IOException {
+    return com.google.protobuf.GeneratedMessageV3
+        .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+  }
+  public static hse.kpo.grpc.ReportRequest parseFrom(
+      com.google.protobuf.CodedInputStream input)
+      throws java.io.IOException {
+    return com.google.protobuf.GeneratedMessageV3
+        .parseWithIOException(PARSER, input);
+  }
+  public static hse.kpo.grpc.ReportRequest parseFrom(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws java.io.IOException {
+    return com.google.protobuf.GeneratedMessageV3
+        .parseWithIOException(PARSER, input, extensionRegistry);
+  }
+
+  @java.lang.Override
+  public Builder newBuilderForType() { return newBuilder(); }
+  public static Builder newBuilder() {
+    return DEFAULT_INSTANCE.toBuilder();
+  }
+  public static Builder newBuilder(hse.kpo.grpc.ReportRequest prototype) {
+    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+  }
+  @java.lang.Override
+  public Builder toBuilder() {
+    return this == DEFAULT_INSTANCE
+        ? new Builder() : new Builder().mergeFrom(this);
+  }
+
+  @java.lang.Override
+  protected Builder newBuilderForType(
+      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    Builder builder = new Builder(parent);
+    return builder;
+  }
+  /**
+   * Protobuf type {@code ReportRequest}
+   */
+  public static final class Builder extends
+      com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+      // @@protoc_insertion_point(builder_implements:ReportRequest)
+      hse.kpo.grpc.ReportRequestOrBuilder {
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return hse.kpo.grpc.ReportProto.internal_static_ReportRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return hse.kpo.grpc.ReportProto.internal_static_ReportRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              hse.kpo.grpc.ReportRequest.class, hse.kpo.grpc.ReportRequest.Builder.class);
+    }
+
+    // Construct using hse.kpo.grpc.ReportRequest.newBuilder()
+    private Builder() {
+
+    }
+
+    private Builder(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      super(parent);
+
+    }
+    @java.lang.Override
+    public Builder clear() {
+      super.clear();
+      return this;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.Descriptor
+        getDescriptorForType() {
+      return hse.kpo.grpc.ReportProto.internal_static_ReportRequest_descriptor;
+    }
+
+    @java.lang.Override
+    public hse.kpo.grpc.ReportRequest getDefaultInstanceForType() {
+      return hse.kpo.grpc.ReportRequest.getDefaultInstance();
+    }
+
+    @java.lang.Override
+    public hse.kpo.grpc.ReportRequest build() {
+      hse.kpo.grpc.ReportRequest result = buildPartial();
+      if (!result.isInitialized()) {
+        throw newUninitializedMessageException(result);
+      }
+      return result;
+    }
+
+    @java.lang.Override
+    public hse.kpo.grpc.ReportRequest buildPartial() {
+      hse.kpo.grpc.ReportRequest result = new hse.kpo.grpc.ReportRequest(this);
+      onBuilt();
+      return result;
+    }
+
+    @java.lang.Override
+    public Builder mergeFrom(com.google.protobuf.Message other) {
+      if (other instanceof hse.kpo.grpc.ReportRequest) {
+        return mergeFrom((hse.kpo.grpc.ReportRequest)other);
+      } else {
+        super.mergeFrom(other);
+        return this;
+      }
+    }
+
+    public Builder mergeFrom(hse.kpo.grpc.ReportRequest other) {
+      if (other == hse.kpo.grpc.ReportRequest.getDefaultInstance()) return this;
+      this.mergeUnknownFields(other.getUnknownFields());
+      onChanged();
+      return this;
+    }
+
+    @java.lang.Override
+    public final boolean isInitialized() {
+      return true;
+    }
+
+    @java.lang.Override
+    public Builder mergeFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                done = true; // was an endgroup tag
+              }
+              break;
+            } // default:
+          } // switch (tag)
+        } // while (!done)
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.unwrapIOException();
+      } finally {
+        onChanged();
+      } // finally
+      return this;
+    }
+    @java.lang.Override
+    public final Builder setUnknownFields(
+        final com.google.protobuf.UnknownFieldSet unknownFields) {
+      return super.setUnknownFields(unknownFields);
+    }
+
+    @java.lang.Override
+    public final Builder mergeUnknownFields(
+        final com.google.protobuf.UnknownFieldSet unknownFields) {
+      return super.mergeUnknownFields(unknownFields);
+    }
+
+
+    // @@protoc_insertion_point(builder_scope:ReportRequest)
+  }
+
+  // @@protoc_insertion_point(class_scope:ReportRequest)
+  private static final hse.kpo.grpc.ReportRequest DEFAULT_INSTANCE;
+  static {
+    DEFAULT_INSTANCE = new hse.kpo.grpc.ReportRequest();
+  }
+
+  public static hse.kpo.grpc.ReportRequest getDefaultInstance() {
+    return DEFAULT_INSTANCE;
+  }
+
+  private static final com.google.protobuf.Parser<ReportRequest>
+      PARSER = new com.google.protobuf.AbstractParser<ReportRequest>() {
+    @java.lang.Override
+    public ReportRequest parsePartialFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      Builder builder = newBuilder();
+      try {
+        builder.mergeFrom(input, extensionRegistry);
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(builder.buildPartial());
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(builder.buildPartial());
+      }
+      return builder.buildPartial();
+    }
+  };
+
+  public static com.google.protobuf.Parser<ReportRequest> parser() {
+    return PARSER;
+  }
+
+  @java.lang.Override
+  public com.google.protobuf.Parser<ReportRequest> getParserForType() {
+    return PARSER;
+  }
+
+  @java.lang.Override
+  public hse.kpo.grpc.ReportRequest getDefaultInstanceForType() {
+    return DEFAULT_INSTANCE;
+  }
+
+}
+
+// Generated by the protocol buffer compiler.  DO NOT EDIT!
+// source: report.proto
+
+package hse.kpo.grpc;
+
+/**
+ * Protobuf type {@code ReportResponse}
+ */
+public final class ReportResponse extends
+    com.google.protobuf.GeneratedMessageV3 implements
+    // @@protoc_insertion_point(message_implements:ReportResponse)
+    ReportResponseOrBuilder {
+private static final long serialVersionUID = 0L;
+  // Use ReportResponse.newBuilder() to construct.
+  private ReportResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    super(builder);
+  }
+  private ReportResponse() {
+    title_ = "";
+    content_ = "";
+  }
+
+  @java.lang.Override
+  @SuppressWarnings({"unused"})
+  protected java.lang.Object newInstance(
+      UnusedPrivateParameter unused) {
+    return new ReportResponse();
+  }
+
+  public static final com.google.protobuf.Descriptors.Descriptor
+      getDescriptor() {
+    return hse.kpo.grpc.ReportProto.internal_static_ReportResponse_descriptor;
+  }
+
+  @java.lang.Override
+  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internalGetFieldAccessorTable() {
+    return hse.kpo.grpc.ReportProto.internal_static_ReportResponse_fieldAccessorTable
+        .ensureFieldAccessorsInitialized(
+            hse.kpo.grpc.ReportResponse.class, hse.kpo.grpc.ReportResponse.Builder.class);
+  }
+
+  public static final int TITLE_FIELD_NUMBER = 1;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object title_ = "";
+  /**
+   * <code>string title = 1;</code>
+   * @return The title.
+   */
+  @java.lang.Override
+  public java.lang.String getTitle() {
+    java.lang.Object ref = title_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      title_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string title = 1;</code>
+   * @return The bytes for title.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getTitleBytes() {
+    java.lang.Object ref = title_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      title_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int CONTENT_FIELD_NUMBER = 2;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object content_ = "";
+  /**
+   * <code>string content = 2;</code>
+   * @return The content.
+   */
+  @java.lang.Override
+  public java.lang.String getContent() {
+    java.lang.Object ref = content_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      content_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string content = 2;</code>
+   * @return The bytes for content.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getContentBytes() {
+    java.lang.Object ref = content_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      content_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  private byte memoizedIsInitialized = -1;
+  @java.lang.Override
+  public final boolean isInitialized() {
+    byte isInitialized = memoizedIsInitialized;
+    if (isInitialized == 1) return true;
+    if (isInitialized == 0) return false;
+
+    memoizedIsInitialized = 1;
+    return true;
+  }
+
+  @java.lang.Override
+  public void writeTo(com.google.protobuf.CodedOutputStream output)
+                      throws java.io.IOException {
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, title_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(content_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, content_);
+    }
+    getUnknownFields().writeTo(output);
+  }
+
+  @java.lang.Override
+  public int getSerializedSize() {
+    int size = memoizedSize;
+    if (size != -1) return size;
+
+    size = 0;
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(title_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, title_);
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(content_)) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, content_);
+    }
+    size += getUnknownFields().getSerializedSize();
+    memoizedSize = size;
+    return size;
+  }
+
+  @java.lang.Override
+  public boolean equals(final java.lang.Object obj) {
+    if (obj == this) {
+     return true;
+    }
+    if (!(obj instanceof hse.kpo.grpc.ReportResponse)) {
+      return super.equals(obj);
+    }
+    hse.kpo.grpc.ReportResponse other = (hse.kpo.grpc.ReportResponse) obj;
+
+    if (!getTitle()
+        .equals(other.getTitle())) return false;
+    if (!getContent()
+        .equals(other.getContent())) return false;
+    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+    return true;
+  }
+
+  @java.lang.Override
+  public int hashCode() {
+    if (memoizedHashCode != 0) {
+      return memoizedHashCode;
+    }
+    int hash = 41;
+    hash = (19 * hash) + getDescriptor().hashCode();
+    hash = (37 * hash) + TITLE_FIELD_NUMBER;
+    hash = (53 * hash) + getTitle().hashCode();
+    hash = (37 * hash) + CONTENT_FIELD_NUMBER;
+    hash = (53 * hash) + getContent().hashCode();
+    hash = (29 * hash) + getUnknownFields().hashCode();
+    memoizedHashCode = hash;
+    return hash;
+  }
+
+  public static hse.kpo.grpc.ReportResponse parseFrom(
+      java.nio.ByteBuffer data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static hse.kpo.grpc.ReportResponse parseFrom(
+      java.nio.ByteBuffer data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
+  public static hse.kpo.grpc.ReportResponse parseFrom(
+      com.google.protobuf.ByteString data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static hse.kpo.grpc.ReportResponse parseFrom(
+      com.google.protobuf.ByteString data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
+  public static hse.kpo.grpc.ReportResponse parseFrom(byte[] data)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data);
+  }
+  public static hse.kpo.grpc.ReportResponse parseFrom(
+      byte[] data,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws com.google.protobuf.InvalidProtocolBufferException {
+    return PARSER.parseFrom(data, extensionRegistry);
+  }
+  public static hse.kpo.grpc.ReportResponse parseFrom(java.io.InputStream input)
+      throws java.io.IOException {
+    return com.google.protobuf.GeneratedMessageV3
+        .parseWithIOException(PARSER, input);
+  }
+  public static hse.kpo.grpc.ReportResponse parseFrom(
+      java.io.InputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws java.io.IOException {
+    return com.google.protobuf.GeneratedMessageV3
+        .parseWithIOException(PARSER, input, extensionRegistry);
+  }
+  public static hse.kpo.grpc.ReportResponse parseDelimitedFrom(java.io.InputStream input)
+      throws java.io.IOException {
+    return com.google.protobuf.GeneratedMessageV3
+        .parseDelimitedWithIOException(PARSER, input);
+  }
+  public static hse.kpo.grpc.ReportResponse parseDelimitedFrom(
+      java.io.InputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws java.io.IOException {
+    return com.google.protobuf.GeneratedMessageV3
+        .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+  }
+  public static hse.kpo.grpc.ReportResponse parseFrom(
+      com.google.protobuf.CodedInputStream input)
+      throws java.io.IOException {
+    return com.google.protobuf.GeneratedMessageV3
+        .parseWithIOException(PARSER, input);
+  }
+  public static hse.kpo.grpc.ReportResponse parseFrom(
+      com.google.protobuf.CodedInputStream input,
+      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws java.io.IOException {
+    return com.google.protobuf.GeneratedMessageV3
+        .parseWithIOException(PARSER, input, extensionRegistry);
+  }
+
+  @java.lang.Override
+  public Builder newBuilderForType() { return newBuilder(); }
+  public static Builder newBuilder() {
+    return DEFAULT_INSTANCE.toBuilder();
+  }
+  public static Builder newBuilder(hse.kpo.grpc.ReportResponse prototype) {
+    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+  }
+  @java.lang.Override
+  public Builder toBuilder() {
+    return this == DEFAULT_INSTANCE
+        ? new Builder() : new Builder().mergeFrom(this);
+  }
+
+  @java.lang.Override
+  protected Builder newBuilderForType(
+      com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+    Builder builder = new Builder(parent);
+    return builder;
+  }
+  /**
+   * Protobuf type {@code ReportResponse}
+   */
+  public static final class Builder extends
+      com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+      // @@protoc_insertion_point(builder_implements:ReportResponse)
+      hse.kpo.grpc.ReportResponseOrBuilder {
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return hse.kpo.grpc.ReportProto.internal_static_ReportResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return hse.kpo.grpc.ReportProto.internal_static_ReportResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              hse.kpo.grpc.ReportResponse.class, hse.kpo.grpc.ReportResponse.Builder.class);
+    }
+
+    // Construct using hse.kpo.grpc.ReportResponse.newBuilder()
+    private Builder() {
+
+    }
+
+    private Builder(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      super(parent);
+
+    }
+    @java.lang.Override
+    public Builder clear() {
+      super.clear();
+      bitField0_ = 0;
+      title_ = "";
+      content_ = "";
+      return this;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.Descriptor
+        getDescriptorForType() {
+      return hse.kpo.grpc.ReportProto.internal_static_ReportResponse_descriptor;
+    }
+
+    @java.lang.Override
+    public hse.kpo.grpc.ReportResponse getDefaultInstanceForType() {
+      return hse.kpo.grpc.ReportResponse.getDefaultInstance();
+    }
+
+    @java.lang.Override
+    public hse.kpo.grpc.ReportResponse build() {
+      hse.kpo.grpc.ReportResponse result = buildPartial();
+      if (!result.isInitialized()) {
+        throw newUninitializedMessageException(result);
+      }
+      return result;
+    }
+
+    @java.lang.Override
+    public hse.kpo.grpc.ReportResponse buildPartial() {
+      hse.kpo.grpc.ReportResponse result = new hse.kpo.grpc.ReportResponse(this);
+      if (bitField0_ != 0) { buildPartial0(result); }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartial0(hse.kpo.grpc.ReportResponse result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.title_ = title_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.content_ = content_;
+      }
+    }
+
+    @java.lang.Override
+    public Builder mergeFrom(com.google.protobuf.Message other) {
+      if (other instanceof hse.kpo.grpc.ReportResponse) {
+        return mergeFrom((hse.kpo.grpc.ReportResponse)other);
+      } else {
+        super.mergeFrom(other);
+        return this;
+      }
+    }
+
+    public Builder mergeFrom(hse.kpo.grpc.ReportResponse other) {
+      if (other == hse.kpo.grpc.ReportResponse.getDefaultInstance()) return this;
+      if (!other.getTitle().isEmpty()) {
+        title_ = other.title_;
+        bitField0_ |= 0x00000001;
+        onChanged();
+      }
+      if (!other.getContent().isEmpty()) {
+        content_ = other.content_;
+        bitField0_ |= 0x00000002;
+        onChanged();
+      }
+      this.mergeUnknownFields(other.getUnknownFields());
+      onChanged();
+      return this;
+    }
+
+    @java.lang.Override
+    public final boolean isInitialized() {
+      return true;
+    }
+
+    @java.lang.Override
+    public Builder mergeFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              title_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000001;
+              break;
+            } // case 10
+            case 18: {
+              content_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000002;
+              break;
+            } // case 18
+            default: {
+              if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                done = true; // was an endgroup tag
+              }
+              break;
+            } // default:
+          } // switch (tag)
+        } // while (!done)
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.unwrapIOException();
+      } finally {
+        onChanged();
+      } // finally
+      return this;
+    }
+    private int bitField0_;
+
+    private java.lang.Object title_ = "";
+    /**
+     * <code>string title = 1;</code>
+     * @return The title.
+     */
+    public java.lang.String getTitle() {
+      java.lang.Object ref = title_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        title_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string title = 1;</code>
+     * @return The bytes for title.
+     */
+    public com.google.protobuf.ByteString
+        getTitleBytes() {
+      java.lang.Object ref = title_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        title_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string title = 1;</code>
+     * @param value The title to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTitle(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      title_ = value;
+      bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string title = 1;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearTitle() {
+      title_ = getDefaultInstance().getTitle();
+      bitField0_ = (bitField0_ & ~0x00000001);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string title = 1;</code>
+     * @param value The bytes for title to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTitleBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      title_ = value;
+      bitField0_ |= 0x00000001;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object content_ = "";
+    /**
+     * <code>string content = 2;</code>
+     * @return The content.
+     */
+    public java.lang.String getContent() {
+      java.lang.Object ref = content_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        content_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string content = 2;</code>
+     * @return The bytes for content.
+     */
+    public com.google.protobuf.ByteString
+        getContentBytes() {
+      java.lang.Object ref = content_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        content_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string content = 2;</code>
+     * @param value The content to set.
+     * @return This builder for chaining.
+     */
+    public Builder setContent(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      content_ = value;
+      bitField0_ |= 0x00000002;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string content = 2;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearContent() {
+      content_ = getDefaultInstance().getContent();
+      bitField0_ = (bitField0_ & ~0x00000002);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string content = 2;</code>
+     * @param value The bytes for content to set.
+     * @return This builder for chaining.
+     */
+    public Builder setContentBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      content_ = value;
+      bitField0_ |= 0x00000002;
+      onChanged();
+      return this;
+    }
+    @java.lang.Override
+    public final Builder setUnknownFields(
+        final com.google.protobuf.UnknownFieldSet unknownFields) {
+      return super.setUnknownFields(unknownFields);
+    }
+
+    @java.lang.Override
+    public final Builder mergeUnknownFields(
+        final com.google.protobuf.UnknownFieldSet unknownFields) {
+      return super.mergeUnknownFields(unknownFields);
+    }
+
+
+    // @@protoc_insertion_point(builder_scope:ReportResponse)
+  }
+
+  // @@protoc_insertion_point(class_scope:ReportResponse)
+  private static final hse.kpo.grpc.ReportResponse DEFAULT_INSTANCE;
+  static {
+    DEFAULT_INSTANCE = new hse.kpo.grpc.ReportResponse();
+  }
+
+  public static hse.kpo.grpc.ReportResponse getDefaultInstance() {
+    return DEFAULT_INSTANCE;
+  }
+
+  private static final com.google.protobuf.Parser<ReportResponse>
+      PARSER = new com.google.protobuf.AbstractParser<ReportResponse>() {
+    @java.lang.Override
+    public ReportResponse parsePartialFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      Builder builder = newBuilder();
+      try {
+        builder.mergeFrom(input, extensionRegistry);
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(builder.buildPartial());
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(builder.buildPartial());
+      }
+      return builder.buildPartial();
+    }
+  };
+
+  public static com.google.protobuf.Parser<ReportResponse> parser() {
+    return PARSER;
+  }
+
+  @java.lang.Override
+  public com.google.protobuf.Parser<ReportResponse> getParserForType() {
+    return PARSER;
+  }
+
+  @java.lang.Override
+  public hse.kpo.grpc.ReportResponse getDefaultInstanceForType() {
+    return DEFAULT_INSTANCE;
+  }
+
+}
+
+package hse.kpo;
+
+import hse.kpo.domains.*;
+import hse.kpo.domains.cars.Car;
+import hse.kpo.enums.ProductionTypes;
+import hse.kpo.facade.Hse;
+import hse.kpo.factories.cars.HandCarFactory;
+import hse.kpo.factories.cars.PedalCarFactory;
+import hse.kpo.observers.SalesObserver;
+import hse.kpo.services.CustomerService;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.annotation.DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD;
+
+@SpringBootTest
+@DirtiesContext(classMode = BEFORE_EACH_TEST_METHOD)
+class HseTest {
+
+    @Autowired
+    private Hse hse;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private PedalCarFactory pedalCarFactory;
+
+    @Autowired
+    private HandCarFactory handCarFactory;
+
+    @Mock
+    private SalesObserver salesObserver;
+
+    @Test
+    @DisplayName("Клиент с handPower=6 должен получить автомобиль с ручным приводом")
+    void customerWithEnoughHandPower_ShouldGetHandCar() {
+        // Arrange
+        hse.addCustomer("Test", 3, 6, 100);
+        hse.addHandCar();
+
+        // Act
+        hse.sell();
+
+        // Assert
+        Customer customer = customerService.getCustomers().get(0);
+        Car receivedCar = customer.getCars().getFirst();
+
+        assertAll(
+                () -> assertNotNull(receivedCar, "Автомобиль не был назначен")
+        );
+    }
+
+    @Test
+    @DisplayName("Клиент с handPower=4 не должен получить автомобиль с ручным приводом")
+    void customerWithLowHandPower_ShouldNotGetHandCar() {
+        // Arrange
+        hse.addCustomer("Test", 3, 4, 100);
+        hse.addHandCar();
+
+        // Act
+        hse.sell();
+
+        // Assert
+        Customer customer = customerService.getCustomers().get(0);
+
+        assertAll(
+                () -> assertNull(customer.getCars(),
+                        "Клиент не должен был получить автомобиль. Проверьте совместимость двигателя")
+        );
+    }
+
+    @Test
+    @DisplayName("При продаже двух автомобилей разным клиентам оба должны получить машины")
+    void multipleCustomers_ShouldGetDifferentCars() {
+        // Arrange
+        hse.addCustomer("First", 3, 6, 100);
+        hse.addCustomer("Second", 5, 7, 110);
+        hse.addHandCar();
+        hse.addHandCar();
+
+        // Act
+        hse.sell();
+
+        // Assert
+        List<Customer> customers = customerService.getCustomers();
+        assertAll(
+                () -> assertNotNull(customers.get(0).getCars().getFirst(),
+                        "Первый клиент должен получить автомобиль"),
+                () -> assertNotNull(customers.get(1).getCars().getFirst(),
+                        "Второй клиент должен получить автомобиль"),
+                () -> assertNotEquals(customers.get(0).getCars().getFirst().getVin(),
+                        customers.get(1).getCars().getFirst().getVin(),
+                        "VIN автомобилей должны отличаться")
+        );
+    }
+
+    @Test
+    @DisplayName("Отчет должен содержать информацию о продажах")
+    void report_ShouldContainSalesInformation() {
+        // Arrange
+        // Добавляем клиента с параметрами, подходящими для педального автомобиля
+        hse.addCustomer("TestClient", 7, 5, 100); // legPower=7 > 5 (требование PedalEngine)
+
+        // Добавляем автомобиль с педальным двигателем (размер педалей 6)
+        hse.addPedalCar(6);
+
+        // Act
+        hse.sell(); // Выполняем продажу
+        String report = hse.generateReport(); // Генерируем отчет
+
+        // Assert
+        assertAll(() -> assertTrue(report.contains("TestClient"),
+                "В отчете должно быть имя клиента"),
+                () -> assertTrue(report.contains(ProductionTypes.CAR.toString()),
+                        "В отчете должен быть указан тип продукции 'CAR'"),
+                () -> assertTrue(report.matches("(?s).*VIN-\\d+.*"),
+                        "Отчет должен содержать VIN автомобиля в формате 'VIN-число'"));
+    }
+}package hse.kpo;
+
+import hse.kpo.enums.ReportFormat;
+import hse.kpo.facade.Hse;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+@SpringBootTest
+class KpoApplicationTests {
+
+	@Autowired
+	private Hse hse;
+
+	@Test
+	@DisplayName("Тест загрузки контекста")
+	void hseCarServiceTest() throws IOException {
+
+		hse.addCustomer("Ivan1",6,4, 150);
+		hse.addCustomer("Maksim", 4, 6, 80);
+		hse.addCustomer("Petya", 6, 6, 20);
+		hse.addCustomer("Nikita", 4, 4, 300);
+
+		hse.addPedalCar(6);
+		hse.addPedalCar(6);
+		hse.addPedalCar(6);
+		hse.addPedalCatamaran(6);
+		hse.addPedalCatamaran(6);
+
+		hse.addWheelCatamaran();
+
+		hse.addHandCar();
+		hse.addHandCar();
+		hse.addHandCatamaran();
+		hse.addHandCatamaran();
+
+		hse.addLevitationCar();
+		hse.addLevitationCar();
+		hse.addLevitationCatamaran();
+		hse.addLevitationCatamaran();
+
+		hse.sell();
+
+		// Экспорт в консоль в формате Markdown
+		hse.exportReport(ReportFormat.MARKDOWN, new PrintWriter(System.out));
+		// Экспорт в файл в формате MARKDOWN
+		try (FileWriter fileWriter = new FileWriter("report.MD")) {
+			hse.exportReport(ReportFormat.MARKDOWN, fileWriter);
+		}
+
+
+		// Экспорт в файл в формате JSON
+		try (FileWriter fileWriter = new FileWriter("report.json")) {
+			hse.exportReport(ReportFormat.JSON, fileWriter);
+		}
+
+		// Экспорт в файл в формате csv
+		try (FileWriter fileWriter = new FileWriter("transports.csv")) {
+			hse.exportTransport(ReportFormat.CSV, fileWriter);
+		}
+
+		// Экспорт в файл в формате XML
+		try (FileWriter fileWriter = new FileWriter("transports.xml")) {
+			hse.exportTransport(ReportFormat.XML, fileWriter);
+		}
+
+		Assertions.assertDoesNotThrow(() -> hse.exportReport(ReportFormat.MARKDOWN, new PrintWriter(System.out)));
+	}
+
+}
+package hse.kpo.controllers.cars;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import hse.kpo.dto.request.CarRequest;
+import hse.kpo.dto.response.CarResponse;
+import hse.kpo.enums.EngineTypes;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+class CarControllerTest {
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Test
+    @DisplayName("Создание педального автомобиля с валидными параметрами")
+    void createPedalCar_ValidData_Returns201() throws Exception {
+        CarRequest request = CarRequest.builder().engineType("PEDAL").pedalSize(10).build();
+
+        String responseJson = mockMvc.perform(post("/api/cars")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+
+        CarResponse response = objectMapper.readValue(responseJson, CarResponse.class);
+        assertAll(
+                () -> assertNotNull(response.vin(), "VIN должен быть присвоен"),
+                () -> assertEquals(EngineTypes.PEDAL.name(), response.engineType(), "Тип двигателя должен быть PEDAL")
+        );
+    }
+
+    @Test
+    @DisplayName("Создание ручного автомобиля с валидными параметрами")
+    void createHandCar_ValidData_Returns201() throws Exception {
+        CarRequest request = CarRequest.builder().engineType("HAND").build();
+
+        String responseJson = mockMvc.perform(post("/api/cars")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+
+        CarResponse response = objectMapper.readValue(responseJson, CarResponse.class);
+        assertAll(
+                () -> assertNotNull(response.vin(), "VIN должен быть присвоен"),
+                () -> assertEquals(EngineTypes.HAND.name(), response.engineType(), "Тип двигателя должен быть HAND")
+        );
+    }
+
+    @Test
+    @DisplayName("Создание летающего автомобиля с валидными параметрами")
+    void createLevitationCar_ValidData_Returns201() throws Exception {
+        CarRequest request = CarRequest.builder().engineType("LEVITATION").build();
+
+        String responseJson = mockMvc.perform(post("/api/cars")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+
+        CarResponse response = objectMapper.readValue(responseJson, CarResponse.class);
+        assertAll(
+                () -> assertNotNull(response.vin(), "VIN должен быть присвоен"),
+                () -> assertEquals(EngineTypes.LEVITATION.name(), response.engineType(),
+                        "Тип двигателя должен быть LEVITATION")
+        );
+    }
+}package hse.kpo.dto.response;
+
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class CustomerResponse {
+    private String name;
+    private int legPower;
+    private int handPower;
+    private int iq;
+    private List<Integer> carVin;
+    private Integer catamaranVin;
+}
+package hse.kpo.dto.response;
+
+public record CarResponse(
+        Integer vin,
+        String engineType,
+        Integer pedalSize
+) {}
+package hse.kpo.dto.request;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
+
+@Builder
+public record CatamaranRequest(
+        @Schema(description = "Тип двигателя (PEDAL, HAND, LEVITATION)", example = "PEDAL")
+        @Pattern(regexp = "PEDAL|HAND|LEVITATION", message = "Допустимые значения: PEDAL, HAND, LEVITATION")
+        String engineType,
+
+        @Schema(description = "Размер педалей (1-15)", example = "6")
+        @Min(value = 1, message = "Минимальный размер педалей - 1")
+        @Max(value = 15, message = "Максимальный размер педалей - 15")
+        @Nullable
+        Integer pedalSize
+) {}
+package hse.kpo.dto.request;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
+
+@Builder
+public record CarRequest(
+        @Schema(description = "Тип двигателя (PEDAL, HAND, LEVITATION)", example = "PEDAL")
+        @Pattern(regexp = "PEDAL|HAND|LEVITATION", message = "Допустимые значения: PEDAL, HAND, LEVITATION")
+        String engineType,
+
+        @Schema(description = "Размер педалей (1-15)", example = "6")
+        @Min(value = 1, message = "Минимальный размер педалей - 1")
+        @Max(value = 15, message = "Максимальный размер педалей - 15")
+        @Nullable
+        Integer pedalSize
+) {}
+package hse.kpo.dto.request;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class CustomerRequest {
+    @NotBlank(message = "Имя не может быть пустым")
+    private String name;
+
+    @Min(value = 1, message = "Сила ног должна быть >= 1")
+    private int legPower;
+
+    @Min(value = 1, message = "Сила рук должна быть >= 1")
+    private int handPower;
+
+    @Min(value = 1, message = "IQ должен быть >= 1")
+    private int iq;
+}
+package hse.kpo.domains.catamarans;
+
+import hse.kpo.domains.AbstractEngine;
+import hse.kpo.domains.Customer;
+import hse.kpo.domains.HandEngine;
+import hse.kpo.domains.LevitationEngine;
+import hse.kpo.domains.PedalEngine;
+import hse.kpo.enums.EngineTypes;
+import hse.kpo.enums.ProductionTypes;
+import hse.kpo.interfaces.Engine;
+import hse.kpo.interfaces.Transport;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * Класс хранящий информацию о катамаране.
+ */
+@Getter
+@Setter
+@Entity
+@Table(name = "catamarans")
+@ToString
+@NoArgsConstructor
+public class Catamaran implements Transport {
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "engine_id")
+    private AbstractEngine engine;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int vin;
+
+    public Catamaran(int vin, AbstractEngine engine) {
+        this.vin = vin;
+        this.engine = engine;
+    }
+
+    public Catamaran(AbstractEngine engine) {
+        this.engine = engine;
+    }
+
+    public String getEngineType() {
+        if (engine instanceof HandEngine) {
+            return EngineTypes.HAND.name();
+        }
+        if (engine instanceof PedalEngine) {
+            return EngineTypes.PEDAL.name();
+        }
+        if (engine instanceof LevitationEngine) {
+            return EngineTypes.LEVITATION.name();
+        };
+        throw new RuntimeException("Where is engine???");
+    }
+
+    public boolean isCompatible(Customer customer) {
+        return this.engine.isCompatible(customer, ProductionTypes.CATAMARAN);
+    }
+
+    @Override
+    public String getTransportType() {
+        return ProductionTypes.CATAMARAN.name();
+    }
+}
+package hse.kpo.domains;
+
+import hse.kpo.enums.ProductionTypes;
+import hse.kpo.interfaces.Engine;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+/**
+ * Класс, реализующий {@link Engine} ручного типа.
+ */
+@NoArgsConstructor
+@ToString
+@Entity
+@DiscriminatorValue("HAND")
+public class HandEngine extends AbstractEngine {
+    @Override
+    public boolean isCompatible(Customer customer, ProductionTypes type) {
+        return switch (type) {
+            case ProductionTypes.CAR -> customer.getHandPower() > 5;
+            case ProductionTypes.CATAMARAN -> customer.getHandPower() > 2;
+            case null, default -> throw new RuntimeException("This type of production doesn't exist");
+        };
+    }
+}
+package hse.kpo.domains;
+
+import hse.kpo.enums.ProductionTypes;
+import hse.kpo.interfaces.Engine;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+/**
+ * Класс, реализующий {@link AbstractEngine} педального типа.
+ */
+@ToString
+@Getter
+@Entity
+@DiscriminatorValue("PEDAL")
+@NoArgsConstructor
+public class PedalEngine extends AbstractEngine {
+    private int size;
+
+    @Override
+    public boolean isCompatible(Customer customer, ProductionTypes type) {
+        return switch (type) {
+            case ProductionTypes.CAR -> customer.getLegPower() > 5;
+            case ProductionTypes.CATAMARAN -> customer.getLegPower() > 2;
+            case null, default -> throw new RuntimeException("This type of production doesn't exist");
+        };
+    }
+
+    public PedalEngine(int size) {
+        this.size = size;
+    }
+}
+package hse.kpo.domains;
+
+import java.util.ArrayList;
+import java.util.List;
+import hse.kpo.domains.cars.Car;
+import hse.kpo.domains.catamarans.Catamaran;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * Класс, описывающий покупателя.
+ */
+@Getter
+@Setter
+@Entity
+@Table(name = "customers")
+@NoArgsConstructor
+public class Customer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, unique = true)
+    private String name;
+
+    @Column(nullable = false)
+    private int legPower;
+
+    @Column(nullable = false)
+    private int handPower;
+
+    @Column(nullable = false)
+    private int iq;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Car> cars;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "catamaran_id")
+    private Catamaran catamaran;
+
+    public Customer(String name, int legPower, int handPower, int iq) {
+        this.name = name;
+        this.legPower = legPower;
+        this.handPower = handPower;
+        this.iq = iq;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", legPower=" + legPower +
+            ", handPower=" + handPower +
+            ", iq=" + iq +
+            ", cars=" + cars.stream().map(Car::getVin).toList().toString() +
+            ", catamaran=" + catamaran +
+            '}';
+    }
+}
+package hse.kpo.domains;
+
+import hse.kpo.enums.ProductionTypes;
+import hse.kpo.interfaces.Engine;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+/**
+ * Класс, реализующий {@link AbstractEngine} ручного типа.
+ */
+@NoArgsConstructor
+@ToString
+@Entity
+@DiscriminatorValue("LEVITATION")
+public class LevitationEngine extends AbstractEngine {
+    @Override
+    public boolean isCompatible(Customer customer, ProductionTypes type) {
+        return switch (type) {
+            case ProductionTypes.CAR -> customer.getIq() > 300;
+            case ProductionTypes.CATAMARAN -> customer.getIq() > 150;
+            case null, default -> throw new RuntimeException("This type of production doesn't exist");
+        };
+    }
+}
+package hse.kpo.domains;
+
+import hse.kpo.domains.cars.Car;
+import hse.kpo.domains.catamarans.Catamaran;
+import hse.kpo.enums.ProductionTypes;
+
+public class CatamaranWithWheels extends Car {
+    private final Catamaran catamaran;
+
+    public CatamaranWithWheels(Catamaran catamaran) {
+        super(catamaran.getVin() + 10000, (AbstractEngine) catamaran.getEngine());
+        this.catamaran = catamaran;
+    }
+
+    @Override
+    public boolean isCompatible(Customer customer) {
+        // Используем проверку совместимости для автомобилей
+        return this.catamaran.getEngine().isCompatible(customer, ProductionTypes.CATAMARAN);
+    }
+
+    @Override
+    public String toString() {
+        return "Адаптированный катамаран VIN-" + getVin();
+    }
+}package hse.kpo.domains.cars;
+
+import hse.kpo.domains.AbstractEngine;
+import hse.kpo.domains.Customer;
+import hse.kpo.domains.HandEngine;
+import hse.kpo.domains.LevitationEngine;
+import hse.kpo.domains.PedalEngine;
+import hse.kpo.enums.EngineTypes;
+import hse.kpo.enums.ProductionTypes;
+import hse.kpo.interfaces.Engine;
+import hse.kpo.interfaces.Transport;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+/**
+ * Класс хранящий информацию о машине.
+ */
+@Getter
+@Setter
+@Entity
+@Table(name = "cars")
+@ToString
+@NoArgsConstructor
+public class Car implements Transport {
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "engine_id")
+    private AbstractEngine engine;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int vin;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer; // Ссылка на владельца
+
+    public Car(int vin, AbstractEngine engine) {
+        this.vin = vin;
+        this.engine = engine;
+    }
+
+    public Car(AbstractEngine engine) {
+        this.engine = engine;
+    }
+
+    public String getEngineType() {
+        if (engine instanceof HandEngine) {
+            return EngineTypes.HAND.name();
+        }
+        if (engine instanceof PedalEngine) {
+            return EngineTypes.PEDAL.name();
+        }
+        if (engine instanceof LevitationEngine) {
+            return EngineTypes.LEVITATION.name();
+        };
+        throw new RuntimeException("Where is engine???");
+    }
+
+    public boolean isCompatible(Customer customer) {
+        return this.engine.isCompatible(customer, ProductionTypes.CAR);
+    }
+
+    @Override
+    public String getTransportType() {
+        return ProductionTypes.CAR.name();
+    }
+}
+package hse.kpo.domains;
+
+/**
+ * Отчет о работе системы.
+ *
+ * @param title название отчета
+ * @param content наполнение отчета
+ */
+public record Report(String title, String content) {
+    @Override
+    public String toString() {
+        return String.format("%s%n%n%s", title, content);
+    }
+}
+package hse.kpo.domains;
+
+import hse.kpo.enums.ProductionTypes;
+import hse.kpo.interfaces.Engine;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "engine_type")
+@Table(name = "engines")
+public class AbstractEngine implements Engine {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "engine_type", insertable = false, updatable = false)
+    private String type;
+
+    @Override
+    public boolean isCompatible(Customer customer, ProductionTypes type) {
+        return false;
+    }
+}
+package hse.kpo.builders;
+
+import hse.kpo.domains.Customer;
+import hse.kpo.domains.Report;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+/**
+ * Класс для составления отчета о работе системы.
+ */
+public class ReportBuilder {
+
+    /**
+     * Пример форматированной даты - 2025-02-10.
+     */
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    private StringBuilder content = new StringBuilder();
+
+    /**
+     * Метод для добавления информации о покупателях в отчет.
+     *
+     * @param customers покупатели
+     * @return {@link ReportBuilder} для дальнейшего составления отчета
+     */
+    public ReportBuilder addCustomers(List<Customer> customers) {
+        content.append("Покупатели:");
+        customers.forEach(customer -> content.append(String.format(" - %s", customer)));
+        content.append("\n");
+
+        return this;
+    }
+
+    /**
+     * Метод для добавления информации о действиях в системе в отчет.
+     *
+     * @param operation операция в системе
+     * @return {@link ReportBuilder} для дальнейшего составления отчета
+     */
+    public ReportBuilder addOperation(String operation) {
+        content.append(String.format("Операция: %s", operation));
+        content.append(System.lineSeparator());
+        return this;
+    }
+
+    /**
+     * Метод получения итогового отчета о системе.
+     *
+     * @return {@link Report} отчет о системе
+     */
+    public Report build() {
+        return new Report(String.format("Отчет за %s", ZonedDateTime.now().format(DATE_TIME_FORMATTER)),
+                content.toString());
+    }
+}
+package hse.kpo.grpc;
+
+import hse.kpo.facade.Hse;
+import io.grpc.stub.StreamObserver;
+import lombok.RequiredArgsConstructor;
+import net.devh.boot.grpc.server.service.GrpcService;
+
+@RequiredArgsConstructor
+@GrpcService
+public class ReportGrpcController extends ReportServiceGrpc.ReportServiceImplBase {
+
+    private final Hse hse;
+
+    @Override
+    public void getLatestReport(ReportRequest request,
+                                StreamObserver<ReportResponse> responseObserver) {
+        String report = hse.generateReport();
+        ReportResponse response = ReportResponse.newBuilder()
+            .setTitle("Sales Report")
+            .setContent(report)
+            .build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+}package hse.kpo.config.swagger;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SwaggerConfig {
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("HSE Car Service API")
+                        .version("1.0")
+                        .description("API для управления автомобилями"));
+    }
+}
+package hse.kpo.enums;
+
+/**
+ * Типы продуктов.
+ */
+public enum ProductionTypes {
+    CAR,
+    CATAMARAN
+}
+package hse.kpo.enums;
+
+import java.util.Arrays;
+import java.util.Optional;
+
+public enum EngineTypes {
+    HAND ("HAND"),
+    PEDAL ("PEDAL"),
+    LEVITATION ("LEVITATION");
+
+    private final String name;
+
+    EngineTypes(String name) {
+        this.name = name;
+    }
+
+    public static Optional<EngineTypes> find(String name) {
+        return Arrays.stream(values()).filter(type -> type.name.equals(name)).findFirst();
+    }
+}
+package hse.kpo.enums;
+
+public enum ReportFormat {
+    JSON,
+    MARKDOWN,
+    CSV,
+    XML
+}
+package hse.kpo.facade;
+
+import hse.kpo.domains.catamarans.Catamaran;
+import hse.kpo.domains.CatamaranWithWheels;
+import hse.kpo.domains.Customer;
+import hse.kpo.domains.Report;
+import hse.kpo.domains.cars.Car;
+import hse.kpo.dto.request.CustomerRequest;
+import hse.kpo.enums.ReportFormat;
+import hse.kpo.export.transport.TransportExporter;
+import hse.kpo.factories.ReportExporterFactory;
+import hse.kpo.factories.TransportExporterFactory;
+import hse.kpo.factories.cars.*;
+import hse.kpo.factories.catamarans.*;
+import hse.kpo.interfaces.Transport;
+import hse.kpo.params.EmptyEngineParams;
+import hse.kpo.params.PedalEngineParams;
+import hse.kpo.export.reports.ReportExporter;
+import hse.kpo.services.CustomerService;
+import hse.kpo.services.cars.HseCarService;
+import hse.kpo.services.catamarans.HseCatamaranService;
+import hse.kpo.observers.SalesObserver;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.Writer;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Stream;
+
+/**
+ * Фасад для работы с системой продажи транспортных средств.
+ * Предоставляет упрощенный интерфейс для управления клиентами,
+ * транспортом и процессами продаж.
+ */
+@Component
+@RequiredArgsConstructor
+public class Hse {
+    private final CustomerService customerService;
+    private final HseCarService carService;
+    private final HseCatamaranService catamaranService;
+    private final SalesObserver salesObserver;
+    private final PedalCarFactory pedalCarFactory;
+    private final HandCarFactory handCarFactory;
+    private final LevitationCarFactory levitationCarFactory;
+    private final PedalCatamaranFactory pedalCatamaranFactory;
+    private final HandCatamaranFactory handCatamaranFactory;
+    private final LevitationCatamaranFactory levitationCatamaranFactory;
+    private final ReportExporterFactory reportExporterFactory;
+    private final TransportExporterFactory transportExporterFactory;
+
+    @PostConstruct
+    private void init() {
+        carService.addObserver(salesObserver);
+    }
+
+    /**
+     * Добавляет нового клиента в систему.
+     *
+     * @param name имя клиента
+     * @param legPower сила ног (1-10)
+     * @param handPower сила рук (1-10)
+     * @param iq уровень интеллекта (1-200)
+     * @example
+     * hse.addCustomer("Анна", 7, 5, 120);
+     */
+    public void addCustomer(String name, int legPower, int handPower, int iq) {
+        Customer customer = new Customer(name, legPower, handPower, iq);
+        customerService.addCustomer(customer);
+    }
+
+    public Customer updateCustomer(CustomerRequest request) {
+        return customerService.updateCustomer(request);
+    }
+
+    public boolean deleteCustomer(String name) {
+        return customerService.deleteCustomer(name);
+    }
+
+    /**
+     * Добавляет педальный автомобиль в систему.
+     *
+     * @param pedalSize размер педалей (1-15)
+     */
+    public Car addPedalCar(int pedalSize) {
+        return carService.addCar(pedalCarFactory, new PedalEngineParams(pedalSize));
+    }
+
+    /**
+     * Добавляет автомобиль с ручным приводом.
+     */
+    public Car addHandCar() {
+        return carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
+    }
+
+    /**
+     * Добавляет левитирующий автомобиль.
+     */
+    public Car addLevitationCar() {
+        return carService.addCar(levitationCarFactory, EmptyEngineParams.DEFAULT);
+    }
+
+    public void addWheelCatamaran() {
+        carService.addExistingCar(new CatamaranWithWheels(createCatamaran()));
+    }
+
+    private Catamaran createCatamaran() {
+        var engineCount = new Random().nextInt(3);
+
+        return switch (engineCount) {
+            case 0 -> catamaranService.addCatamaran(handCatamaranFactory, EmptyEngineParams.DEFAULT);
+            case 1 -> catamaranService.addCatamaran(pedalCatamaranFactory, new PedalEngineParams(6));
+            case 2 -> catamaranService.addCatamaran(levitationCatamaranFactory, EmptyEngineParams.DEFAULT);
+            default -> throw new RuntimeException("nonono");
+        };
+    }
+
+    /**
+     * Добавляет педальный катамаран.
+     *
+     * @param pedalSize размер педалей (1-15)
+     */
+    public Catamaran addPedalCatamaran(int pedalSize) {
+        return catamaranService.addCatamaran(pedalCatamaranFactory, new PedalEngineParams(pedalSize));
+    }
+
+    /**
+     * Добавляет катамаран с ручным приводом.
+     */
+    public Catamaran addHandCatamaran() {
+        return catamaranService.addCatamaran(handCatamaranFactory, EmptyEngineParams.DEFAULT);
+    }
+
+    /**
+     * Добавляет левитирующий катамаран.
+     */
+    public Catamaran addLevitationCatamaran() {
+        return catamaranService.addCatamaran(levitationCatamaranFactory, EmptyEngineParams.DEFAULT);
+    }
+
+    /**
+     * Запускает процесс продажи доступного транспорта.
+     * Автомобили продаются перед катамаранами.
+     */
+    public void sell() {
+        carService.sellCars();
+        catamaranService.sellCatamarans();
+    }
+
+    public void exportReport(ReportFormat format, Writer writer) {
+        Report report = salesObserver.buildReport();
+        ReportExporter exporter = reportExporterFactory.create(format);
+
+        try {
+            exporter.export(report, writer);
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void exportTransport(ReportFormat format, Writer writer) {
+        List<Transport> transports = Stream.concat(
+                carService.getCars().stream(),
+                catamaranService.getCatamarans().stream())
+                .toList();
+        TransportExporter exporter = transportExporterFactory.create(format);
+
+        try {
+            exporter.export(transports, writer);
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
+    }
+
+    /**
+     * Генерирует отчет о продажах.
+     *
+     * @return форматированная строка с отчетом
+     * @example
+     * System.out.println(hse.generateReport());
+     */
+    public String generateReport() {
+        return salesObserver.buildReport().toString();
+    }
+}package hse.kpo.repositories;
+
+import java.util.Optional;
+import hse.kpo.domains.Customer;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+    void deleteByName(String name);
+    Optional<Customer> findByName(String name);
+}
+package hse.kpo.repositories;
+
+import java.util.List;
+import hse.kpo.domains.cars.Car;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+public interface CarRepository extends JpaRepository<Car, Integer> {
+    @Query("""
+        SELECT c 
+        FROM Car c 
+        JOIN c.engine e 
+        WHERE e.type = :engineType 
+        AND c.vin > :minVin
+    """)
+    List<Car> findCarsByEngineTypeAndVinGreaterThan(
+            @Param("engineType") String engineType,
+            @Param("minVin") Integer minVin
+    );
+}package hse.kpo.repositories;
+
+import java.util.List;
+import java.util.Locale;
+import hse.kpo.domains.cars.Car;
+import hse.kpo.domains.catamarans.Catamaran;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+public interface CatamaranRepository extends JpaRepository<Catamaran, Integer> {
+    @Query("""
+        SELECT c 
+        FROM Catamaran c 
+        JOIN c.engine e 
+        WHERE e.type = :engineType 
+        AND c.vin > :minVin
+    """)
+    List<Catamaran> findCatamaransByEngineTypeAndVinGreaterThan(
+            @Param("engineType") String engineType,
+            @Param("minVin") Integer minVin
+    );
+}package hse.kpo.factories.catamarans;
+
+import hse.kpo.domains.catamarans.Catamaran;
+import hse.kpo.domains.LevitationEngine;
+import hse.kpo.interfaces.catamarans.CatamaranFactory;
+import hse.kpo.params.EmptyEngineParams;
+import org.springframework.stereotype.Component;
+
+/**
+ * Фабрика для создания катамаранов с {@link LevitationEngine} типом двигателя.
+ */
+@Component
+public class LevitationCatamaranFactory implements CatamaranFactory<EmptyEngineParams> {
+    @Override
+    public Catamaran create(EmptyEngineParams catamaranParams) {
+        var engine = new LevitationEngine();
+
+        return new Catamaran(engine);
+    }
+}
+package hse.kpo.factories.catamarans;
+
+import hse.kpo.domains.catamarans.Catamaran;
+import hse.kpo.domains.HandEngine;
+import hse.kpo.interfaces.catamarans.CatamaranFactory;
+import hse.kpo.params.EmptyEngineParams;
+import org.springframework.stereotype.Component;
+
+/**
+ * Фабрика для создания катамаранов с {@link HandEngine} типом двигателя.
+ */
+@Component
+public class HandCatamaranFactory implements CatamaranFactory<EmptyEngineParams> {
+    @Override
+    public Catamaran create(EmptyEngineParams catamaranParams) {
+        var engine = new HandEngine();
+
+        return new Catamaran(engine);
+    }
+}
+package hse.kpo.factories.catamarans;
+
+
+import hse.kpo.domains.catamarans.Catamaran;
+import hse.kpo.domains.PedalEngine;
+import hse.kpo.interfaces.catamarans.CatamaranFactory;
+import hse.kpo.params.PedalEngineParams;
+import org.springframework.stereotype.Component;
+
+/**
+ * Фабрика для создания катамаранов с {@link PedalEngine} типом двигателя.
+ */
+@Component
+public class PedalCatamaranFactory implements CatamaranFactory<PedalEngineParams> {
+    @Override
+    public Catamaran create(PedalEngineParams catamaranParams) {
+        var engine = new PedalEngine(catamaranParams.pedalSize());
+
+        return new Catamaran(engine);
+    }
+}
+package hse.kpo.factories;
+
+import hse.kpo.enums.ReportFormat;
+import hse.kpo.export.reports.ReportExporter;
+import hse.kpo.export.reports.impl.JsonReportExporter;
+import hse.kpo.export.reports.impl.MarkdownReportExporter;
+import hse.kpo.export.transport.TransportExporter;
+import hse.kpo.export.transport.impl.CsvTransportExporter;
+import hse.kpo.export.transport.impl.XmlTransportExporter;
+import org.springframework.stereotype.Component;
+
+@Component
+public class TransportExporterFactory {
+    public TransportExporter create(ReportFormat format) {
+        return switch (format) {
+            case XML -> new XmlTransportExporter();
+            case CSV -> new CsvTransportExporter();
+            default -> throw new IllegalArgumentException("Unsupported format: " + format);
+        };
+    }
+}
+package hse.kpo.factories;
+
+import hse.kpo.enums.ReportFormat;
+import hse.kpo.export.reports.ReportExporter;
+import hse.kpo.export.reports.impl.JsonReportExporter;
+import hse.kpo.export.reports.impl.MarkdownReportExporter;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ReportExporterFactory {
+    public ReportExporter create(ReportFormat format) {
+        return switch (format) {
+            case JSON -> new JsonReportExporter();
+            case MARKDOWN -> new MarkdownReportExporter();
+            default -> throw new IllegalArgumentException("Unsupported format: " + format);
+        };
+    }
+}
+package hse.kpo.factories.cars;
+
+
+import hse.kpo.domains.cars.Car;
+import hse.kpo.domains.PedalEngine;
+import hse.kpo.interfaces.cars.CarFactory;
+import hse.kpo.params.PedalEngineParams;
+import hse.kpo.repositories.CarRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+/**
+ * Фабрика для создания машин с {@link PedalEngine} типом двигателя.
+ */
+@Component
+public class PedalCarFactory implements CarFactory<PedalEngineParams> {
+    @Override
+    public Car create(PedalEngineParams carParams) {
+        var engine = new PedalEngine(carParams.pedalSize());
+
+        return new Car(engine);
+    }
+}
+package hse.kpo.factories.cars;
+
+import hse.kpo.domains.cars.Car;
+import hse.kpo.domains.LevitationEngine;
+import hse.kpo.interfaces.cars.CarFactory;
+import hse.kpo.params.EmptyEngineParams;
+import hse.kpo.repositories.CarRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+/**
+ * Фабрика для создания машин с {@link LevitationEngine} типом двигателя.
+ */
+@Component
+public class LevitationCarFactory implements CarFactory<EmptyEngineParams> {
+    @Override
+    public Car create(EmptyEngineParams carParams) {
+        var engine = new LevitationEngine();
+
+        return new Car(engine);
+    }
+}
+package hse.kpo.factories.cars;
+
+import hse.kpo.domains.cars.Car;
+import hse.kpo.domains.HandEngine;
+import hse.kpo.interfaces.cars.CarFactory;
+import hse.kpo.params.EmptyEngineParams;
+import hse.kpo.repositories.CarRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+/**
+ * Фабрика для создания машин с {@link HandEngine} типом двигателя.
+ */
+@Component
+public class HandCarFactory implements CarFactory<EmptyEngineParams> {
+    @Override
+    public Car create(EmptyEngineParams carParams) {
+        var engine = new HandEngine();
+
+        return new Car(engine);
+    }
+}
+package hse.kpo.params;
+
+/**
+ * Параметры для педальных двигателей.
+ *
+ * @param pedalSize размер педалей
+ */
+public record PedalEngineParams(int pedalSize) {
+}
+package hse.kpo.params;
+
+/**
+ * Параметры для остальных двигателей.
+ */
+public record EmptyEngineParams() {
+    public static final EmptyEngineParams DEFAULT = new EmptyEngineParams();
+}
+package hse.kpo.export.transport.impl;
+
+import hse.kpo.export.transport.TransportExporter;
+import hse.kpo.interfaces.Transport;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.List;
+
+public class XmlTransportExporter implements TransportExporter {
+
+    public void export(List<Transport> transports, Writer writer) throws IOException {
+        writer.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        writer.write("<TransportList>\n");
+
+        // Данные
+        for (Transport transport : transports) {
+            writer.write(String.format("""
+                              <Vehicle>
+                                  <VIN>%d</VIN>
+                                  <Type>%s</Type>
+                                  <Engine>
+                                      <Type>%s</Type>
+                                  </Engine>
+                              </Vehicle>
+                            """,
+                    transport.getVin(),
+                    transport.getTransportType(),
+                    transport.getEngineType()
+            ));
+        }
+
+        writer.write("</TransportList>");
+        writer.flush();
+    }
+}package hse.kpo.export.transport.impl;
+
+import hse.kpo.export.transport.TransportExporter;
+import hse.kpo.interfaces.Transport;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.util.List;
+
+public class CsvTransportExporter implements TransportExporter {
+
+    public void export(List<Transport> transports, Writer writer) throws IOException {
+        // Заголовок CSV
+        writer.write("VIN,Type,EngineType\n");
+
+        // Данные
+        for (Transport transport : transports) {
+
+            String line = String.format("%d,%s,%s\n",
+                    transport.getVin(),
+                    transport.getTransportType(),
+                    transport.getEngineType());
+
+            writer.write(line);
+        }
+        writer.flush();
+    }
+}package hse.kpo.export.transport;
+
+import hse.kpo.interfaces.Transport;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.List;
+
+public interface TransportExporter {
+    void export(List<Transport> transports, Writer writer) throws IOException;
+}package hse.kpo.export.reports.impl;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import hse.kpo.domains.Report;
+import hse.kpo.export.reports.ReportExporter;
+
+import java.io.IOException;
+import java.io.Writer;
+
+public class JsonReportExporter implements ReportExporter {
+    private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Override
+    public void export(Report report, Writer writer) throws IOException {
+        objectMapper.writeValue(writer, report);
+    }
+}
+package hse.kpo.export.reports.impl;
+
+import hse.kpo.domains.Report;
+import hse.kpo.export.reports.ReportExporter;
+
+import java.io.IOException;
+import java.io.Writer;
+
+public class MarkdownReportExporter implements ReportExporter {
+    @Override
+    public void export(Report report, Writer writer) throws IOException {
+        writer.write("# " + report.title() + "\n\n");
+        writer.write(report.content());
+        writer.flush();
+    }
+}package hse.kpo.export.reports;
+
+import hse.kpo.domains.Report;
+import java.io.IOException;
+import java.io.Writer;
+
+public interface ReportExporter {
+    void export(Report report, Writer writer) throws IOException;
+}package hse.kpo.controllers.customers;
+
+import hse.kpo.domains.Customer;
+import hse.kpo.domains.cars.Car;
+import hse.kpo.dto.request.CustomerRequest;
+import hse.kpo.dto.response.CustomerResponse;
+import hse.kpo.facade.Hse;
+import hse.kpo.services.CustomerService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/api/customers")
+@RequiredArgsConstructor
+@Tag(name = "Клиенты", description = "Управление клиентами")
+public class CustomerController {
+    private final Hse hseFacade;
+    private final CustomerService customerService;
+
+    @PostMapping
+    @Operation(summary = "Создать клиента")
+    public ResponseEntity<CustomerResponse> createCustomer(
+            @Valid @RequestBody CustomerRequest request) {
+        hseFacade.addCustomer(request.getName(),
+                request.getLegPower(),
+                request.getHandPower(),
+                request.getIq());
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(convertToResponse(findCustomerByName(request.getName())));
+    }
+
+    @PutMapping("/{name}")
+    @Operation(summary = "Обновить клиента")
+    public ResponseEntity<CustomerResponse> updateCustomer(
+            @PathVariable String name,
+            @Valid @RequestBody CustomerRequest request) {
+        var updatedCustomer = hseFacade.updateCustomer(request);
+        return ResponseEntity.ok(convertToResponse(updatedCustomer));
+    }
+
+    @DeleteMapping("/{name}")
+    @Operation(summary = "Удалить клиента")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable String name) {
+        hseFacade.deleteCustomer(name);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    @Operation(summary = "Получить всех клиентов")
+    public List<CustomerResponse> getAllCustomers() {
+        return customerService.getCustomers().stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
+    }
+
+    private Customer findCustomerByName(String name) {
+        return customerService.getCustomers().stream()
+                .filter(c -> c.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Клиент не найден"));
+    }
+
+    private CustomerResponse convertToResponse(Customer customer) {
+        return new CustomerResponse(
+                customer.getName(),
+                customer.getLegPower(),
+                customer.getHandPower(),
+                customer.getIq(),
+                customer.getCars() != null ? customer.getCars().stream().map(Car::getVin).toList() : null,
+                customer.getCatamaran() != null ? customer.getCatamaran().getVin() : null
+        );
+    }
+}
+package hse.kpo.controllers.catamarans;
+
+import java.util.List;
+import java.util.Objects;
+import hse.kpo.domains.catamarans.Catamaran;
+import hse.kpo.dto.request.CatamaranRequest;
+import hse.kpo.enums.EngineTypes;
+import hse.kpo.facade.Hse;
+import hse.kpo.services.catamarans.HseCatamaranService;
+import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+
+@RestController
+@RequestMapping("/api/catamarans")
+@RequiredArgsConstructor
+@Tag(name = "Катамараны", description = "Управление катамаранами")
+public class CatamaranController {
+    private final HseCatamaranService catamaranService;
+    private final Hse hseFacade;
+
+    @GetMapping("/{vin}")
+    @Operation(summary = "Получить катамаран по VIN")
+    public ResponseEntity<Catamaran> getCatamaranById(@PathVariable int vin) {
+        return catamaranService.getCatamarans().stream()
+            .filter(catamaran -> catamaran.getVin() == vin).findFirst()
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    @Operation(summary = "Создать катамаран",
+        description = "Для PEDAL требуется pedalSize (1-15)")
+    public ResponseEntity<Catamaran> createCatamaran(
+        @Valid @RequestBody CatamaranRequest request,
+        BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                bindingResult.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        var engineType = EngineTypes.find(request.engineType());
+        if (engineType.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "No this type");
+        }
+
+        var catamaran = switch (engineType.get()) {
+            case EngineTypes.PEDAL -> hseFacade.addPedalCatamaran(request.pedalSize());
+            case EngineTypes.HAND -> hseFacade.addHandCatamaran();
+            case EngineTypes.LEVITATION -> hseFacade.addLevitationCatamaran();
+            default -> throw new RuntimeException();
+        };
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(catamaran);
+    }
+
+    @PostMapping("/sell")
+    @Operation(summary = "Продать все доступные катамараны")
+    public ResponseEntity<Void> sellAllCatamarans() {
+        catamaranService.sellCatamarans();
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/sell/{vin}")
+    @Operation(summary = "Продать катамаран по VIN")
+    public ResponseEntity<Void> sellCatamaran(@PathVariable int vin) {
+        var catamaranOptional = catamaranService.getCatamarans().stream()
+            .filter(c -> c.getVin() == vin).findFirst();
+
+        if (catamaranOptional.isPresent()) {
+            var catamaran = catamaranOptional.get();
+            catamaranService.getCatamarans().remove(catamaran);
+            hseFacade.sell();
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{vin}")
+    @Operation(summary = "Удалить катамаран")
+    public ResponseEntity<Void> deleteCatamaran(@PathVariable int vin) {
+        boolean removed = catamaranService.getCatamarans()
+            .removeIf(catamaran -> catamaran.getVin() == vin);
+        return removed ? ResponseEntity.noContent().build()
+            : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping
+    @Operation(summary = "Получить все катамараны с фильтрацией",
+        parameters = {
+            @Parameter(name = "engineType", description = "Фильтр по типу двигателя"),
+            @Parameter(name = "minVin", description = "Минимальный VIN")
+        })
+    public List<Catamaran> getAllCatamarans(
+        @RequestParam(required = false) String engineType,
+        @RequestParam(required = false) Integer minVin) {
+
+        if (Objects.isNull(minVin)) {
+            minVin = 0;
+        }
+        if (StringUtils.isBlank(engineType)) {
+            return catamaranService.getCatamarans();
+        }
+        return catamaranService.getCatamaransWithFiltration(engineType, minVin);
+    }
+}package hse.kpo.controllers.cars;
+
+import hse.kpo.domains.AbstractEngine;
+import hse.kpo.domains.HandEngine;
+import hse.kpo.domains.LevitationEngine;
+import hse.kpo.domains.PedalEngine;
+import hse.kpo.domains.cars.Car;
+import hse.kpo.dto.request.CarRequest;
+import hse.kpo.enums.EngineTypes;
+import hse.kpo.facade.Hse;
+import hse.kpo.services.cars.HseCarService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.Objects;
+
+@RestController
+@RequestMapping("/api/cars")
+@RequiredArgsConstructor
+@Tag(name = "Автомобили", description = "Управление транспортными средствами")
+public class CarController {
+    private final HseCarService carService;
+    private final Hse hseFacade;
+
+    @GetMapping("/{vin}")
+    @Operation(summary = "Получить автомобиль по VIN")
+    public ResponseEntity<Car> getCarByVin(@PathVariable int vin) {
+        return carService.findByVin(vin)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    @Operation(summary = "Создать автомобиль",
+            description = "Для PEDAL требуется pedalSize (1-15)")
+    public ResponseEntity<Car> createCar(
+            @Valid @RequestBody CarRequest request,
+            BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    bindingResult.getAllErrors().get(0).getDefaultMessage());
+        }
+
+        var engineType = EngineTypes.find(request.engineType());
+        if (engineType.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "No this type");
+        }
+
+        var car = switch (engineType.get()) {
+            case EngineTypes.PEDAL -> hseFacade.addPedalCar(request.pedalSize());
+            case EngineTypes.HAND -> hseFacade.addHandCar();
+            case EngineTypes.LEVITATION -> hseFacade.addLevitationCar();
+            default -> throw new RuntimeException();
+        };
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(car);
+    }
+
+    @PostMapping("/sell")
+    @Operation(summary = "Продать все доступные автомобили")
+    public ResponseEntity<Void> sellAllCars() {
+        carService.sellCars();
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/sell/{vin}")
+    @Operation(summary = "Продать автомобиль по VIN")
+    public ResponseEntity<Object> sellCar(@PathVariable int vin) {
+        return carService.findByVin(vin).map(car -> {
+            carService.deleteByVin(car.getVin());
+            hseFacade.sell();
+            return ResponseEntity.ok().build();
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{vin}")
+    @Operation(summary = "Обновить автомобиль")
+    public ResponseEntity<Car> updateCar(
+            @PathVariable int vin,
+            @Valid @RequestBody CarRequest request) {
+
+        return carService.findByVin(vin)
+                .map(existingCar -> {
+                    existingCar.setEngine(createEngineFromRequest(request));
+                    carService.addExistingCar(existingCar);
+                    return ResponseEntity.ok(existingCar);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{vin}")
+    @Operation(summary = "Удалить автомобиль")
+    public ResponseEntity<Void> deleteCar(@PathVariable int vin) {
+        carService.deleteByVin(vin);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    @Operation(summary = "Получить все автомобили с фильтрацией",
+            parameters = {
+                    @Parameter(name = "engineType", description = "Фильтр по типу двигателя"),
+                    @Parameter(name = "minVin", description = "Минимальный VIN")
+            })
+    public List<Car> getAllCars(
+            @RequestParam(required = false) String engineType,
+            @RequestParam(required = false) Integer minVin) {
+        if (Objects.isNull(minVin)) {
+            minVin = 0;
+        }
+        if (StringUtils.isBlank(engineType)) {
+            return carService.getCars();
+        }
+        return carService.getCarsWithFiltration(engineType, minVin);
+    }
+
+    private AbstractEngine createEngineFromRequest(CarRequest request) {
+        return switch (EngineTypes.valueOf(request.engineType())) {
+            case PEDAL -> new PedalEngine(request.pedalSize());
+            case HAND -> new HandEngine();
+            case LEVITATION -> new LevitationEngine();
+        };
+    }
+}package hse.kpo.observers;
+
+import hse.kpo.domains.Customer;
+import hse.kpo.domains.Report;
+import hse.kpo.enums.ProductionTypes;
+
+public interface SalesObserver {
+    void onSale(Customer customer, ProductionTypes productType, int vin);
+
+    void checkCustomers();
+
+    Report buildReport();
+}
+package hse.kpo.observers;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface Sales {
+}
+package hse.kpo.observers;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+
+@Slf4j
+@Component
+@Aspect
+@RequiredArgsConstructor
+public class SalesAspect {
+    private final SalesObserver salesObserver;
+
+    @Around("@annotation(sales)")
+    public Object sales(ProceedingJoinPoint pjp, Sales sales) throws Throwable {
+
+        salesObserver.checkCustomers();
+
+        try {
+            Object result = pjp.proceed();
+            salesObserver.checkCustomers();
+            return result;
+        } catch (Throwable e) {
+            log.warn(e.getMessage());
+            throw e;
+        }
+    }
+}
+
+package hse.kpo.observers;
+
+import hse.kpo.builders.ReportBuilder;
+import hse.kpo.domains.Customer;
+import hse.kpo.domains.Report;
+import hse.kpo.enums.ProductionTypes;
+import hse.kpo.services.CustomerService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+public class ReportSalesObserver implements SalesObserver {
+    private final CustomerService customerService;
+
+    private final ReportBuilder reportBuilder = new ReportBuilder();
+
+    public Report buildReport() {
+        return reportBuilder.build();
+    }
+
+    public void checkCustomers() {
+        reportBuilder.addCustomers(customerService.getCustomers());
+    }
+
+    @Override
+    public void onSale(Customer customer, ProductionTypes productType, int vin) {
+        String message = String.format(
+                "Продажа: %s VIN-%d клиенту %s (Сила рук: %d, Сила ног: %d, IQ: %d)",
+                productType, vin, customer.getName(),
+                customer.getHandPower(), customer.getLegPower(), customer.getIq()
+        );
+        reportBuilder.addOperation(message);
+    }
+}
+package hse.kpo.exception.handler;
+
+import hse.kpo.exception.KpoException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice(basePackages = "hse.kpo")
+public class KpoExceptionHandler {
+    @ExceptionHandler(KpoException.class)
+    public ResponseEntity<KpoException> handleKpoException(KpoException ex) {
+        return ResponseEntity.status(HttpStatus.valueOf(ex.getCode()))
+                .body(ex);
+    }
+
+    @ExceptionHandler(Error.class)
+    public ResponseEntity<KpoException> handleError(Error error) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new KpoException(HttpStatus.INTERNAL_SERVER_ERROR.value(), error.getMessage()));
+    }
+}
+package hse.kpo.exception;
+
+import lombok.Getter;
+
+@Getter
+public class KpoException extends RuntimeException {
+    private final int code;
+
+    public KpoException(int code, String message) {
+        super(message);
+        this.code = code;
+    }
+}package hse.kpo.services.catamarans;
+
+import hse.kpo.domains.Customer;
+import hse.kpo.domains.catamarans.Catamaran;
+import hse.kpo.interfaces.CustomerProvider;
+import hse.kpo.interfaces.catamarans.CatamaranFactory;
+import hse.kpo.interfaces.catamarans.CatamaranProvider;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import hse.kpo.repositories.CatamaranRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+/**
+ * Сервис продажи катамаранов.
+ */
+@Component
+@RequiredArgsConstructor
+@Slf4j
+public class HseCatamaranService implements CatamaranProvider{
+
+    private final CustomerProvider customerProvider;
+    private final CatamaranRepository catamaranRepository;
+
+    /**
+     * Метод продажи катамаранов.
+     */
+    public void sellCatamarans() {
+        var customers = customerProvider.getCustomers();
+        customers.stream().filter(customer -> Objects.isNull(customer.getCatamaran()))
+            .forEach(customer -> {
+                var catamaran = this.takeCatamaran(customer);
+                if (Objects.nonNull(catamaran)) {
+                    customer.setCatamaran(catamaran);
+                } else {
+                    log.warn("No catamaran in CatamaranService");
+                }
+            });
+    }
+
+    @Override
+    public Catamaran takeCatamaran(Customer customer) {
+
+        var filteredCatamarans = catamaranRepository.findAll().stream().filter(Catamaran -> Catamaran.isCompatible(customer)).toList();
+
+        var firstCatamaran = filteredCatamarans.stream().findFirst();
+
+        firstCatamaran.ifPresent(catamaranRepository::delete);
+
+        return firstCatamaran.orElse(null);
+    }
+
+    /**
+     * Метод добавления {@link Catamaran} в систему.
+     *
+     * @param catamaranFactory фабрика для создания автомобилей
+     * @param catamaranParams параметры для создания автомобиля
+     */
+    public <T> Catamaran addCatamaran(CatamaranFactory<T> catamaranFactory, T catamaranParams) {
+        return catamaranRepository.save(catamaranFactory.create(catamaranParams));
+    }
+
+    public Catamaran addExistingCatamaran(Catamaran Catamaran) {
+        return catamaranRepository.save(Catamaran);
+    }
+
+    public Optional<Catamaran> findByVin(Integer vin) {
+        return catamaranRepository.findById(vin);
+    }
+
+    public void deleteByVin(Integer vin) {
+        catamaranRepository.deleteById(vin);
+    }
+
+    public List<Catamaran> getCatamaransWithFiltration(String engineType, Integer vin) {
+        return catamaranRepository.findCatamaransByEngineTypeAndVinGreaterThan(engineType, vin);
+    }
+
+    public List<Catamaran> getCatamarans() {
+        return catamaranRepository.findAll();
+    }
+}package hse.kpo.services.cars;
+
+import hse.kpo.domains.Customer;
+import hse.kpo.domains.cars.Car;
+import hse.kpo.enums.ProductionTypes;
+import hse.kpo.interfaces.cars.CarFactory;
+import hse.kpo.observers.Sales;
+import hse.kpo.observers.SalesObserver;
+import hse.kpo.interfaces.cars.CarProvider;
+import hse.kpo.interfaces.CustomerProvider;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import hse.kpo.repositories.CarRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * Сервис продажи машин.
+ */
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class HseCarService implements CarProvider{
+
+    private final List<SalesObserver> observers = new ArrayList<>();
+
+    private final CustomerProvider customerProvider;
+    private final CarRepository carRepository;
+
+    public void addObserver(SalesObserver observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObserversForSale(Customer customer, ProductionTypes productType, int vin) {
+        observers.forEach(obs -> obs.onSale(customer, productType, vin));
+    }
+
+    /**
+     * Метод продажи машин
+     */
+    @Sales
+    public void sellCars() {
+        customerProvider.getCustomers().stream()
+            .filter(customer -> customer.getCars() == null || customer.getCars().isEmpty())
+            .forEach(customer -> {
+                Car car = takeCar(customer);
+                if (Objects.nonNull(car)) {
+                    customer.getCars().add(car); // Добавляем автомобиль в список клиента
+                    car.setCustomer(customer);   // Устанавливаем ссылку на клиента в автомобиле
+                    carRepository.save(car);     // Сохраняем изменения
+                    notifyObserversForSale(customer, ProductionTypes.CAR, car.getVin());
+                } else {
+                    log.warn("No car in CarService");
+                }
+            });
+    }
+
+    @Override
+    public Car takeCar(Customer customer) {
+
+        var filteredCars = carRepository.findAll().stream().filter(car -> car.isCompatible(customer)).toList();
+
+        var firstCar = filteredCars.stream().findFirst();
+
+        return firstCar.orElse(null);
+    }
+
+    /**
+     * Метод добавления {@link Car} в систему.
+     *
+     * @param carFactory фабрика для создания автомобилей
+     * @param carParams параметры для создания автомобиля
+     */
+    public <T> Car addCar(CarFactory<T> carFactory, T carParams) {
+        return carRepository.save(carFactory.create(carParams));
+    }
+
+    public Car addExistingCar(Car car) {
+        return carRepository.save(car);
+    }
+
+    public Optional<Car> findByVin(Integer vin) {
+        return carRepository.findById(vin);
+    }
+
+    public void deleteByVin(Integer vin) {
+        carRepository.deleteById(vin);
+    }
+
+    public List<Car> getCarsWithFiltration(String engineType, Integer vin) {
+        return carRepository.findCarsByEngineTypeAndVinGreaterThan(engineType, vin);
+    }
+
+    public List<Car> getCars() {
+        return carRepository.findAll();
+    }
+}package hse.kpo.services;
+
+import java.util.List;
+import hse.kpo.domains.Customer;
+import hse.kpo.dto.request.CustomerRequest;
+import hse.kpo.exception.KpoException;
+import hse.kpo.interfaces.CustomerProvider;
+import hse.kpo.repositories.CustomerRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@RequiredArgsConstructor
+@Service
+public class CustomerService implements CustomerProvider {
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Override
+    public List<Customer> getCustomers() {
+        return customerRepository.findAll();
+    }
+
+    @Override
+    public void addCustomer(Customer customer) {
+        customerRepository.save(customer);
+    }
+
+    @Transactional
+    @Override
+    public Customer updateCustomer(CustomerRequest request) {
+        var customerOptional = customerRepository.findByName(request.getName());
+
+        if (customerOptional.isPresent()) {
+            var customer = customerOptional.get();
+            customer.setIq(request.getIq());
+            customer.setHandPower(request.getHandPower());
+            customer.setLegPower(request.getLegPower());
+            return customerRepository.save(customer);
+        }
+        throw new KpoException(HttpStatus.NOT_FOUND.value(), String.format("no customer with name: %s", request.getName()));
+    }
+
+    @Transactional
+    @Override
+    public boolean deleteCustomer(String name) {
+        customerRepository.deleteByName(name); // Добавьте метод в CustomerRepository
+        return true;
+    }
+}
+package hse.kpo.interfaces.catamarans;
+
+import hse.kpo.domains.catamarans.Catamaran;
+
+/**
+ * Интерфейс для определения методов фабрик.
+ *
+ * @param <T> параметры для фабрик
+ */
+public interface CatamaranFactory<T> {
+    /**
+     * Метод создания катамаранов.
+     *
+     * @param catamaranParams параметры для создания
+     * @return {@link Catamaran}
+     */
+    Catamaran create(T catamaranParams);
+}
+package hse.kpo.interfaces.catamarans;
+
+import hse.kpo.domains.catamarans.Catamaran;
+import hse.kpo.domains.Customer;
+
+public interface CatamaranProvider {
+
+    /**
+     * Метод покупки катамарана.
+     *
+     * @param customer - покупатель
+     * @return - {@link Catamaran}
+     */
+    Catamaran takeCatamaran(Customer customer);
+}
+package hse.kpo.interfaces;
+
+import hse.kpo.domains.Customer;
+
+public interface Transport {
+    boolean isCompatible(Customer customer);
+
+    int getVin();
+
+    String getEngineType();
+
+    String getTransportType();
+}
+package hse.kpo.interfaces;
+
+
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import hse.kpo.domains.Customer;
+import hse.kpo.domains.HandEngine;
+import hse.kpo.domains.LevitationEngine;
+import hse.kpo.domains.PedalEngine;
+import hse.kpo.enums.ProductionTypes;
+import jakarta.persistence.Entity;
+import lombok.ToString;
+
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = HandEngine.class, name = "hand"),
+        @JsonSubTypes.Type(value = PedalEngine.class, name = "pedal"),
+        @JsonSubTypes.Type(value = LevitationEngine.class, name = "levitation")
+})
+public interface Engine {
+
+    String toString();
+
+    /**
+     * Метод для проверки совместимости двигателя с покупателем.
+     *
+     * @param customer - покупатель, с которым мы сравниваем двигатель
+     * @param type - тип объекта
+     * @return true, если двигатель подходит покупателю
+     */
+    boolean isCompatible(Customer customer, ProductionTypes type);
+}
+package hse.kpo.interfaces.cars;
+
+import hse.kpo.domains.cars.Car;
+
+/**
+ * Интерфейс для определения методов фабрик.
+ *
+ * @param <T> параметры для фабрик
+ */
+public interface CarFactory<T> {
+    /**
+     * Метод создания машин.
+     *
+     * @param carParams параметры для создания
+     * @return {@link Car}
+     */
+    Car create(T carParams);
+}
+package hse.kpo.interfaces.cars;
+
+import hse.kpo.domains.cars.Car;
+import hse.kpo.domains.Customer;
+
+public interface CarProvider {
+
+    /**
+     * Метод покупки машины.
+     *
+     * @param customer - покупатель
+     * @return - {@link Car}
+     */
+    Car takeCar(Customer customer);
+}
+package hse.kpo.interfaces;
+
+import hse.kpo.domains.Customer;
+import hse.kpo.dto.request.CustomerRequest;
+
+import java.util.List;
+
+/**
+ * Интерфейс для определения методов хранилища покупателей.
+ */
+public interface CustomerProvider {
+    /**
+     * Метод возвращает коллекцию покупателей.
+     *
+     * @return список {@link Customer}
+     */
+    List<Customer> getCustomers();
+
+    void addCustomer(Customer customer);
+
+    Customer updateCustomer(CustomerRequest request);
+
+    boolean deleteCustomer(String name);
+}
+package hse.kpo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ * Точка входа в приложение.
+ */
+@SpringBootApplication
+public class KpoApplication {
+	public static void main(String[] args) {
+		SpringApplication.run(KpoApplication.class, args);
+	}
+}

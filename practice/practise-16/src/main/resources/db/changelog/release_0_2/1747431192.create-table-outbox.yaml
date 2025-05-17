@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1747431192
+      author: Nikita
+      changes:
+        - createTable:
+            tableName: outbox_events
+            columns:
+              - column:
+                  name: id
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: aggregate_type
+                  type: VARCHAR(255)
+              - column:
+                  name: event_type
+                  type: VARCHAR(255)
+              - column:
+                  name: payload
+                  type: VARCHAR(1000)
+              - column:
+                  name: created_at
+                  type: datetime
+              - column:
+                  name: sent
+                  type: boolean

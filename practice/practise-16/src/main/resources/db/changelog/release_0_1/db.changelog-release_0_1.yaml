@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      file: 1744444970.create-table-car.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: 1744445365.create-table-catamaran.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: 1744445365.create-table-customer.yaml
+      relativeToChangelogFile: true
