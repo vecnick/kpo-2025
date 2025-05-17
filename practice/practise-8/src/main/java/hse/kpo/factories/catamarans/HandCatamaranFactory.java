@@ -1,6 +1,6 @@
 package hse.kpo.factories.catamarans;
 
-import hse.kpo.domains.Catamaran;
+import hse.kpo.domains.catamaran.Catamaran;
 import hse.kpo.domains.HandEngine;
 import hse.kpo.interfaces.catamarans.CatamaranFactory;
 import hse.kpo.params.EmptyEngineParams;

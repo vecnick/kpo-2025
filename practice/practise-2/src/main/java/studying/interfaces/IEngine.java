@@ -2,6 +2,9 @@ package studying.interfaces;
 
 import studying.domains.Customer;
 
+/**
+ * Интерфейс двигателя
+ */
 public interface IEngine {
 
     /**

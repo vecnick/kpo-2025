@@ -41,8 +41,7 @@ public class CarStorage implements CarProvider {
      */
     public <T> Car addCar(CarFactory<T> carFactory, T carParams) {
         var car = carFactory.create(
-                carParams,
-                ++carNumberCounter
+                carParams
         );
 
         cars.add(car);

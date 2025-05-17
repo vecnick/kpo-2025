@@ -33,6 +33,11 @@ repositories {
 }
 
 dependencies {
+   // Spring Web (включает REST и Tomcat)
+   implementation("org.springframework.boot:spring-boot-starter-web")
+   // Swagger UI и OpenAPI
+   implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+   
 	implementation("org.springframework.boot:spring-boot-starter")
 
 	compileOnly("org.projectlombok:lombok")

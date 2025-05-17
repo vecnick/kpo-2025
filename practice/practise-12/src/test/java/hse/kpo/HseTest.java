@@ -7,7 +7,7 @@ import hse.kpo.facade.Hse;
 import hse.kpo.factories.cars.HandCarFactory;
 import hse.kpo.factories.cars.PedalCarFactory;
 import hse.kpo.observers.SalesObserver;
-import hse.kpo.storages.CustomerStorage;
+import hse.kpo.services.CustomerService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -28,7 +28,7 @@ class HseTest {
     private Hse hse;
 
     @Autowired
-    private CustomerStorage customerStorage;
+    private CustomerService customerStorage;
 
     @Autowired
     private PedalCarFactory pedalCarFactory;

@@ -1,0 +1,10 @@
+---
+title: "OPERATION"
+content:
+- id: 0
+  type: "OUTCOME"
+  bankAccountId: 0
+  amount: 200.0
+  date: "2025-03-21 23:39:33"
+  description: "aaaa"
+  categoryId: 0
