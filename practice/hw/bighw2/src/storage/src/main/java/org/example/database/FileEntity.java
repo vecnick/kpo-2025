@@ -1,12 +1,16 @@
 package org.example.database;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "files")
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class FileEntity {
 

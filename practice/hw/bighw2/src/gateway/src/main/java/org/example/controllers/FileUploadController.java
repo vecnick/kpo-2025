@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -21,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Tag(name = "Загрузка", description = "Загрузка файлов в систему")
 public class FileUploadController {
 
-    @Value("http://localhost:8081")
+    @Value("http://storage:8081")
     private String fileServiceUrl;
 
     @Autowired
@@ -31,20 +33,27 @@ public class FileUploadController {
     @Operation(summary = "Загрузить файл")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
-            HttpHeaders fileHeaders = new HttpHeaders();
-            fileHeaders.setContentType(MediaType.TEXT_PLAIN);
-
-            HttpEntity<byte[]> fileEntity = new HttpEntity<>(file.getBytes(), fileHeaders);
-
             MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-            body.add("file", fileEntity);
+
+            Resource fileAsResource = new ByteArrayResource(file.getBytes()) {
+                @Override
+                public String getFilename() {
+                    return file.getOriginalFilename();
+                }
+            };
+
+            body.add("file", fileAsResource);
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-            HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, headers);
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-            ResponseEntity<String> response = restTemplate.postForEntity(fileServiceUrl + "/api/files/upload", request, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity(
+                    fileServiceUrl + "/api/files/upload",
+                    requestEntity,
+                    String.class
+            );
 
             return ResponseEntity.ok("Ответ от хранилища: " + response.getBody());
 
