@@ -1,6 +1,6 @@
 package org.example.services;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.example.database.FileEntity;
 import org.example.database.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +23,23 @@ public class StorageService {
 
         return repo.findById(sha256)
                 .orElseGet(() -> {
-                    FileEntity e = FileEntity.builder()
-                            .id(sha256)
-                            .filename(file.getOriginalFilename())
-                            .contentType(file.getContentType())
-                            .data(bytes)
-                            .build();
-                    return repo.save(e);
+                    try {
+                        FileEntity e = FileEntity.builder()
+                                .id(sha256)
+                                .filename(file.getOriginalFilename())
+                                .contentType(file.getContentType())
+                                .data(bytes)
+                                .build();
+                        System.out.println("before saving");
+                        FileEntity saved = repo.save(e);
+                        System.out.println("after saving, id=" + saved.getId());
+                        return saved;
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        throw new RuntimeException("Ошибка при сохранении", ex);
+                    }
                 });
+
     }
 
     public FileEntity get(String id) {

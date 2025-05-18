@@ -1,5 +1,7 @@
 package org.example.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.database.FileEntity;
 import org.example.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +11,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/files")
+@Tag(name = "Storage", description = "хранилище файлов")
 public class FileController {
 
     @Autowired
     private StorageService storage;
 
     @PostMapping("/upload")
+    @Operation(summary = "Загрузить файл")
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) {
         try {
             FileEntity saved = storage.store(file);
@@ -25,6 +29,7 @@ public class FileController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Выгрузить файл")
     public ResponseEntity<?> download(@PathVariable String id) {
         FileEntity f = storage.get(id);
         return ResponseEntity.ok()
