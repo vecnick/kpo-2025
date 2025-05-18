@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/upload")
+@RequestMapping("/download")
 @Tag(name = "Скачивание файлов", description = "Скачивание файлов по ID")
 public class FileDownloadController {
 
