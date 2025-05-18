@@ -3,6 +3,7 @@ package org.example.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -20,14 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Tag(name = "Загрузка", description = "Загрузка файлов в систему")
 public class FileUploadController {
 
-    @Value("http://host.docker.internal:8081")
+    @Value("http://localhost:8081")
     private String fileServiceUrl;
 
-    private final RestTemplate restTemplate;
-
-    public FileUploadController(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+    @Autowired
+    private RestTemplate restTemplate;
 
     @PostMapping
     @Operation(summary = "Загрузить файл")
@@ -46,7 +44,7 @@ public class FileUploadController {
 
             HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, headers);
 
-            ResponseEntity<String> response = restTemplate.postForEntity(fileServiceUrl + "/store", request, String.class);
+            ResponseEntity<String> response = restTemplate.postForEntity(fileServiceUrl + "/api/files/upload", request, String.class);
 
             return ResponseEntity.ok("Ответ от хранилища: " + response.getBody());
 
