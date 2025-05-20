@@ -16,16 +16,42 @@ services:
     volumes:
       - storing_postgres_data:/var/lib/postgresql/data
 
+  file_analysis_db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: file_analysis
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5433"
+    volumes:
+      - analysis_postgres_data:/var/lib/postgresql/data
+      
   file_storing_service:
     restart: unless-stopped
     build: file_storing_service
     ports:
       - "8080:8080"
+      - "9090:9090"
     depends_on:
       - files_storing_db
     environment:
       # меняем localhost на имя контейнера в котором база развёрнута (указываем адрес базы) - автоматически подставится вместо значения из application.yml
       SPRING_DATASOURCE_URL: 'jdbc:postgresql://files_storing_db:5432/files_storing'
+      
+  file_analysis_service:
+    restart: unless-stopped
+    build: file_analysis_service
+    ports:
+      - "8081:8081"
+      - "9091:9091"
+    depends_on:
+      - file_storing_service
+      - file_analysis_db
+    environment:
+      # меняем localhost на имя контейнера в котором база развёрнута (указываем адрес базы) - автоматически подставится вместо значения из application.yml
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://file_analysis_db:5433/file_analysis'
 
 
 

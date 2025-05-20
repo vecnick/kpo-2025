@@ -1,12 +1,11 @@
 package analysis.service;
 
 import analysis.entity.TextAnalys;
-import analysis.interfaces.IFileInfoServiceMediator;
+import analysis.interfaces.IStoringGrpcImpl;
 import analysis.interfaces.ITextAnalysService;
 import analysis.repository.TextAnalysRepository;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -17,11 +16,11 @@ import static java.lang.Math.max;
 @Service
 public class TextAnalysService implements ITextAnalysService {
 
-    private final IFileInfoServiceMediator fileInfoServiceMediator;
+    private final IStoringGrpcImpl storingGrpc;
     private final TextAnalysRepository textAnalysRepository;
 
-    public TextAnalysService(IFileInfoServiceMediator fileInfoServiceMediator, TextAnalysRepository textAnalysRepository) {
-        this.fileInfoServiceMediator = fileInfoServiceMediator;
+    public TextAnalysService(IStoringGrpcImpl storingGrpc, TextAnalysRepository textAnalysRepository) {
+        this.storingGrpc = storingGrpc;
         this.textAnalysRepository = textAnalysRepository;
     }
 
@@ -43,7 +42,7 @@ public class TextAnalysService implements ITextAnalysService {
     @Override
     public Optional<Integer> countParagraphs(int id) {
 
-        Optional<String> optText = fileInfoServiceMediator.getFileTextById(id);
+        Optional<String> optText = storingGrpc.getFileTextById(id);
         if (optText.isEmpty()) {
             return Optional.empty();
         }
@@ -79,7 +78,7 @@ public class TextAnalysService implements ITextAnalysService {
     @Override
     public Optional<Integer> countWords(int id) {
 
-        Optional<String> optText = fileInfoServiceMediator.getFileTextById(id);
+        Optional<String> optText = storingGrpc.getFileTextById(id);
         if (optText.isEmpty()) {
             return Optional.empty();
         }
@@ -115,7 +114,7 @@ public class TextAnalysService implements ITextAnalysService {
     @Override
     public Optional<Integer> countSymbols(int id) {
 
-        Optional<String> optText = fileInfoServiceMediator.getFileTextById(id);
+        Optional<String> optText = storingGrpc.getFileTextById(id);
         if (optText.isEmpty()) {
             return Optional.empty();
         }
@@ -137,14 +136,14 @@ public class TextAnalysService implements ITextAnalysService {
         int points = 0;
 
         // Получаем список всех id-шников
-        Optional<List<Integer>> optIds = fileInfoServiceMediator.getAllIds();
+        Optional<List<Integer>> optIds = storingGrpc.getAllIds();
         if (optIds.isEmpty()) {
             return Optional.empty();
         }
         List<Integer> ids = optIds.get();
 
         // Получаем хэш сравниваемого файла
-        Optional<String> optNewFileHash = fileInfoServiceMediator.getHashById(newFileId);
+        Optional<String> optNewFileHash = storingGrpc.getHashById(newFileId);
         if (optNewFileHash.isEmpty()) {
             return Optional.empty();
         }
@@ -155,7 +154,7 @@ public class TextAnalysService implements ITextAnalysService {
             if (ids.get(i) == newFileId) { continue; }
 
             // Получаем хэш файла из хранилища
-            Optional<String> optFileHash = fileInfoServiceMediator.getHashById(ids.get(i));
+            Optional<String> optFileHash = storingGrpc.getHashById(ids.get(i));
             if (optFileHash.isEmpty()) {
                 return Optional.empty();
             }

@@ -36,6 +36,7 @@ dependencies {
 	implementation ("io.grpc:grpc-stub:1.61.0")
 	implementation ("net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE")
 	implementation ("net.devh:grpc-client-spring-boot-starter:2.15.0.RELEASE")
+	implementation("javax.annotation:javax.annotation-api:1.3.2")
 	
 	implementation ("org.assertj:assertj-core:3.24.2")
 	implementation ("org.springframework.boot:spring-boot-starter-web")
@@ -68,10 +69,3 @@ protobuf {
         }
     }
 }
-
-
-
-tasks.withType<org.springframework.boot.gradle.tasks.run.BootRun> {
-    mainClass.set("analysis.Main")
-}
-

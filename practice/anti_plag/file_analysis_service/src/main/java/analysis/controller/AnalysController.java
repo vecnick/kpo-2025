@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import storing.interfaces.IFileInfoService;
-import storing.record.FileInfoParams;
 
 import java.util.List;
 
@@ -18,7 +16,7 @@ import java.util.List;
 public class AnalysController {
     private final IAnalysService analysService;
 
-    public  AnalysController(IAnalysService analysService) {
+    public AnalysController(IAnalysService analysService) {
         this.analysService = analysService;
     }
 

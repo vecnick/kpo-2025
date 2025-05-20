@@ -1,6 +1,6 @@
 package analysis.service;
 
-import analysis.interfaces.IFileInfoServiceMediator;
+import analysis.interfaces.IStoringGrpcImpl;
 import analysis.interfaces.IWordCloudService;
 import analysis.record.WordCloudPicParams;
 import analysis.record.WordCloudRequestParams;
@@ -23,17 +23,17 @@ public class WordCloudService implements IWordCloudService {
 
     private final HttpClient client = HttpClient.newHttpClient();
     private final Path filesDir;
-    private final IFileInfoServiceMediator fileInfoServiceMediator;
+    private final IStoringGrpcImpl storingGrpc;
 
-    public WordCloudService(Path filesDir, IFileInfoServiceMediator fileInfoServiceMediator) {
+    public WordCloudService(Path filesDir, IStoringGrpcImpl storingGrpc) {
         this.filesDir = filesDir;
-        this.fileInfoServiceMediator = fileInfoServiceMediator;
+        this.storingGrpc = storingGrpc;
     }
 
     @Override
     public Optional<WordCloudPicParams> createWordCloud(int fileId) {
 
-        Optional<String> optText = fileInfoServiceMediator.getFileTextById(fileId);
+        Optional<String> optText = storingGrpc.getFileTextById(fileId);
         if (optText.isEmpty()) {
             return Optional.empty();
         }

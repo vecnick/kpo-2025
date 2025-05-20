@@ -15,5 +15,13 @@ spring:
 server:
   port: 8081
 
+grpc:
+  server:
+    port: 9091
+  client:
+    file_storing_service:
+      address: static://localhost:9090
+      negotiation-type: plaintext
+    
 wordcloud:
   dir: WORDCLOUD_PICS

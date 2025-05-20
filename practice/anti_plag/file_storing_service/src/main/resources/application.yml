@@ -14,6 +14,10 @@ spring:
         format_sql: true
 server:
   port: 8080
+  
+grpc:
+  server:
+    port: 9090
 
 upload:
   dir: UPLOADED_FILES
