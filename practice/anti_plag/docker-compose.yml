@@ -1,0 +1,32 @@
+version: '3.8'
+
+volumes:
+  storing_postgres_data:
+  
+services:
+  files_storing_db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: files_storing
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - storing_postgres_data:/var/lib/postgresql/data
+
+  file_storing_service:
+    restart: unless-stopped
+    build: file_storing_service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - files_storing_db
+    environment:
+      # меняем localhost на имя контейнера в котором база развёрнута (указываем адрес базы) - автоматически подставится вместо значения из application.yml
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://files_storing_db:5432/files_storing'
+
+
+
+

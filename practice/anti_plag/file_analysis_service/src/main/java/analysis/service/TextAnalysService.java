@@ -1,9 +1,14 @@
 package analysis.service;
 
+import analysis.entity.TextAnalys;
 import analysis.interfaces.IFileInfoServiceMediator;
 import analysis.interfaces.ITextAnalysService;
+import analysis.repository.TextAnalysRepository;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,9 +18,26 @@ import static java.lang.Math.max;
 public class TextAnalysService implements ITextAnalysService {
 
     private final IFileInfoServiceMediator fileInfoServiceMediator;
+    private final TextAnalysRepository textAnalysRepository;
 
-    public TextAnalysService(IFileInfoServiceMediator fileInfoServiceMediator) {
+    public TextAnalysService(IFileInfoServiceMediator fileInfoServiceMediator, TextAnalysRepository textAnalysRepository) {
         this.fileInfoServiceMediator = fileInfoServiceMediator;
+        this.textAnalysRepository = textAnalysRepository;
+    }
+
+    @Override
+    public List<TextAnalys> getAll() {
+        return  textAnalysRepository.findAll();
+    }
+
+    @Override
+    public Optional<TextAnalys> getByFileId(int fileId) {
+        return textAnalysRepository.getByFileId(fileId);
+    }
+
+    @Override
+    public Optional<String> getPathByFileId(int fileId) {
+        return textAnalysRepository.getPathByFileId(fileId);
     }
 
     @Override
@@ -144,5 +166,28 @@ public class TextAnalysService implements ITextAnalysService {
         }
 
         return Optional.of(points);
+    }
+
+    @Override
+    public Optional<byte[]> getWordCloudPic(int fileId) {
+        Optional<String> path = getPathByFileId(fileId);
+        if (path.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Path filePath = Path.of(path.get());
+        if (!Files.exists(filePath)) {
+            System.out.println("Файла не существует - TextAnalysService");
+            return Optional.empty();
+        }
+
+        // Получаем байты изображения
+        try {
+            byte[] imageBytes = Files.readAllBytes(filePath);
+            return Optional.of(imageBytes);
+        } catch (Exception e) {
+            System.out.println("Не удалось получить содержимое файла - TextAnalysService");
+            return Optional.empty();
+        }
     }
 }

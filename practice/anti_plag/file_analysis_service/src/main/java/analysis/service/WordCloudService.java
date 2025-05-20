@@ -15,6 +15,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Optional;
 
 @Service
@@ -30,9 +31,9 @@ public class WordCloudService implements IWordCloudService {
     }
 
     @Override
-    public Optional<WordCloudPicParams> getWordCloud(int id) {
+    public Optional<WordCloudPicParams> createWordCloud(int fileId) {
 
-        Optional<String> optText = fileInfoServiceMediator.getFileTextById(id);
+        Optional<String> optText = fileInfoServiceMediator.getFileTextById(fileId);
         if (optText.isEmpty()) {
             return Optional.empty();
         }
@@ -90,5 +91,15 @@ public class WordCloudService implements IWordCloudService {
         }
 
         return Optional.of(new WordCloudPicParams(path.toString(), filename));
+    }
+
+    @Override
+    public boolean deleteWordCloud(String filePath) {
+        try {
+            return Files.deleteIfExists(Paths.get(filePath));
+        } catch (IOException e) {
+            System.out.println("Не удалось удалить картинку WordCloud - WordCloudService");
+            return false;
+        }
     }
 }

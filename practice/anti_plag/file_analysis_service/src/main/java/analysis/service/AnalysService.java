@@ -8,7 +8,6 @@ import analysis.record.WordCloudPicParams;
 import analysis.repository.TextAnalysRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,25 +23,10 @@ public class AnalysService implements IAnalysService {
     }
 
     @Override
-    public List<TextAnalys> getAll() {
-        return  textAnalysRepository.findAll();
-    }
-
-    @Override
-    public Optional<TextAnalys> getByFileId(int fileId) {
-        return textAnalysRepository.getByFileId(fileId);
-    }
-
-    @Override
-    public Optional<String> getPathByFileId(int fileId) {
-        return textAnalysRepository.getPathByFileId(fileId);
-    }
-
-    @Override
     public Optional<TextAnalys> startAnalys(int fileId) {
 
         // Возвращаем уже имеющиеся записи, если такие есть
-        Optional<TextAnalys> existedTextAnalys = getByFileId(fileId);
+        Optional<TextAnalys> existedTextAnalys = textAnalysService.getByFileId(fileId);
         if (existedTextAnalys.isPresent()) {
             return existedTextAnalys;
         }
@@ -51,7 +35,7 @@ public class AnalysService implements IAnalysService {
         Optional<Integer> words = textAnalysService.countWords(fileId);
         Optional<Integer> symbols = textAnalysService.countSymbols(fileId);
         Optional<Integer> plagiatePoints = textAnalysService.calculatePlagiatePoints(fileId);
-        Optional<WordCloudPicParams> wordCloudPicParams = wordCloudService.getWordCloud(fileId);
+        Optional<WordCloudPicParams> wordCloudPicParams = wordCloudService.createWordCloud(fileId);
 
         if (paragraphs.isEmpty() || words.isEmpty() || symbols.isEmpty() || plagiatePoints.isEmpty() || wordCloudPicParams.isEmpty()) {
             System.out.println("В FullAnalysService не все параметры корректно поулчены.");
@@ -69,5 +53,24 @@ public class AnalysService implements IAnalysService {
                 .build();
 
         return Optional.of(textAnalys);
+    }
+
+    @Override
+    public boolean deleteAnalys(int fileId) {
+        // Удаляем файл
+        Optional<String> picPath = textAnalysService.getPathByFileId(fileId);
+        if (picPath.isEmpty() || !wordCloudService.deleteWordCloud(picPath.get())) {
+            return false;
+        }
+
+        Optional<Integer> analysId = textAnalysRepository.getIdByFileId(fileId);
+        if (analysId.isEmpty()) {
+            return false;
+        }
+
+        // Удаляем запись из бд
+        boolean inStorage = textAnalysRepository.existsById(analysId.get());
+        textAnalysRepository.deleteById(analysId.get());
+        return inStorage;
     }
 }

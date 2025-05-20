@@ -20,6 +20,12 @@ public interface TextAnalysRepository extends JpaRepository<TextAnalys, Integer>
     Optional<TextAnalys> getByFileId(@Param("fileId") int fileId);
 
     @Query("""
+            SELECT ta.id FROM TextAnalys ta 
+            WHERE ta.fileId = :fileId
+            """)
+    Optional<Integer> getIdByFileId(@Param("fileId") int fileId);
+
+    @Query("""
             SELECT ta.WCPicPath FROM TextAnalys ta 
             WHERE ta.fileId = :fileId
             """)

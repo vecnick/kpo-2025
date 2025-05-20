@@ -7,9 +7,6 @@ import java.util.Optional;
 
 public interface IAnalysService {
 
-    List<TextAnalys> getAll();
-    Optional<TextAnalys> getByFileId(int fileId);
-    Optional<String> getPathByFileId(int fileId);
-
     Optional<TextAnalys> startAnalys(int fileId);
+    boolean deleteAnalys(int fileId);
 }

@@ -79,9 +79,13 @@ public class FileInfoService implements IFileInfoService {
             return Optional.empty();
         }
 
-        // Читаем содержимое файла
         Path filePath = Path.of(location.get());
+        if (!Files.exists(filePath)) {
+            System.out.println("Файла не существует - FileInfoService");
+            return Optional.empty();
+        }
 
+        // Читаем содержимое файла
         try {
             String content = Files.readString(filePath, StandardCharsets.UTF_8);
             return Optional.of(content);

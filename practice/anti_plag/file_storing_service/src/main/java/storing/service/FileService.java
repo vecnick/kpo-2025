@@ -2,6 +2,7 @@ package storing.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.mock.web.MockMultipartFile;
 import storing.entity.FileInfo;
 import storing.interfaces.IFileInfoService;
 import storing.interfaces.IFileService;
@@ -20,6 +21,17 @@ public class FileService implements IFileService {
     public FileService(IFileInfoService fileInfoService, IFileUploadService fileUploadService) {
         this.fileInfoService = fileInfoService;
         this.fileUploadService = fileUploadService;
+    }
+
+    @Override
+    public  Optional<Integer> save(String location, String text) {
+        MultipartFile multipartFile = new MockMultipartFile(
+                "file", // default
+                location,
+                "text/plain", // default для .txt формата
+                text.getBytes()
+        );
+        return save(multipartFile);
     }
 
     @Override
