@@ -5,6 +5,7 @@ import analysis.TextAnalysOuterClass;
 import analysis.entity.TextAnalys;
 import analysis.interfaces.IAnalysService;
 import analysis.interfaces.ITextAnalysService;
+import com.google.protobuf.ByteString;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
@@ -42,6 +43,13 @@ public class AnalysisGrpc extends AnalysisServiceGrpc.AnalysisServiceImplBase {
     public void getPathByFileId(TextAnalysOuterClass.IdRequest request, StreamObserver<TextAnalysOuterClass.PathResponse> responseObserver) {
         Optional<String> path = textAnalysService.getPathByFileId(request.getId());
         responseObserver.onNext(makePathResponse(path));
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getWordCloudPic(TextAnalysOuterClass.IdRequest request, StreamObserver<TextAnalysOuterClass.PicResponse> responseObserver) {
+        Optional<byte[]> pic = textAnalysService.getWordCloudPic(request.getId());
+        responseObserver.onNext(makePicResponse(pic));
         responseObserver.onCompleted();
     }
 
@@ -85,14 +93,18 @@ public class AnalysisGrpc extends AnalysisServiceGrpc.AnalysisServiceImplBase {
 
     private TextAnalysOuterClass.TextAnalysResponse makeTextAnalysResponse(Optional<TextAnalys> textAnalys) {
         TextAnalysOuterClass.TextAnalysResponse.Builder builder = TextAnalysOuterClass.TextAnalysResponse.newBuilder();
-        if (textAnalys.isPresent()) { builder.setTextAnalys(makeTextAnalysParam(textAnalys.get())); }
+        if (textAnalys.isPresent()) {
+            builder.setTextAnalys(makeTextAnalysParam(textAnalys.get()));
+        }
         builder.setFound(textAnalys.isPresent());
         return builder.build();
     }
 
     private TextAnalysOuterClass.PathResponse makePathResponse(Optional<String> path) {
         TextAnalysOuterClass.PathResponse.Builder builder = TextAnalysOuterClass.PathResponse.newBuilder();
-        if (path.isPresent()) { builder.setPath(path.get()); }
+        if (path.isPresent()) {
+            builder.setPath(path.get());
+        }
         builder.setFound(path.isPresent());
         return builder.build();
     }
@@ -101,5 +113,14 @@ public class AnalysisGrpc extends AnalysisServiceGrpc.AnalysisServiceImplBase {
         return TextAnalysOuterClass.BoolResponse.newBuilder()
                 .setResult(result)
                 .build();
+    }
+
+    private TextAnalysOuterClass.PicResponse makePicResponse(Optional<byte[]> pic) {
+        TextAnalysOuterClass.PicResponse.Builder builder = TextAnalysOuterClass.PicResponse.newBuilder();
+        if (pic.isPresent()) {
+            builder.setPic(ByteString.copyFrom(pic.get()));
+        }
+        builder.setFound(pic.isPresent());
+        return builder.build();
     }
 }

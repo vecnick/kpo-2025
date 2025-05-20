@@ -70,7 +70,6 @@ public class FileService implements IFileService {
         if (existedFile.isEmpty()) {
             return false;
         }
-        FileInfoParams fileInfoParams = new FileInfoParams(existedFile.get());
 
         // Удаляем информацию из базы данных
         if (!fileInfoService.deleteFileInfoById(id)) {
@@ -78,6 +77,6 @@ public class FileService implements IFileService {
         }
 
         // Удаляем информацию из хранилища
-        return fileUploadService.deleteFile(fileInfoParams.location());
+        return fileUploadService.deleteFile(existedFile.get().getLocation());
     }
 }

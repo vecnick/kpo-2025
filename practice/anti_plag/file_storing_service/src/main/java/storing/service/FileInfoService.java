@@ -24,7 +24,7 @@ public class FileInfoService implements IFileInfoService {
 
     @Override
     public List<FileInfo> getAll() {
-        return  fileInfoRepository.findAll();
+        return fileInfoRepository.findAll();
     }
 
     @Override
