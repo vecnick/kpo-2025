@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FileEntity {
+public class MyFileEntity {
 
     @Id
     @Column(length = 64)

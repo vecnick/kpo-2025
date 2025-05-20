@@ -2,7 +2,7 @@ package org.example.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.example.database.FileEntity;
+import org.example.database.MyFileEntity;
 import org.example.services.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class FileController {
     @Operation(summary = "Загрузить файл")
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) {
         try {
-            FileEntity saved = storage.store(file);
+            MyFileEntity saved = storage.store(file);
             return ResponseEntity.ok("ID файла (SHA‑256): " + saved.getId());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -31,7 +31,7 @@ public class FileController {
     @GetMapping("/{id}")
     @Operation(summary = "Выгрузить файл")
     public ResponseEntity<?> download(@PathVariable String id) {
-        FileEntity f = storage.get(id);
+        MyFileEntity f = storage.get(id);
         return ResponseEntity.ok()
                 .header("Content-Type", f.getContentType())
                 .header("Content-Disposition", "attachment; filename=\"" + f.getFilename() + "\"")

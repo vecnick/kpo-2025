@@ -1,14 +1,13 @@
 package org.example.services;
 
 import org.springframework.transaction.annotation.Transactional;
-import org.example.database.FileEntity;
+import org.example.database.MyFileEntity;
 import org.example.database.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.MessageDigest;
-import java.util.List;
 
 @Service
 public class StorageService {
@@ -17,7 +16,7 @@ public class StorageService {
     private FileRepository repo;
 
     @Transactional
-    public FileEntity store(MultipartFile file) throws Exception {
+    public MyFileEntity store(MultipartFile file) throws Exception {
 
         byte[] bytes = file.getBytes();
         String sha256 = sha256Hex(bytes);
@@ -25,7 +24,7 @@ public class StorageService {
         return repo.findById(sha256)
                 .orElseGet(() -> {
                     try {
-                        FileEntity e = FileEntity.builder()
+                        MyFileEntity e = MyFileEntity.builder()
                                 .id(sha256)
                                 .filename(file.getOriginalFilename())
                                 .contentType(file.getContentType())
@@ -40,7 +39,7 @@ public class StorageService {
 
     }
 
-    public FileEntity get(String id) {
+    public MyFileEntity get(String id) {
         return repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Файл не найден"));
     }
