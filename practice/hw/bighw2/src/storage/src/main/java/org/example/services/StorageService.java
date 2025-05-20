@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.MessageDigest;
+import java.util.List;
 
 @Service
 public class StorageService {
@@ -30,10 +31,7 @@ public class StorageService {
                                 .contentType(file.getContentType())
                                 .data(bytes)
                                 .build();
-                        System.out.println("before saving");
-                        FileEntity saved = repo.save(e);
-                        System.out.println("after saving, id=" + saved.getId());
-                        return saved;
+                        return repo.save(e);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                         throw new RuntimeException("Ошибка при сохранении", ex);

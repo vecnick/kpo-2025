@@ -2,13 +2,17 @@ spring:
   application:
     name: storage
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-    jpa:
+    url: jdbc:postgresql://postgres-db-storage:5432/postgres-db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
       hibernate:
-        ddl-auto: create-drop
-      show-sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 server:
   port: 8081
+
+

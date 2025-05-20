@@ -3,6 +3,7 @@ package org.example.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.example.services.FilesMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -25,6 +26,9 @@ public class FileUploadController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    FilesMappingService filesMappingService;
 
     @PostMapping
     @Operation(summary = "Загрузить файл")
@@ -51,6 +55,19 @@ public class FileUploadController {
                     requestEntity,
                     String.class
             );
+
+            String responseBody = response.getBody();
+
+            try {
+                if (responseBody != null && responseBody.contains(":")) {
+                    String id = responseBody.split(":")[1].trim();
+                    filesMappingService.addFile(fileAsResource.getFilename(), id);
+                } else {
+                    throw new RuntimeException("Некорректный ID в ответе от хранилища, ответ хранилища:\n" + responseBody);
+                }
+            } catch (Exception e) {
+                return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            }
 
             return ResponseEntity.ok("Ответ от хранилища: " + response.getBody());
 
