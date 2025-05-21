@@ -1,6 +1,6 @@
 spring:
   datasource:
-   # url: jdbc:postgresql://localhost:5433/files_analysis
+    url: jdbc:postgresql://localhost:5433/files_analysis
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -12,9 +12,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-server:
-  port: 8081
-
 grpc:
   server:
     port: 9091

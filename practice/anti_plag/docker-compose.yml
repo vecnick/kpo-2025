@@ -33,7 +33,6 @@ services:
     restart: unless-stopped
     build: file_storing_service
     ports:
-      - "8080:8080"
       - "9090:9090"
     depends_on:
       - files_storing_db
@@ -45,7 +44,6 @@ services:
     restart: unless-stopped
     build: file_analysis_service
     ports:
-      - "8081:8081"
       - "9091:9091"
     depends_on:
       - files_analysis_db
@@ -53,6 +51,18 @@ services:
     environment:
       # меняем localhost на имя контейнера в котором база развёрнута (указываем адрес базы) - автоматически подставится вместо значения из application.yml
       SPRING_DATASOURCE_URL: 'jdbc:postgresql://files_analysis_db:5433/files_analysis'
+
+  api_gateway_service:
+    restart: unless-stopped
+    build: api_gateway_service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - file_storing_service
+      - file_analysis_service
+
+      
+      
 
 
 

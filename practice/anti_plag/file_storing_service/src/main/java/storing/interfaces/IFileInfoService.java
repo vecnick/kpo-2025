@@ -3,7 +3,6 @@ package storing.interfaces;
 import storing.entity.FileInfo;
 import storing.record.FileInfoParams;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 

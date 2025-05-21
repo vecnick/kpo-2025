@@ -6,7 +6,6 @@ import storing.interfaces.IFileInfoService;
 import storing.record.FileInfoParams;
 import storing.repository.FileInfoRepository;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.charset.StandardCharsets;
