@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/upload")
+@RequestMapping("api/upload")
 @Tag(name = "Загрузка", description = "Загрузка файлов в систему")
 public class FileUploadController {
 
@@ -30,7 +30,7 @@ public class FileUploadController {
     @Autowired
     FilesMappingService filesMappingService;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Загрузить файл")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {

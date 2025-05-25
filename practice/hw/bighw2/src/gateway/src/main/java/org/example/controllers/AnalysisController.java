@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
-@RequestMapping("/analysis")
+@RequestMapping("api/analysis")
 @Tag(name = "Analysis", description = "Обращение к сервису анализа")
 @RequiredArgsConstructor
 public class AnalysisController {

@@ -16,3 +16,6 @@ server:
   port: 8081
   use-forward-headers: true
   forward-headers-strategy: framework
+springdoc:
+  api-docs:
+    path: /api/files

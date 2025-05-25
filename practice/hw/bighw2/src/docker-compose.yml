@@ -49,12 +49,14 @@ services:
   swagger-ui:
     image: swaggerapi/swagger-ui:v5.22.0
     restart: always
+    ports:
+      - "8083:8080"
     environment:
       URLS: >
         [
           { name: 'Storage', url: 'http://localhost:8081/api/files' },
           { name: 'Analysis', url: 'http://localhost:8082/api/analysis' },
-          { name: 'Gateway', url: 'http://localhost:8080'}
+          { name: 'Gateway', url: 'http://localhost:8080/api'}
         ]
 
 volumes:

@@ -5,3 +5,6 @@ server:
   port: 8082
   use-forward-headers: true
   forward-headers-strategy: framework
+springdoc:
+  api-docs:
+    path: /api/analysis
