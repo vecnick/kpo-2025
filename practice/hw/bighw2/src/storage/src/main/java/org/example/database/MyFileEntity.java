@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+
+import java.sql.Types;
 
 @Entity
 @Table(name = "files")
@@ -24,6 +27,6 @@ public class MyFileEntity {
 
     @Lob
     @Column(columnDefinition = "BYTEA")
+    @JdbcTypeCode(Types.VARBINARY)
     private byte[] data;
-
 }

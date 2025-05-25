@@ -46,5 +46,16 @@ services:
     ports:
       - "8081:8080"
 
+  swagger-ui:
+    image: swaggerapi/swagger-ui:v5.22.0
+    restart: always
+    environment:
+      URLS: >
+        [
+          { name: 'Storage', url: 'http://localhost:8081/api/files' },
+          { name: 'Analysis', url: 'http://localhost:8082/api/analysis' },
+          { name: 'Gateway', url: 'http://localhost:8080'}
+        ]
+
 volumes:
   postgres_data_stor:
