@@ -15,9 +15,9 @@ import hse.kpo.interfaces.Transport;
 import hse.kpo.params.EmptyEngineParams;
 import hse.kpo.params.PedalEngineParams;
 import hse.kpo.export.reports.ReportExporter;
+import hse.kpo.services.CustomerService;
 import hse.kpo.services.cars.HseCarService;
 import hse.kpo.services.catamarans.HseCatamaranService;
-import hse.kpo.storages.CustomerStorage;
 import hse.kpo.observers.SalesObserver;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +36,7 @@ import java.util.stream.Stream;
 @Component
 @RequiredArgsConstructor
 public class Hse {
-    private final CustomerStorage customerStorage;
+    private final CustomerService customerStorage;
     private final HseCarService carService;
     private final HseCatamaranService catamaranService;
     private final SalesObserver salesObserver;

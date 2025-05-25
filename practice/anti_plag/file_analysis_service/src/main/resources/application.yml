@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/files_analysis
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+grpc:
+  server:
+    port: 9091
+  client:
+    file_storing_service:
+      address: static://localhost:9090
+      negotiation-type: plaintext
+    
+wordcloud:
+  dir: WORDCLOUD_PICS

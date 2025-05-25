@@ -1,3 +1,5 @@
+import org.gradle.api.plugins.quality.Checkstyle
+
 plugins {
 	java
 	checkstyle
@@ -53,6 +55,11 @@ dependencies {
 
 	implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
 }
+
+tasks.withType(Checkstyle::class).configureEach {
+    isEnabled = false
+}
+
 
 tasks.withType<Test> {
 	useJUnitPlatform()

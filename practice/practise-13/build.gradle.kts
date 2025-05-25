@@ -35,6 +35,15 @@ repositories {
 }
 
 dependencies {
+	// Telegram
+	implementation("org.telegram:telegrambots-spring-boot-starter:6.9.7.1")
+
+	// gRPC
+	implementation("io.grpc:grpc-stub:1.62.2")
+	implementation("io.grpc:grpc-protobuf:1.62.2")
+	implementation("net.devh:grpc-client-spring-boot-starter:3.0.0.RELEASE")
+	compileOnly("org.apache.tomcat:annotations-api:6.0.53")
+    
 	implementation("org.springframework.boot:spring-boot-starter")
 
 	implementation("org.springframework.boot:spring-boot-starter-web")

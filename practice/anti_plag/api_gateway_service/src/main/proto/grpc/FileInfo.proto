@@ -1,0 +1,82 @@
+syntax = "proto3";
+package storing;
+option java_multiple_files = false;
+option java_outer_classname = "FileInfoOuterClass";
+
+service StoringService {
+  rpc GetAll (EmptyRequest) returns (FileInfoListResponse);
+  rpc GetAllIds (EmptyRequest) returns (IntegerListResponse);
+  rpc GetById (IdRequest) returns (FileInfoResponse);
+  rpc GetIdByHash (HashRequest) returns (IdResponse);
+  rpc GetHashById (IdRequest) returns (HashResponse);
+  rpc GetLocationById (IdRequest) returns (LocationResponse);
+  rpc GetFileTextById (IdRequest) returns (TextResponse);
+  
+  rpc SaveFileInfo (MultipartFileRequest) returns (IdResponse);
+  rpc DeleteFileInfoById (IdRequest) returns (BoolResponse);
+}
+
+// Requests
+
+message EmptyRequest {}
+
+message IdRequest {
+  int32 id = 1;
+}
+
+message HashRequest {
+  string hash = 1;
+}
+
+message MultipartFileRequest {
+  string location = 1;
+  string text = 2;
+}
+
+// Structs
+
+message FileInfoParam {
+  int32 id = 1;
+  string name = 2;
+  string hash = 3;
+  string location = 4;
+}
+
+// Responses
+
+message FileInfoListResponse {
+  repeated FileInfoParam fileInfo = 1;
+}
+
+message IntegerListResponse {
+  repeated int32 ids = 1;
+}
+
+message FileInfoResponse {
+  FileInfoParam fileInfo = 1;
+  bool found = 2;
+}	
+
+message IdResponse {
+  int32 id = 1;
+  bool found = 2;
+}
+
+message HashResponse {
+  string hash = 1;
+  bool found = 2;
+}
+
+message LocationResponse {
+  string location = 1;
+  bool found = 2;
+}
+
+message TextResponse {
+  string text = 1;
+  bool found = 2;
+}
+
+message BoolResponse {
+  bool result = 1;
+}
