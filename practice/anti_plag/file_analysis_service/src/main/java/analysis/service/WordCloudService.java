@@ -80,6 +80,14 @@ public class WordCloudService implements IWordCloudService {
                 + WordCloudPicDateUtil.getLocalDateTimeStr()
                 + ".png";
 
+        // Создаём папку, если её нет
+        try {
+            Files.createDirectories(filesDir);
+        } catch (Exception e) {
+            System.out.println("Не удалось создать директорию - WordCloudService");
+            return Optional.empty();
+        }
+
         // Записываем полученные байты в файл
         byte[] imageBytes = response.body();
         Path path = filesDir.resolve(filename);

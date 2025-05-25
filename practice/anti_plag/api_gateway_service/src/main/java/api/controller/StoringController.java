@@ -3,10 +3,13 @@ package api.controller;
 import api.interfaces.IStoringGrpcImpl;
 import api.record.FileInfoParams;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -16,6 +19,33 @@ public class StoringController {
 
     public StoringController(IStoringGrpcImpl storingGrpc) {
         this.storingGrpc = storingGrpc;
+    }
+
+    @Operation(summary = "Добавить файл")
+    @PutMapping(value = "/files", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Integer> save(@RequestPart("file") MultipartFile file) {
+        String filename;
+        String contentString;
+
+        try {
+            filename = file.getOriginalFilename();
+            contentString = new String(file.getBytes(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            System.out.println("Не удалось считать содержимое файла - StoringController");
+            return ResponseEntity.badRequest().build();
+        }
+
+        return storingGrpc.saveFileInfo(filename, contentString).map(
+                id -> ResponseEntity.ok(id))
+                .orElse(ResponseEntity.badRequest().build());
+    }
+
+    @Operation(summary = "Удалить файл")
+    @DeleteMapping("/files/{id}")
+    public ResponseEntity<Void> deleteById(int id) {
+        return storingGrpc.deleteFileInfoById(id) ?
+                ResponseEntity.noContent().build() :
+                ResponseEntity.badRequest().build();
     }
 
     @Operation(summary = "Получить описание всех файлов")

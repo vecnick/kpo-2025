@@ -27,13 +27,15 @@ repositories {
 
 dependencies {
 	// для работы с grpc
-	implementation("io.grpc:grpc-netty-shaded:1.61.0")
-	implementation ("io.grpc:grpc-protobuf:1.61.0")
-	implementation ("io.grpc:grpc-stub:1.61.0")
-	implementation ("net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE")
-	implementation ("net.devh:grpc-client-spring-boot-starter:2.15.0.RELEASE")
-	implementation("javax.annotation:javax.annotation-api:1.3.2")
-	
+	implementation("io.grpc:grpc-netty-shaded:1.58.0")
+	implementation("io.grpc:grpc-protobuf:1.58.0")
+	implementation("io.grpc:grpc-stub:1.58.0")
+	implementation("net.devh:grpc-server-spring-boot-starter:2.15.0.RELEASE")
+	implementation("net.devh:grpc-client-spring-boot-starter:2.15.0.RELEASE")
+	implementation("com.google.protobuf:protobuf-java:3.25.1")
+	compileOnly("javax.annotation:javax.annotation-api:1.3.2")
+		
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation ("org.assertj:assertj-core:3.24.2")
 	implementation ("org.springframework.boot:spring-boot-starter-web")
 	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
@@ -54,7 +56,7 @@ protobuf {
     }
     plugins {
         create("grpc") {
-            artifact = "io.grpc:protoc-gen-grpc-java:1.61.0"
+            artifact = "io.grpc:protoc-gen-grpc-java:1.58.0"
         }
     }
     generateProtoTasks {
@@ -65,3 +67,8 @@ protobuf {
         }
     }
 }
+
+tasks.named<Jar>("jar") {
+    enabled = false
+}
+

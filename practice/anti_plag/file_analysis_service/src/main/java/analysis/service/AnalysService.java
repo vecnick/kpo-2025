@@ -52,6 +52,8 @@ public class AnalysService implements IAnalysService {
                 .fileId(fileId)
                 .build();
 
+        textAnalysRepository.save(textAnalys);
+
         return Optional.of(textAnalys);
     }
 

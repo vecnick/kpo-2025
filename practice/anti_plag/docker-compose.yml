@@ -25,11 +25,12 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5433:5433"
+      - "5433:5432"
     volumes:
       - analysis_postgres_data:/var/lib/postgresql/data
       
   file_storing_service:
+    container_name: file-storing-service
     restart: unless-stopped
     build: file_storing_service
     ports:
@@ -39,8 +40,9 @@ services:
     environment:
       # меняем localhost на имя контейнера в котором база развёрнута (указываем адрес базы) - автоматически подставится вместо значения из application.yml
       SPRING_DATASOURCE_URL: 'jdbc:postgresql://files_storing_db:5432/files_storing'
-      
+
   file_analysis_service:
+    container_name: file-analysis-service
     restart: unless-stopped
     build: file_analysis_service
     ports:
@@ -50,9 +52,11 @@ services:
       - file_storing_service
     environment:
       # меняем localhost на имя контейнера в котором база развёрнута (указываем адрес базы) - автоматически подставится вместо значения из application.yml
-      SPRING_DATASOURCE_URL: 'jdbc:postgresql://files_analysis_db:5433/files_analysis'
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://files_analysis_db:5432/files_analysis'
+      GRPC_CLIENT_FILE_STORING_SERVICE_ADDRESS: "static://file-storing-service:9090"
 
   api_gateway_service:
+    container_name: api-gateway-service
     restart: unless-stopped
     build: api_gateway_service
     ports:
@@ -60,7 +64,11 @@ services:
     depends_on:
       - file_storing_service
       - file_analysis_service
-
+    environment:
+      # меняем localhost на имя контейнера в котором база развёрнута (указываем адрес базы) - автоматически подставится вместо значения из application.yml
+      GRPC_CLIENT_FILE_STORING_SERVICE_ADDRESS: "static://file-storing-service:9090"
+      GRPC_CLIENT_FILE_ANALYSIS_SERVICE_ADDRESS: "static://file-analysis-service:9091"
+    
       
       
 

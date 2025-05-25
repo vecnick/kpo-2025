@@ -119,7 +119,7 @@ public class StoringGrpcImpl implements IStoringGrpcImpl {
 
     private FileInfoOuterClass.MultipartFileRequest makeMultipartFileRequest(String location, String text) {
         return FileInfoOuterClass.MultipartFileRequest.newBuilder()
-                .setLocation(text)
+                .setLocation(location)
                 .setText(text)
                 .build();
     }

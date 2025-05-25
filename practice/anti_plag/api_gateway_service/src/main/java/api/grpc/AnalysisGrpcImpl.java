@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 public class AnalysisGrpcImpl implements IAnalysisGrpcImpl {
 
-    @GrpcClient("file_storing_service")
+    @GrpcClient("file_analysis_service")
     private AnalysisServiceGrpc.AnalysisServiceBlockingStub analysisServiceBlockingStub;
 
     @Override

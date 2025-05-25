@@ -48,7 +48,7 @@ public class FileUploadService implements IFileUploadService {
         try {
             file.transferTo(destination.toFile());
         } catch (Exception e) {
-            System.out.println("Не удалось сохранить файл -FileUploadService");
+            System.out.println("Не удалось сохранить файл - FileUploadService");
             return Optional.empty();
         }
 
