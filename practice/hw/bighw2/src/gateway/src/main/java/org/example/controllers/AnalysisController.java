@@ -28,7 +28,7 @@ public class AnalysisController {
     @Autowired
     private FilesMappingService filesMappingService;
 
-    @Value("http://analysis:8082")
+    @Value("http://analysis:8080")
     private String analServiceUrl;
 
     @GetMapping("/{name}")

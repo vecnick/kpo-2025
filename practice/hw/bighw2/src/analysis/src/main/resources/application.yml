@@ -2,9 +2,9 @@ spring:
   application:
     name: analysis
 server:
-  port: 8082
+  port: 8080
   use-forward-headers: true
   forward-headers-strategy: framework
 springdoc:
   api-docs:
-    path: /api/analysis
+    path: /api

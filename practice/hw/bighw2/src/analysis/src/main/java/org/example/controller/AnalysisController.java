@@ -24,7 +24,7 @@ import java.util.Map;
 @Tag(name = "Analysis", description = "анализ файлов")
 public class AnalysisController {
 
-    @Value("http://storage:8081")
+    @Value("http://storage:8080")
     private String fileServiceUrl;
 
     @Autowired
@@ -62,16 +62,20 @@ public class AnalysisController {
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(payload, headers);
 
         String quickChartUrl = "https://quickchart.io/word-cloud";
-
-        ResponseEntity<byte[]> cloudResponse = restTemplate.exchange(
-                quickChartUrl,
-                HttpMethod.POST,
-                requestEntity,
-                byte[].class
-        );
+        ResponseEntity<byte[]> cloudResponse;
+        try {
+            cloudResponse = restTemplate.exchange(
+                    quickChartUrl,
+                    HttpMethod.POST,
+                    requestEntity,
+                    byte[].class
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка при обращении к quickchart.io: " + e.getMessage());
+        }
 
         if (cloudResponse.getStatusCode() != HttpStatus.OK || cloudResponse.getBody() == null) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ошибка при обработке ответа quickchart.io");
         }
 
         return ResponseEntity.ok()

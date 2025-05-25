@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Tag(name = "Загрузка", description = "Загрузка файлов в систему")
 public class FileUploadController {
 
-    @Value("http://storage:8081")
+    @Value("http://storage:8080")
     private String fileServiceUrl;
 
     @Autowired

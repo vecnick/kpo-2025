@@ -54,8 +54,8 @@ services:
     environment:
       URLS: >
         [
-          { name: 'Storage', url: 'http://localhost:8081/api/files' },
-          { name: 'Analysis', url: 'http://localhost:8082/api/analysis' },
+          { name: 'Storage', url: 'http://localhost:8081/api' },
+          { name: 'Analysis', url: 'http://localhost:8082/api' },
           { name: 'Gateway', url: 'http://localhost:8080/api'}
         ]
 

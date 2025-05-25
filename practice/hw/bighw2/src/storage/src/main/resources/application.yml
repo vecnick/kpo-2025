@@ -13,9 +13,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 server:
-  port: 8081
+  port: 8080
   use-forward-headers: true
   forward-headers-strategy: framework
 springdoc:
   api-docs:
-    path: /api/files
+    path: /api

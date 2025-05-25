@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 @Tag(name = "Скачивание файлов", description = "Скачивание файлов по ID")
 public class FileDownloadController {
 
-    @Value("http://storage:8081")
+    @Value("http://storage:8080")
     private String fileServiceUrl;
 
     @Autowired
