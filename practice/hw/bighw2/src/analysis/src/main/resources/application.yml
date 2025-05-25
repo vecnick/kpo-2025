@@ -1,7 +1,7 @@
 spring:
   application:
-    name: gateway
+    name: analysis
 server:
-  port: 8080
+  port: 8082
   use-forward-headers: true
   forward-headers-strategy: framework

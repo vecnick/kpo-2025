@@ -14,3 +14,5 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 server:
   port: 8081
+  use-forward-headers: true
+  forward-headers-strategy: framework
