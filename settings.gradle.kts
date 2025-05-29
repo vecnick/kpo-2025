@@ -1,1 +1,4 @@
-rootProject.name = "practise-7"
+rootProject.name = "HW2"
+include("gateway")
+include("storage")
+include("analysis")
