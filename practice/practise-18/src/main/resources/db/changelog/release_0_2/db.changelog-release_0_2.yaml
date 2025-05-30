@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: 1747431192.create-table-outbox.yaml
+      relativeToChangelogFile: true
