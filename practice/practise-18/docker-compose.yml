@@ -31,7 +31,7 @@ services:
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
     networks:
-      - kafka-net
+      - kpo-net
 
   kafka:
     image: bitnami/kafka:3.3
@@ -49,7 +49,7 @@ services:
     depends_on:
       - zookeeper
     networks:
-      - kafka-net
+      - kpo-net
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -62,10 +62,10 @@ services:
     depends_on:
       - kafka
     networks:
-      - kafka-net
+      - kpo-net
 
 networks:
-  kafka-net:
+  kpo-net:
     driver: bridge
 volumes:
   postgres_data:
