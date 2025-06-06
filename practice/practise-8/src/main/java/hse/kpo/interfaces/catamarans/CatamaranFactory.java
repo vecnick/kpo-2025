@@ -1,6 +1,6 @@
 package hse.kpo.interfaces.catamarans;
 
-import hse.kpo.domains.Catamaran;
+import hse.kpo.domains.catamaran.Catamaran;
 
 /**
  * Интерфейс для определения методов фабрик.

@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class LevitationCarFactory implements CarFactory<EmptyEngineParams> {
     @Override
-    public Car create(EmptyEngineParams carParams, int carNumber) {
+    public Car create(EmptyEngineParams carParams) {
         var engine = new LevitationEngine(); // Создаем двигатель без каких-либо параметров
 
-        return new Car(carNumber, engine); // создаем автомобиль с левитирующим приводом
+        return new Car(engine); // создаем автомобиль с левитирующим приводом
     }
 }

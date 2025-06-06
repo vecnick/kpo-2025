@@ -4,6 +4,7 @@ import hse.kpo.domains.Catamaran;
 import hse.kpo.domains.CatamaranWithWheels;
 import hse.kpo.domains.Customer;
 import hse.kpo.domains.Report;
+import hse.kpo.domains.cars.Car;
 import hse.kpo.enums.ReportFormat;
 import hse.kpo.export.transport.TransportExporter;
 import hse.kpo.factories.ReportExporterFactory;
@@ -82,22 +83,25 @@ public class Hse {
      *
      * @param pedalSize размер педалей (1-15)
      */
-    public void addPedalCar(int pedalSize) {
-        carStorage.addCar(pedalCarFactory, new PedalEngineParams(pedalSize));
+    public Car addPedalCar(int pedalSize) {
+        Car car = carStorage.addCar(pedalCarFactory, new PedalEngineParams(pedalSize));
+        return car;
     }
 
     /**
      * Добавляет автомобиль с ручным приводом.
      */
-    public void addHandCar() {
-        carStorage.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
+    public Car addHandCar() {
+        Car car = carStorage.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
+        return car;
     }
 
     /**
      * Добавляет левитирующий автомобиль.
      */
-    public void addLevitationCar() {
-        carStorage.addCar(levitationCarFactory, EmptyEngineParams.DEFAULT);
+    public Car addLevitationCar() {
+        Car car = carStorage.addCar(levitationCarFactory, EmptyEngineParams.DEFAULT);
+        return car;
     }
 
     public void addWheelCatamaran() {

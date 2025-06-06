@@ -1,11 +1,13 @@
 package hse.kpo.storages;
 
-import hse.kpo.domains.Car;
+import hse.kpo.domains.cars.Car;
 import hse.kpo.domains.Customer;
 import hse.kpo.interfaces.cars.CarFactory;
 import hse.kpo.interfaces.cars.CarProvider;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CarStorage implements CarProvider {
-
+    @Getter
     private final List<Car> cars = new ArrayList<>();
 
     private int carNumberCounter = 0;

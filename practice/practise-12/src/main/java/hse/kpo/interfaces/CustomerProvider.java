@@ -1,7 +1,6 @@
 package hse.kpo.interfaces;
 
 import hse.kpo.domains.Customer;
-import hse.kpo.storages.CustomerStorage;
 
 import java.util.List;
 
