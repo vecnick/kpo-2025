@@ -2,7 +2,10 @@ package hse.kpo.service;
 
 import static java.lang.Integer.parseInt;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.IntSummaryStatistics;
@@ -17,10 +20,17 @@ import hse.kpo.grpc.ReportServiceGrpc;
 import hse.kpo.tg.NotificationBot;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.S3Exception;
 
 @Slf4j
 @Service
@@ -29,12 +39,18 @@ public class NotificationService {
 
     private final ReportServiceGrpc.ReportServiceBlockingStub reportService;
     private final NotificationBot notificationBot;
+    private final S3Client s3Client;
+
+    @Value("${aws.s3.bucket.name}")
+    private String bucketName;
 
     @Scheduled(fixedRate = 60_000)  // Каждую минуту
     public void checkSalesAndNotify() {
         log.warn("getting report");
         ReportResponse report = reportService.getLatestReport(null);
         parseAndSendNotifications(report.getContent());
+
+        saveReportToS3(report.getContent());
     }
 
     private void parseAndSendNotifications(String reportContent) {
@@ -206,5 +222,58 @@ public class NotificationService {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
         return matcher.find() ? matcher.group(1).trim() : null;
+    }
+
+    private void saveReportToS3(String reportContent) {
+        try {
+            // Форматируем время для записи
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            String entry = String.format("\n\n=== [%s] ===\n%s", timestamp, reportContent);
+
+            // Формируем имя файла (по дате)
+            String fileName = "reports/" + LocalDateTime.now().format(DateTimeFormatter.ISO_DATE) + ".txt";
+
+            // Получаем существующий контент или создаем новый
+            String fullContent = getExistingReportContent(fileName) + entry;
+
+            // Сохраняем в S3
+            s3Client.putObject(
+                PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileName)
+                    .contentType("text/plain")
+                    .build(),
+                RequestBody.fromString(fullContent)
+            );
+
+            log.info("Report saved to S3: s3://{}/{}", bucketName, fileName);
+        } catch (Exception e) {
+            log.error("Error saving report to S3", e);
+        }
+    }
+
+    private String getExistingReportContent(String fileName) {
+        try {
+            // Проверяем существование файла
+            s3Client.headObject(HeadObjectRequest.builder()
+                .bucket(bucketName)
+                .key(fileName)
+                .build());
+
+            // Если файл существует - загружаем содержимое
+            return s3Client.getObjectAsBytes(GetObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileName)
+                    .build())
+                .asString(StandardCharsets.UTF_8);
+        } catch (S3Exception e) {
+            if (e.statusCode() == 404) {
+                // Файл не существует - возвращаем заголовок
+                return "=== Daily Sales Report ==="
+                    + "\nDate: " + LocalDateTime.now().format(DateTimeFormatter.ISO_DATE)
+                    + "\n===================================";
+            }
+            throw new RuntimeException("S3 error: " + e.getMessage(), e);
+        }
     }
 }
