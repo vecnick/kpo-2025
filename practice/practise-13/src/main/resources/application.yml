@@ -23,3 +23,16 @@ spring:
     change-log: classpath:db/changelog/db.changelog-master.yaml
 server:
   port: 8081
+
+
+grpc:
+  client:
+    report-service:
+      address: 'static://localhost:9090'
+      negotiation-type: plaintext
+
+telegram:
+  bot:
+    username: test12312332199901_bot
+    token: 7881565931:AAGRjSIuf0duTwPzkRinLhYBWMBoRncg_to
+    chat-id: 895736614

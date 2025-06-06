@@ -1,5 +1,7 @@
 package hse.kpo.domains;
 
+import hse.kpo.domains.cars.Car;
+import hse.kpo.domains.catamaran.Catamaran;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

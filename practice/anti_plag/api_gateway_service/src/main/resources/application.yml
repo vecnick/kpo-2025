@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+grpc:
+  client:
+    file_storing_service:
+      address: static://localhost:9090
+      negotiation-type: plaintext
+    file_analysis_service:
+      address: static://localhost:9091
+      negotiation-type: plaintext

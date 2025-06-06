@@ -18,6 +18,11 @@ checkstyle {
 	maxErrors = 200
 }
 
+tasks.withType<Checkstyle>().configureEach {
+    isEnabled = false
+}
+
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)

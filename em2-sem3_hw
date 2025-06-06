@@ -1,0 +1,30 @@
+* [33m3b6603c[m[33m ([m[1;32msem2-sem3_hw[m[33m)[m hw3-4
+* [33m35ff8c8[m[33m ([m[1;31morigin/sem2-sem3_hw[m[33m)[m hw
+* [33m13a5634[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m new examples
+* [33m6288771[m add Javadoc
+* [33m44ad45f[m hw 24.01
+* [33m3965602[m practise 3-4
+*   [33md706cba[m Merge remote-tracking branch 'upstream/main'
+[32m|[m[33m\[m  
+[32m|[m * [33mfaa71bd[m[33m ([m[1;31mupstream/main[m[33m)[m add practise-4
+[32m|[m * [33m90ac819[m fix README.md
+* [33m|[m [33ma0f792f[m cw 24.01
+* [33m|[m [33mf9ff5c3[m определения 17.08
+* [33m|[m [33m393cb1a[m rep update
+[33m|[m [33m|[m * [33m5f694b6[m[33m ([m[1;31mupstream/develop[m[33m)[m fix README.md
+[33m|[m [33m|[m[33m/[m  
+[33m|[m * [33m5c5a5f2[m fix README.md
+[33m|[m * [33mdb7afda[m add practise-3 template
+[33m|[m * [33m33bdebc[m add practise-3 link to README
+[33m|[m * [33m086b7e8[m add Main add GRADES fix gitignore
+[33m|[m * [33m7055fab[m add practise 3
+[33m|[m * [33me1a4c07[m add GRADES.md
+[33m|[m[33m/[m  
+* [33m99621eb[m move classes to folders
+* [33m2fb0fad[m fix service
+* [33m2e7ba18[m add gitignore
+* [33mf01b2a1[m add comments
+* [33m5489c41[m add comments
+* [33ma0de4c9[m sem 2
+* [33m7208ecb[m add README.md
+* [33md099f31[m adding practise-1

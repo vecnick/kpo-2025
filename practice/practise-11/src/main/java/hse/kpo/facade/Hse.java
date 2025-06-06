@@ -92,25 +92,25 @@ public class Hse {
      * @param pedalSize размер педалей (1-15)
      */
     public Car addPedalCar(int pedalSize) {
-        return carStorage.addCar(pedalCarFactory, new PedalEngineParams(pedalSize));
+        return carService.addCar(pedalCarFactory, new PedalEngineParams(pedalSize));
     }
 
     /**
      * Добавляет автомобиль с ручным приводом.
      */
     public Car addHandCar() {
-        return carStorage.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
+        return carService.addCar(handCarFactory, EmptyEngineParams.DEFAULT);
     }
 
     /**
      * Добавляет левитирующий автомобиль.
      */
     public Car addLevitationCar() {
-        return carStorage.addCar(levitationCarFactory, EmptyEngineParams.DEFAULT);
+        return carService.addCar(levitationCarFactory, EmptyEngineParams.DEFAULT);
     }
 
     public void addWheelCatamaran() {
-        carStorage.addExistingCar(new CatamaranWithWheels(createCatamaran()));
+        carService.addExistingCar(new CatamaranWithWheels(createCatamaran()));
     }
 
     private Catamaran createCatamaran() {

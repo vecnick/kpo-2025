@@ -1,0 +1,60 @@
+syntax = "proto3";
+package analysis;
+option java_multiple_files = false;
+option java_outer_classname = "TextAnalysOuterClass";
+
+service AnalysisService {
+  rpc GetAll (EmptyRequest) returns (TextAnalysListResponse);
+  rpc GetByFileId (IdRequest) returns (TextAnalysResponse);
+  rpc GetPathByFileId (IdRequest) returns (PathResponse);
+  rpc GetWordCloudPic (IdRequest) returns (PicResponse);
+
+  rpc StartAnalys (IdRequest) returns (TextAnalysResponse);
+  rpc DeleteAnalys (IdRequest) returns (BoolResponse);
+}
+
+// Requests
+
+message EmptyRequest {}
+
+message IdRequest {
+  int32 id = 1;
+}
+
+// Structs
+
+message TextAnalysParam {
+  int32 id = 1;
+  int32 paragraphs = 2;
+  int32 words = 3;
+  int32 symbols = 4;
+  int32 plagiatePoints = 5;
+  string WCPicName = 6;
+  string WCPicPath = 7;
+  int32 fileId = 8;
+}    
+
+// Responses
+
+message TextAnalysListResponse {
+  repeated TextAnalysParam textAnalys = 1;
+}
+
+message TextAnalysResponse {
+  TextAnalysParam textAnalys = 1;
+  bool found = 2;
+}	
+
+message PathResponse {
+  string path = 1;
+  bool found = 2;
+}
+
+message BoolResponse {
+  bool result = 1;
+}
+
+message PicResponse {
+  bytes pic = 1;
+  bool found = 2;
+}
