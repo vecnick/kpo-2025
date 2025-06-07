@@ -1,91 +1,46 @@
-anti_plag
---------------
+version: '3.8'
 
-# Запуск
+volumes:
+  payments_postgres_data:
+  orders_postgres_data:
+  kafka_data:
+  zookeeper_data:
+  
+services:
+  orders_db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: orders
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - orders_postgres_data:/var/lib/postgresql/data
+  
+  zookeeper:   # нужен для Kafka (внешний сервис координации для брокеров)
+    image: confluentinc/cp-zookeeper:7.5.0
+    restart: unless-stopped
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181   # порт Zookeeper
+      ZOOKEEPER_TICK_TIME: 2000   # базовая еденица времени ("tick") для осуществления действий
+    ports:
+      - "2181:2181"
+    volumes:
+      - zookeeper_data:/var/lib/zookeeper
 
-Сборка - если требуется (в главной директории anti_plag)
-```
-docker-compose build
-```
-
-Запуск (в главной директории anti_plag)
-```
-docker-compose up 
-```
-
-# Описание взаимодействия
-
-- С помощью swagger (http://localhost:8080/swagger-ui/index.html) по RestApi можно отправлять запросы программе.
-Запрос попадает в микросервис, отвечающий за api (api_gateway_service), где обрабатывается в контроллере и через grpc обращается к двум другим микросервисам.
-
-- Микросервис file_storing_service отвечает за сохранение передаваемых по api файлов. Информация о файле хранится в базе данных files_storing_db, а сами файлы хранятся в контейнере в папке /app/UPLOADED_FILES
-
-- Микросервис file_analysis_service отвечает за анализ загруженных файлов. При необходимости обращается через grpc к file_storing_service за информацией о файле и результаты анализа сохраняет в базу данных files_analysis_db. Данный сервис позволяет через http запросы обратиться к WordCloudApi и получить облако слов для текста файла. Картинки WordCloud сохраняются в папку в контейнере /app/WORDCLOUD_PICS
-
-- Все 3 микросервиса и 2 PostgreSQL базы данных запускаются в отдельных контейнерах через общий docker-compose файл в корне проекта.
-
-# Основные api запросы:
-
-- put /files: загрузить и сохранить файл
-- put /analys: провести анализ файла
-- get /analys/{id}/WordCloud: посмотреть картинку WordCloud по id загруженного файла
-- get /files/{id}/text: получить текст файла по его id
-
-# Описание архитектуры микросервиса1 (file_storing_service)
-
-Работа с базой:
-- описание структуры таблицы: entity/FileInfo
-- интерфейс для доступа к базе данных (запрос на получение/сохранение/... данных):  repository/FileInfoRepository
-- логика запросов (обращение к базе данных через интерфейс доступа): service/FileInfoService
-- поля класса FileInfo для более удобной передачи их в методы других классов: record/FileInfoParams
-
-Работа с локальным хранилищем:
-- логика сохранения файлов в локальное хранилище service/FileUploadService
-- информация о загружаемом файле: record/FileUploadParams
-- предоставление пути до папки локального хранилища (указан в application.yml), необходимый для его подстановки Spring-ом: config/FileStorageConfig
-
-Объединение двух сущностей (работа с базой данных и локальным хранилищем)
-- логика сохранения файлов и информации о нём (обращение к сервисам базы данных и локального хранилища): service/FileService
-
-Grpc (связь с другими микросервисами):
-- обработка приходящих запросов к данному микросервису (запросы приходят в формате указанном в TextAnalys.proto): grpc/StoringGrpc
-
-Дополнительная логика, необходимая сервисам:
-- вычисление sha256 хэша текста файла: util/FileHashUtil
-- формат даты, для сохранения файлов в хранилище с уникальным именем: util/FileDateUtil
-
-
-# Описание архитектуры микросервиса2 (file_analysis_service)
-
-Анализ файла:
-- описание структуры таблицы: entity/TextAnalys
-- интерфейс для доступа к базе данных (запрос на получение/сохранение/... данных):  repository/TextAnalysRepository
-- логика отдельных запросов для анализа (обращение к базе данных через интерфейс доступа): service/TextAnalysService
-
-Работа с внешним WordCloudApi:
-- обращение к  WordCloudApi через http и сохранение картинки в лоакльное храналище: service/createWordCloud
-- информация о загружаемом файле: record/WordCloudPicParams
-- структура http запроса: record/WordCloudRequestParams
-- предоставление пути до папки локального хранилища (указан в application.yml), необходимый для его подстановки Spring-ом: config/WordCloudStorageConfig
-
-Объединение двух сущностей (проведение полного анализа)
-- логика полного запуска всех анализирующих методов и сохранение результатов в бд: service/AnalysService
-
-Grpc (связь с другими микросервисами):
-- обработка приходящих запросов к данному микросервису (запросы приходят в формате указанном в FileInfo.proto): grpc/AnalysisGrpc
-- отправка запросов и получение информации у другого микросервиса (file_storing_service): grpc/StoringGrpcImpl
-
-Дополнительная логика, необходимая сервисам:
-- формат даты, для сохранения картинок в хранилище с уникальным именем: util/WordCloudPicDateUtil
-
-# Описание архитектуры микросервиса2 (api_gateway_service)
-
-Controller (предоставление RestApi для обращения ко всей программе извне):
-- Предоставление api к сервисам микросервису1 (file_storing_service): controller/StoringController
-- Предоставление api к сервисам микросервису2 (file_analysis_service): controller/AnalysisController
-
-Grpc (связь с другими микросервисами):
-- отправка запросов и получение информации у микросервиса1 (file_storing_service): grpc/StoringGrpcImpl
-- отправка запросов и получение информации у микросервиса2 (file_analysis_service): grpc/AnalysisGrpcImpl
-
-
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    restart: unless-stopped
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181     # адрес Zookeeper
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092  # адрес Kafka
+  	    KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1   # есть всего 1 брокер
+    volumes:
+      - kafka_data:/var/lib/kafka

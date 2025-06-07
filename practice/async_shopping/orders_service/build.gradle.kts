@@ -1,11 +1,10 @@
 plugins {
 	java
-	jacoco
 	id("org.springframework.boot") version "3.4.2"
 	id("io.spring.dependency-management") version "1.1.7"
 }
 
-group = "bank"
+group = "orders"
 version = "1.0.0"
 
 java {
@@ -24,11 +23,23 @@ repositories {
 	mavenCentral()
 	maven("https://jitpack.io") // для java-object-diff
 }
+	
+dependencies {	
+	// для работы с kafka
+	implementation("org.springframework.kafka:spring-kafka")
 
-dependencies {
-	implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
-	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.18.2")
-	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2")
+	// сериализация класса в json формат
+	implementation("com.fasterxml.jackson.core:jackson-databind")
+
+	// для работы с бд
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	runtimeOnly("org.postgresql:postgresql")
+	
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation ("org.assertj:assertj-core:3.24.2")
+	implementation ("org.springframework.boot:spring-boot-starter-web")
+	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+	implementation ("jakarta.validation:jakarta.validation-api:3.0.2")
 	implementation("org.apache.commons:commons-lang3:3.12.0")
 	implementation("de.danielbechler:java-object-diff:0.93.1")
 	implementation("org.springframework.boot:spring-boot-starter")
@@ -39,13 +50,3 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
-}
-
-tasks.test {
-	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
-}
-tasks.jacocoTestReport {
-	dependsOn(tasks.test) // tests are required to run before generating the report
-}

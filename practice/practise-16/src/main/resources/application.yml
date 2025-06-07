@@ -39,3 +39,7 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 server:
   port: 8081
+spring:
+  redis:
+    host: localhost
+    port: 6379

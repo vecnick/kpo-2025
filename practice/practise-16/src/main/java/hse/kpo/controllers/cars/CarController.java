@@ -8,6 +8,7 @@ import hse.kpo.domains.cars.Car;
 import hse.kpo.dto.request.CarRequest;
 import hse.kpo.enums.EngineTypes;
 import hse.kpo.facade.Hse;
+import hse.kpo.repositories.CarRepository;
 import hse.kpo.services.cars.HseCarService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,14 +16,17 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/cars")
@@ -31,7 +35,16 @@ import java.util.Objects;
 public class CarController {
     private final HseCarService carService;
     private final Hse hseFacade;
+//    private final CarRepository carRepository;
 
+//    @Transactional
+//    @Cacheable(value = "cars", key = "#vin")
+//    public Optional<Car> findByVin(Integer vin) throws InterruptedException {
+//        Thread.sleep(2000);
+//        return carRepository.findById(vin);
+//    }
+
+    @Cacheable(value = "cars", key = "#vin")
     @GetMapping("/{vin}")
     @Operation(summary = "Получить автомобиль по VIN")
     public ResponseEntity<Car> getCarByVin(@PathVariable int vin) {
@@ -85,6 +98,7 @@ public class CarController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    @Cacheable(value = "cars", key = "#vin")
     @PutMapping("/{vin}")
     @Operation(summary = "Обновить автомобиль")
     public ResponseEntity<Car> updateCar(
@@ -100,6 +114,7 @@ public class CarController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Cacheable(value = "cars", key = "#vin")
     @DeleteMapping("/{vin}")
     @Operation(summary = "Удалить автомобиль")
     public ResponseEntity<Void> deleteCar(@PathVariable int vin) {

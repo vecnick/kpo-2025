@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1744444970
+      author: Nikita
+      changes:
+        - createTable:
+            tableName: engines
+            columns:
+              - column:
+                  name: id
+                  autoIncrement: true
+                  type: INT
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: engine_type
+                  type: VARCHAR(50)
+              - column:
+                  name: size
+                  type: INT
+
+        - createTable:
+            tableName: cars
+            columns:
+              - column:
+                  name: vin
+                  type: INTEGER
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: engine_id
+                  type: INTEGER # Связь с engine
+              - column:
+                  name: customer_id
+                  type: INTEGER # Связь с customer
+
+        - addForeignKeyConstraint:
+            baseTableName: cars
+            baseColumnNames: engine_id # Связь с engines.id
+            referencedTableName: engines
+            referencedColumnNames: id
+            constraintName: fk_car_engine
