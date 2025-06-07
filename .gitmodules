@@ -1,0 +1,3 @@
+[submodule "practice/hse-bank-system"]
+	path = practice/hse-bank-system
+	url = https://github.com/ProgrammerPeasant/hse-bank-system.git
