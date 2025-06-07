@@ -7,7 +7,7 @@ on:
     branches: [ "**" ]
 
 env:
-  PROJECT_DIR: "practise/practise-19"
+  PROJECT_DIR: "practice/practise-19"
 
 jobs:
   analyze:
