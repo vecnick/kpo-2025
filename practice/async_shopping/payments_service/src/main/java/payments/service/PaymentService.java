@@ -1,7 +1,9 @@
 package payments.service;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 import payments.entity.BalanceAccount;
+import payments.enums.BalanceAccountRequestResult;
 import payments.interfaces.IBalanceAccountFactory;
 import payments.interfaces.IPaymentService;
 import payments.repository.BalanceAccountRepository;
@@ -81,32 +83,40 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
-    public Optional<BalanceAccount> addBalanceByUserId(int userId, int value) {
+    public Pair<BalanceAccount, BalanceAccountRequestResult> addBalanceByUserId(int userId, int value) {
         try {
             boolean notChanged = (0 == accountRepository.addBalanceByUserId(userId, value));
             if (notChanged) {
                 System.out.println("PaymentService: addBalanceByUserId: счёт с id=" + userId + " не был найден");
-                return Optional.empty();
+                return Pair.of(accountFactory.createEmpty(), BalanceAccountRequestResult.NOT_FOUND);
             }
-            return getAccount(userId);
+
+            Optional<BalanceAccount> result = getAccount(userId);
+            if (result.isEmpty()) { return Pair.of(accountFactory.createEmpty(), BalanceAccountRequestResult.FAIL); }
+            return Pair.of(result.get(), BalanceAccountRequestResult.SUCCESS);
+
         } catch (Exception e) {
             System.out.println("PaymentService: addBalanceByUserId: не удалось увеличить счёт в базе данных");
-            return Optional.empty();
+            return Pair.of(accountFactory.createEmpty(), BalanceAccountRequestResult.FAIL);
         }
     }
 
     @Override
-    public Optional<BalanceAccount> subBalanceByUserId(int userId, int value) {
+    public Pair<BalanceAccount, BalanceAccountRequestResult> subBalanceByUserId(int userId, int value) {
         try {
             boolean notChanged = (0 == accountRepository.subBalanceByUserId(userId, value));
             if (notChanged) {
                 System.out.println("PaymentService: subBalanceByUserId: счёт с id=" + userId + " не был найден");
-                return Optional.empty();
+                return Pair.of(accountFactory.createEmpty(), BalanceAccountRequestResult.NOT_FOUND);
             }
-            return getAccount(userId);
+
+            Optional<BalanceAccount> result = getAccount(userId);
+            if (result.isEmpty()) { return Pair.of(accountFactory.createEmpty(), BalanceAccountRequestResult.FAIL); }
+            return Pair.of(result.get(), BalanceAccountRequestResult.SUCCESS);
+
         } catch (Exception e) {
             System.out.println("PaymentService: subBalanceByUserId: не удалось уменьшить счёт в базе данных");
-            return Optional.empty();
+            return Pair.of(accountFactory.createEmpty(), BalanceAccountRequestResult.FAIL);
         }
     }
 }

@@ -4,6 +4,7 @@ spring:
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+
   jpa:
     show-sql: true
     hibernate:
@@ -12,6 +13,17 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
+
+  kafka:
+    bootstrap-servers: localhost:29092
+    consumer:
+      group-id: order-consumer
+      auto-offset-reset: earliest
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 server:
   port: 8080

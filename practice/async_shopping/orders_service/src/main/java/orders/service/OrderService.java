@@ -2,11 +2,11 @@ package orders.service;
 
 import orders.entity.Order;
 import orders.enums.OrderStatus;
-import orders.enums.TaskType;
+import orders.enums.DelayedTaskType;
 import orders.interfaces.IOrderService;
 import orders.interfaces.IOrdersFactory;
 import orders.interfaces.IOutboxTaskService;
-import orders.records.BalanceWithdrawRequest;
+import orders.records.PaymentRequest;
 import orders.repository.OrderRepository;
 import orders.utility.JsonSerializer;
 import org.springframework.stereotype.Service;
@@ -36,9 +36,9 @@ public class OrderService implements IOrderService {
         Order result = orderRepository.save(order);
 
         // Сохраняем запрос на списание баланса в базу данных, вместо того, чтобы отправлять напрямую
-        BalanceWithdrawRequest request = new BalanceWithdrawRequest(result);
+        PaymentRequest request = new PaymentRequest(result);
         String requestStr = JsonSerializer.makeJsonString(request);
-        outboxTaskService.createOutboxTask(requestStr, TaskType.ORDER);
+        outboxTaskService.createOutboxTask(requestStr, DelayedTaskType.PAYMENT);
 
         return Optional.of(result);
     }

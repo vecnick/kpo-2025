@@ -1,7 +1,7 @@
-package orders.repository;
+package payments.repository;
 
-import orders.entity.OutboxTask;
-import orders.enums.DelayedTaskStatus;
+import payments.entity.OutboxTask;
+import payments.enums.DelayedTaskStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

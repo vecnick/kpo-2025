@@ -1,4 +1,4 @@
-package payments.factories;
+package payments.factory;
 
 import org.springframework.stereotype.Component;
 import payments.entity.BalanceAccount;
@@ -11,4 +11,7 @@ public class BalanceAccountFactory implements IBalanceAccountFactory {
     public BalanceAccount create(int userId) {
         return new BalanceAccount(userId, 0);
     }
+
+    @Override
+    public BalanceAccount createEmpty() { return new BalanceAccount(0, 0); }
 }

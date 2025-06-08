@@ -25,6 +25,15 @@ repositories {
 }
 
 dependencies {
+	// для работы с kafka
+	implementation("org.springframework.kafka:spring-kafka")
+	
+	// для Pair
+	implementation ("org.apache.commons:commons-lang3:3.12.0")
+
+	// сериализация класса в json формат
+	implementation("com.fasterxml.jackson.core:jackson-databind")
+	
 	// для работы с бд
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	runtimeOnly("org.postgresql:postgresql")

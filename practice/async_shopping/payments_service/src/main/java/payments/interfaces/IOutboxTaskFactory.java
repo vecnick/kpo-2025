@@ -1,7 +1,7 @@
-package orders.interfaces;
+package payments.interfaces;
 
-import orders.entity.OutboxTask;
-import orders.enums.DelayedTaskType;
+import payments.entity.OutboxTask;
+import payments.enums.DelayedTaskType;
 
 public interface IOutboxTaskFactory {
     OutboxTask createOutboxTask(String requestPayload, DelayedTaskType taskType);

@@ -3,10 +3,20 @@ version: '3.8'
 volumes:
   payments_postgres_data:
   orders_postgres_data:
-  kafka_data:
-  zookeeper_data:
-  
+ 
 services:
+  payments_db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: payments
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - payments_postgres_data:/var/lib/postgresql/data
+      
   orders_db:
     image: postgres:15
     restart: unless-stopped
@@ -15,46 +25,52 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - orders_postgres_data:/var/lib/postgresql/data
   
   zookeeper:   # нужен для Kafka (внешний сервис координации для брокеров)
-    image: confluentinc/cp-zookeeper:7.5.0
-    restart: unless-stopped
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181   # порт Zookeeper
-      ZOOKEEPER_TICK_TIME: 2000   # базовая еденица времени ("tick") для осуществления действий
+    image: bitnami/zookeeper:3.8
+    container_name: zookeeper
     ports:
       - "2181:2181"
-    volumes:
-      - zookeeper_data:/var/lib/zookeeper
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - kafka-net
 
   kafka:
-    image: confluentinc/cp-kafka:7.5.0
-    restart: unless-stopped
+    image: bitnami/kafka:3.3
+    container_name: kafka
+    ports:
+      - "9092:9092"   # порт для общения с кафкой внутри docker-сети (для kafka-ui)
+      - "29092:29092"   # порт для общения с кафкой снаружи  (для Java-приложения)
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181   # подключение Zookeeper
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:29092   # с каких адрессов будут обращаться к кафке + классификация данных соединений
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://localhost:29092   # адресса, которые кафка отдаёт (рекламирует) клиентам	
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT   # "тип слушателя":"протокол безопасности который будет использоваться"
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT   # тип слушателя, который будет использоваться для общения между брокерами внитри кластера
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true   # при обращении к топику, автоматически создаёт его, если он не существует
     depends_on:
       - zookeeper
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-    volumes:
-      - kafka_data:/var/lib/kafka
+    networks:
+      - kafka-net
       
-  kafka-ui:   # необязательно (просто ui интерфейс)
-    image: provectuslabs/kafka-ui
+  kafka-ui: # необязательно (просто ui интерфейс)
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
     ports:
-      - "8081:8080"
+      - "8085:8080"
     environment:
-      - KAFKA_CLUSTERS_0_NAME=local
-      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
+      - KAFKA_CLUSTERS_0_NAME=local   # имя kafka-кластера, который отображается в веб-интерфейсе kafka ui
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092, localhost:9092, localhost:29092   # возможные адреса брокера (kafka перебирает адреса, пока не найдёт работающий)
     depends_on:
       - kafka
-
+    networks:
+      - kafka-net
+      
+networks:
+  kafka-net:
+    driver: bridge
 

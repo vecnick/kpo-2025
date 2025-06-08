@@ -1,11 +1,11 @@
-package orders.service;
+package payments.service;
 
-import orders.entity.OutboxTask;
-import orders.enums.DelayedTaskStatus;
-import orders.enums.DelayedTaskType;
-import orders.factory.OutboxTaskFactory;
-import orders.interfaces.IOutboxTaskService;
-import orders.repository.OutboxTaskRepository;
+import payments.entity.OutboxTask;
+import payments.enums.DelayedTaskStatus;
+import payments.enums.DelayedTaskType;
+import payments.factory.OutboxTaskFactory;
+import payments.interfaces.IOutboxTaskService;
+import payments.repository.OutboxTaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,10 +23,14 @@ public class OutboxTaskService implements IOutboxTaskService {
     }
 
     @Override
-    // Не пишем try catch для корректной работы @Transactional
     public Optional<OutboxTask> createOutboxTask(String requestPayload, DelayedTaskType taskType) {
-        OutboxTask outboxTask = outboxTaskFactory.createOutboxTask(requestPayload, taskType);
-        return Optional.of(outboxTaskRepository.save(outboxTask));
+        try {
+            OutboxTask outboxTask = outboxTaskFactory.createOutboxTask(requestPayload, taskType);
+            return Optional.of(outboxTaskRepository.save(outboxTask));
+        } catch (Exception e) {
+            System.out.println("OutboxTaskService: createOutboxTask: не удалось создать запрос");
+            return Optional.empty();
+        }
     }
 
     @Override

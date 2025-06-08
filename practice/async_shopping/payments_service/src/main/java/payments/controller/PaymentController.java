@@ -1,10 +1,12 @@
 package payments.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import org.apache.commons.lang3.tuple.Pair;
 import org.aspectj.apache.bcel.Repository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import payments.entity.BalanceAccount;
+import payments.enums.BalanceAccountRequestResult;
 import payments.interfaces.IPaymentService;
 
 import java.util.List;
@@ -54,16 +56,28 @@ public class PaymentController {
     @Operation(summary = "Увеличить счёт для пользователя")
     @PostMapping(value = "/accounts/balance/add/{userId}{value}")
     public ResponseEntity<BalanceAccount> addBalanceByUserId(int userId, int value) {
-        return paymentService.addBalanceByUserId(userId, value).map(
-                account -> ResponseEntity.ok(account))
+        Pair<BalanceAccount, BalanceAccountRequestResult> accountResult = paymentService.addBalanceByUserId(userId, value);
+        Optional<BalanceAccount> account =
+                (accountResult.getRight() == BalanceAccountRequestResult.SUCCESS)
+                ? Optional.of(accountResult.getLeft())
+                : Optional.empty();
+
+        return account.map(
+                acc -> ResponseEntity.ok(acc))
                 .orElse(ResponseEntity.badRequest().build());
     }
 
     @Operation(summary = "Уменьшить счёт для пользователя")
     @PostMapping(value = "/accounts/balance/sub/{userId}{value}")
     public ResponseEntity<BalanceAccount> subBalanceByUserId(int userId, int value) {
-        return paymentService.subBalanceByUserId(userId, value).map(
-                account -> ResponseEntity.ok(account))
+        Pair<BalanceAccount, BalanceAccountRequestResult> accountResult = paymentService.subBalanceByUserId(userId, value);
+        Optional<BalanceAccount> account =
+                (accountResult.getRight() == BalanceAccountRequestResult.SUCCESS)
+                ? Optional.of(accountResult.getLeft())
+                : Optional.empty();
+
+        return account.map(
+                acc -> ResponseEntity.ok(acc))
                 .orElse(ResponseEntity.badRequest().build());
     }
 }

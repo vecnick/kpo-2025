@@ -1,10 +1,10 @@
-package orders.scheduler;
+package payments.scheduler;
 
 import lombok.extern.slf4j.Slf4j;
-import orders.entity.OutboxTask;
-import orders.enums.DelayedTaskStatus;
-import orders.interfaces.IKafkaProducer;
-import orders.interfaces.IOutboxTaskService;
+import payments.entity.OutboxTask;
+import payments.enums.DelayedTaskStatus;
+import payments.interfaces.IKafkaProducer;
+import payments.interfaces.IOutboxTaskService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

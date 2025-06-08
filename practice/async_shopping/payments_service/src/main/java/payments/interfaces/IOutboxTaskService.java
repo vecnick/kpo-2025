@@ -1,8 +1,8 @@
-package orders.interfaces;
+package payments.interfaces;
 
-import orders.entity.OutboxTask;
-import orders.enums.DelayedTaskStatus;
-import orders.enums.DelayedTaskType;
+import payments.entity.OutboxTask;
+import payments.enums.DelayedTaskStatus;
+import payments.enums.DelayedTaskType;
 
 import java.util.List;
 import java.util.Optional;

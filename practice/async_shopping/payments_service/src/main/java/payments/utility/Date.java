@@ -1,4 +1,4 @@
-package orders.utility;
+package payments.utility;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,3 +11,4 @@ public class Date {
         return LocalDateTime.now().format(FORMATTER);
     }
 }
+

@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/orders
+    url: jdbc:postgresql://localhost:5433/orders
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -15,7 +15,12 @@ spring:
         format_sql: true
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: localhost:29092
+    consumer:
+      group-id: order-confirmation-consumer
+      auto-offset-reset: earliest
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer

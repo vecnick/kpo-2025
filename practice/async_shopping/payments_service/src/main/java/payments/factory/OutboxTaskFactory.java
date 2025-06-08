@@ -1,11 +1,12 @@
-package orders.factory;
+package payments.factory;
 
-import orders.entity.OutboxTask;
-import orders.enums.DelayedTaskStatus;
-import orders.enums.DelayedTaskType;
-import orders.interfaces.IOutboxTaskFactory;
-import orders.utility.Date;
 import org.springframework.stereotype.Component;
+import payments.entity.InboxTask;
+import payments.entity.OutboxTask;
+import payments.enums.DelayedTaskStatus;
+import payments.enums.DelayedTaskType;
+import payments.interfaces.IOutboxTaskFactory;
+import payments.utility.Date;
 
 @Component
 public class OutboxTaskFactory implements IOutboxTaskFactory {
