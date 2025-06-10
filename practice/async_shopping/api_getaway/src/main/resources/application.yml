@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: orders-service
+          uri: http://orders-service:8080
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - StripPrefix=2
+
+        - id: payments-service
+          uri: http://payments-service:8081
+          predicates:
+            - Path=/api/payments/**
+          filters:
+            - StripPrefix=2
+
+server:
+  port: 8082

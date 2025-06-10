@@ -16,6 +16,8 @@ services:
       - "5432:5432"
     volumes:
       - payments_postgres_data:/var/lib/postgresql/data
+    networks:
+      - kafka-net   
       
   orders_db:
     image: postgres:15
@@ -28,6 +30,8 @@ services:
       - "5433:5432"
     volumes:
       - orders_postgres_data:/var/lib/postgresql/data
+    networks:
+      - kafka-net   
   
   zookeeper:   # нужен для Kafka (внешний сервис координации для брокеров)
     image: bitnami/zookeeper:3.8
@@ -43,8 +47,7 @@ services:
     image: bitnami/kafka:3.3
     container_name: kafka
     ports:
-      - "9092:9092"   # порт для общения с кафкой внутри docker-сети (для kafka-ui)
-      - "29092:29092"   # порт для общения с кафкой снаружи  (для Java-приложения)
+      - "29092:29092"   # порт для общения с кафкой снаружи
     environment:
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181   # подключение Zookeeper
       - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:29092   # с каких адрессов будут обращаться к кафке + классификация данных соединений
@@ -57,16 +60,57 @@ services:
     networks:
       - kafka-net
       
-  kafka-ui: # необязательно (просто ui интерфейс)
+  kafka-ui: # ui интерфейс для kafka
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
     ports:
       - "8085:8080"
     environment:
       - KAFKA_CLUSTERS_0_NAME=local   # имя kafka-кластера, который отображается в веб-интерфейсе kafka ui
-      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092, localhost:9092, localhost:29092   # возможные адреса брокера (kafka перебирает адреса, пока не найдёт работающий)
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9092
     depends_on:
       - kafka
+    networks:
+      - kafka-net
+ 
+  payments_service:
+    container_name: payments-service
+    restart: unless-stopped
+    build: payments_service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - payments_db
+    environment:
+      # меняем localhost на имя контейнера в котором база развёрнута
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://payments_db:5432/payments'
+    networks:
+      - kafka-net
+      
+  orders_service:
+    container_name: orders-service
+    restart: unless-stopped
+    build: orders_service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - orders_db
+      - payments_service
+    environment:
+      # меняем localhost на имя контейнера в котором база развёрнута
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://orders_db:5432/orders'
+    networks:
+      - kafka-net
+
+  api_getaway:
+    container_name: api-getaway
+    restart: unless-stopped
+    build: api_getaway
+    ports:
+      - "8082:8082"
+    depends_on:
+      - payments_service
+      - orders_service
     networks:
       - kafka-net
       

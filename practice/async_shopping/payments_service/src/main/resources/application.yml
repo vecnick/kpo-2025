@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/payments
+    url: 'jdbc:postgresql://localhost:5432/payments'   # будет заменено
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -15,12 +15,16 @@ spring:
         format_sql: true
 
   kafka:
-    bootstrap-servers: localhost:29092
+    bootstrap-servers: kafka:9092
+    properties:
+      security.protocol: PLAINTEXT
+    admin:
+      auto-create-topics: true
     consumer:
       group-id: order-consumer
       auto-offset-reset: earliest
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
