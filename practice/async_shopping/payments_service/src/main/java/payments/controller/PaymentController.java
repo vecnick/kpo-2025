@@ -38,7 +38,7 @@ public class PaymentController {
     }
 
     @Operation(summary = "Получить список всех счетов")
-    @GetMapping(value = "/accounts/all")
+    @GetMapping(value = "/accounts/getAll")
     public ResponseEntity<List<BalanceAccount>> getAllAccounts() {
         return paymentService.getAllAccounts().map(
                 accounts -> ResponseEntity.ok(accounts))

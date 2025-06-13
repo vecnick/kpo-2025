@@ -7,6 +7,7 @@ import orders.interfaces.IKafkaProducer;
 import orders.interfaces.IOutboxTaskService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,13 +33,18 @@ public class OutboxTaskScheduler {
         }
 
         for (OutboxTask task : outboxTasks.get()) {
-            try {
-                String topic = task.getTaskType().toString();
-                kafkaProducer.send(topic, task.getRequestPayload()); // отправляем запрос kafka и ожидаем принятия сообщения;
-                outboxTaskService.setStatusById(task.getId(), DelayedTaskStatus.SENT);
-            } catch (Exception e) {
-                System.out.println("OutboxTaskScheduler: sendNewTasks: не удалось отправить запрос с id=" + task.getId() + " в kafka");
-            }
+            sendTask(task);
+        }
+    }
+
+    @Transactional
+    public void sendTask(OutboxTask task) {
+        String topic = task.getTaskType().toString();
+        if (!kafkaProducer.send(topic, task.getRequestPayload())) { // отправляем запрос kafka и ожидаем принятия сообщения;
+            throw new RuntimeException();
+        }
+        if (outboxTaskService.setStatusById(task.getId(), DelayedTaskStatus.SENT).isEmpty()) {
+            throw new RuntimeException();
         }
     }
 }

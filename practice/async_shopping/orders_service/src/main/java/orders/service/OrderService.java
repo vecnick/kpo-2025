@@ -28,7 +28,7 @@ public class OrderService implements IOrderService {
         this.outboxTaskService = outboxTaskService;
     }
 
-    @Transactional // откат и попытка отправки нового запроса при ошибке (try catch не ставить!!)
+    @Transactional // откат если возникла ошибка (try catch не ставить!!)
     @Override
     public Optional<Order> createOrder(int userId, int amount, String description) {
         // Сохраняем заказ в базу данных
@@ -38,7 +38,9 @@ public class OrderService implements IOrderService {
         // Сохраняем запрос на списание баланса в базу данных, вместо того, чтобы отправлять напрямую
         PaymentRequest request = new PaymentRequest(result);
         String requestStr = JsonSerializer.makeJsonString(request);
-        outboxTaskService.createOutboxTask(requestStr, DelayedTaskType.PAYMENT);
+        if (outboxTaskService.createOutboxTask(requestStr, DelayedTaskType.PAYMENT).isEmpty()) {
+            throw new RuntimeException();
+        }
 
         return Optional.of(result);
     }

@@ -37,15 +37,15 @@ dependencies {
 	// для работы с бд
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	runtimeOnly("org.postgresql:postgresql")
-	
+
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation ("org.assertj:assertj-core:3.24.2")
+	implementation ("org.springframework.boot:spring-boot-starter")
 	implementation ("org.springframework.boot:spring-boot-starter-web")
 	implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 	implementation ("jakarta.validation:jakarta.validation-api:3.0.2")
 	implementation("org.apache.commons:commons-lang3:3.12.0")
 	implementation("de.danielbechler:java-object-diff:0.93.1")
-	implementation("org.springframework.boot:spring-boot-starter")
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

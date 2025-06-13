@@ -1,6 +1,7 @@
 package payments.scheduler;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import payments.entity.OutboxTask;
 import payments.enums.DelayedTaskStatus;
 import payments.interfaces.IKafkaProducer;
@@ -32,13 +33,18 @@ public class OutboxTaskScheduler {
         }
 
         for (OutboxTask task : outboxTasks.get()) {
-            try {
-                String topic = task.getTaskType().toString();
-                kafkaProducer.send(topic, task.getRequestPayload()); // отправляем запрос kafka и ожидаем принятия сообщения;
-                outboxTaskService.setStatusById(task.getId(), DelayedTaskStatus.SENT);
-            } catch (Exception e) {
-                System.out.println("OutboxTaskScheduler: sendNewTasks: не удалось отправить запрос с id=" + task.getId() + " в kafka");
-            }
+            sendTask(task);
+        }
+    }
+
+    @Transactional // откат если возникла ошибка (try catch не ставить!!)
+    public void sendTask(OutboxTask task) {
+        String topic = task.getTaskType().toString();
+        if (!kafkaProducer.send(topic, task.getRequestPayload())) { // отправляем запрос kafka и ожидаем принятия сообщения;
+            throw new RuntimeException();
+        }
+        if (outboxTaskService.setStatusById(task.getId(), DelayedTaskStatus.SENT).isEmpty()) {
+            throw new RuntimeException();
         }
     }
 }

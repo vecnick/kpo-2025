@@ -23,10 +23,14 @@ public class OutboxTaskService implements IOutboxTaskService {
     }
 
     @Override
-    // Не пишем try catch для корректной работы @Transactional
     public Optional<OutboxTask> createOutboxTask(String requestPayload, DelayedTaskType taskType) {
-        OutboxTask outboxTask = outboxTaskFactory.createOutboxTask(requestPayload, taskType);
-        return Optional.of(outboxTaskRepository.save(outboxTask));
+        try {
+            OutboxTask outboxTask = outboxTaskFactory.createOutboxTask(requestPayload, taskType);
+            return Optional.of(outboxTaskRepository.save(outboxTask));
+        } catch (Exception e) {
+            System.out.println("OutboxTaskService: createOutboxTask: не удалось создать запрос в базе данных");
+            return Optional.empty();
+        }
     }
 
     @Override

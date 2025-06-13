@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import payments.entity.BalanceAccount;
 import payments.entity.InboxTask;
 import payments.enums.BalanceAccountRequestResult;
@@ -35,7 +36,7 @@ public class InboxTaskOrderScheduler {
         this.outboxTaskService = outboxTaskService;
     }
 
-    @Scheduled(fixedRate = 5000) // каждые 5 секунд
+   @Scheduled(fixedRate = 5000) // каждые 5 секунд
     public void receiveNewTasks() {
         Optional<List<InboxTask>> inboxTasks = inboxTaskService.getInboxTasksByStatus(DelayedTaskStatus.NEW);
         if (inboxTasks.isEmpty()) {
@@ -44,31 +45,49 @@ public class InboxTaskOrderScheduler {
         }
 
         for (InboxTask task : inboxTasks.get()) {
-            try {
-                PaymentRequest request = JsonDeserializer.makeObjectFromJsonString(task.getRequestPayload(), PaymentRequest.class);
+            taskSubBalance(task);
+        }
+    }
 
-                Pair<BalanceAccount, BalanceAccountRequestResult> accountResult = paymentService.subBalanceByUserId(request.userId(), request.value());
-                if (accountResult.getRight() == BalanceAccountRequestResult.FAIL) {
-                    throw new RuntimeException();
-                } else if (accountResult.getRight() == BalanceAccountRequestResult.NOT_FOUND) {
-                    inboxTaskService.setStatusById(task.getId(), DelayedTaskStatus.CANCELED); // отменяем запрос если userId неверный
 
-                    // отменяем заказ в сервисе order
-                    PaymentConfirmationRequest outboxRequest = new PaymentConfirmationRequest(request.orderId(), OrderStatus.CANCELLED);
-                    String outboxRequestStr = JsonSerializer.makeJsonString(outboxRequest);
-                    outboxTaskService.createOutboxTask(outboxRequestStr, DelayedTaskType.PAYMENT_CONFIRMATION);
-                    throw new RuntimeException();
-                }
+    @Transactional // откат если возникла ошибка (try catch не ставить!!)
+    public void taskSubBalance(InboxTask task) {
+        // помечаем запрос как отменённый для обеспечения семантики exactly once (скорее всего будет откатано если произойдёт ошибка - но пусть будет для 100% уверенности)
+        if (inboxTaskService.setStatusById(task.getId(), DelayedTaskStatus.CANCELED).isEmpty()) {
+            throw new RuntimeException();
+        }
 
-                inboxTaskService.setStatusById(task.getId(), DelayedTaskStatus.SENT);
+        PaymentRequest request = JsonDeserializer.makeObjectFromJsonString(task.getRequestPayload(), PaymentRequest.class);
 
-                // потверждаем выполнение заказа в сервисе order
-                PaymentConfirmationRequest outboxRequest = new PaymentConfirmationRequest(request.orderId(), OrderStatus.FINISHED);
-                String outboxRequestStr = JsonSerializer.makeJsonString(outboxRequest);
-                outboxTaskService.createOutboxTask(outboxRequestStr, DelayedTaskType.PAYMENT_CONFIRMATION);
+        Pair<BalanceAccount, BalanceAccountRequestResult> accountResult = paymentService.subBalanceByUserId(request.userId(), request.value());
 
-            } catch (Exception e) {
-                System.out.println("InboxTaskScheduler: sendNewTasks: не удалось выполнить запрос с id=" + task.getId());
+        if (accountResult.getRight() == BalanceAccountRequestResult.FAIL) { // ошибка при обращении к сервису по уменьшению баланса
+            throw new RuntimeException();
+        } else if (accountResult.getRight() == BalanceAccountRequestResult.NOT_FOUND) {
+
+            //  помечаем запрос как отменённый если userId неверный
+            if (inboxTaskService.setStatusById(task.getId(), DelayedTaskStatus.CANCELED).isEmpty()) {
+                throw new RuntimeException();
+            }
+
+            // отменяем заказ в сервисе order
+            PaymentConfirmationRequest outboxRequest = new PaymentConfirmationRequest(request.orderId(), OrderStatus.CANCELLED);
+            String outboxRequestStr = JsonSerializer.makeJsonString(outboxRequest);
+            if (outboxTaskService.createOutboxTask(outboxRequestStr, DelayedTaskType.PAYMENT_CONFIRMATION).isEmpty()) {
+                throw new RuntimeException();
+            }
+        } else if (accountResult.getRight() == BalanceAccountRequestResult.SUCCESS) {
+
+            // подтверждаем уменьшение баланса
+            if (inboxTaskService.setStatusById(task.getId(), DelayedTaskStatus.SENT).isEmpty()) {
+                throw new RuntimeException();
+            }
+
+            // подтверждаем выполнение заказа в сервисе order
+            PaymentConfirmationRequest outboxRequest = new PaymentConfirmationRequest(request.orderId(), OrderStatus.FINISHED);
+            String outboxRequestStr = JsonSerializer.makeJsonString(outboxRequest);
+            if (outboxTaskService.createOutboxTask(outboxRequestStr, DelayedTaskType.PAYMENT_CONFIRMATION).isEmpty()) {
+                throw new RuntimeException();
             }
         }
     }

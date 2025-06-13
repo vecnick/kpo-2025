@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class OrderController {
@@ -21,9 +22,12 @@ public class OrderController {
     @Operation(summary = "Создать заказ")
     @PutMapping(value = "/orders/create/{userId}{amount}{description}")
     public ResponseEntity<Order> createOrder(int userId, int amount, @RequestParam(required = false) String description) {
-        return orderService.createOrder(userId, amount, description).map(
-                order -> ResponseEntity.ok(order))
-                .orElse(ResponseEntity.badRequest().build());
+        try {
+            Optional<Order> order = orderService.createOrder(userId, amount, description);
+            return ResponseEntity.ok(order.get());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @Operation(summary = "Удалить заказ")

@@ -1,3 +1,6 @@
+server:
+  port: 8082
+
 spring:
   application:
     name: api-gateway
@@ -6,18 +9,32 @@ spring:
     gateway:
       routes:
         - id: orders-service
-          uri: http://orders-service:8080
+          uri: http://orders-service:8081
           predicates:
             - Path=/api/orders/**
           filters:
             - StripPrefix=2
 
         - id: payments-service
-          uri: http://payments-service:8081
+          uri: http://payments-service:8080
           predicates:
             - Path=/api/payments/**
           filters:
             - StripPrefix=2
 
-server:
-  port: 8082
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: orders
+        url: /api/orders/v3/api-docs
+      - name: payments
+        url: /api/payments/v3/api-docs
+
