@@ -2,10 +2,10 @@
 
 Запускать через команду `docker-compose up` из главной директории с файлом docker-compose.yml + если требуется предварительная сборка `docker-compose build`
 
-Проверить через запросы можно на странице общего api `http://localhost:8082/webjars/swagger-ui/index.html` (с переключением между сервисами) или со страничек каждого микросервиса отдельно `http://localhost:8080/swagger-ui/index.html` - payment_service, `http://localhost:8081/swagger-ui/index.html` - order_service
 
 # WebApi
--------------
+
+Проверить через запросы можно на странице общего api `http://localhost:8082/webjars/swagger-ui/index.html` (с переключением между сервисами) или со страничек каждого микросервиса отдельно `http://localhost:8080/swagger-ui/index.html` - payment_service, `http://localhost:8081/swagger-ui/index.html` - order_service
 
 1. Создание аккаунта с 0 балансом: payments - /accounts/create/{userId}
 2. Создание заказа на некоторую сумму: orders - /orders/create/{userId}{amount}{description}
@@ -18,8 +18,8 @@
 
 *отмена заказа происходит, если указать в заказе несуществующий в базе аккаунтов userId
 
+
 # order_service
--------------
 
 Order:
 - entity/Order - описание таблицы заказов в базе данных
@@ -52,10 +52,10 @@ Kafka:
 - utility/Data - получение текущей даты
 - records/PaymentRequest - стуктура запроса для отправки информации о заказе
 - records/PaymentConfirmationRequest - структура запроса, приходящего в качестве ответа от сервиса оплаты
-- config/CorsConfig - включает поддержку CORS (для общего api)
+- config/SwaggerConfig - настрйка Swagger (для создания общего api)
+
 
 # payment_service
--------------
 
 BalanceAccount:
 - entity/BalanceAccount  - описание таблицы балансов в базе данных
@@ -93,14 +93,16 @@ Kafka:
 - utility/Data - получение текущей даты
 - records/PaymentRequest - стуктура запроса, полученных от сервиса заказов
 - records/PaymentConfirmationRequest - структура запроса, отправляемого сервису заказов для потверждения оплаты
-- config/CorsConfig - включает поддержку CORS (для общего api)
+- config/SwaggerConfig - настрйка Swagger (для создания общего api)
+
 
 # api_getaway
--------------
+
 - объединение двух api в одно (port: 8082)
 
+
 # Схема создания заказа
--------------
+
 (ОСНОВНЫЕ процессы, транзации и архитектурные решения)
 
 Транзакции (методы, которые имеют аннотацию @Transactional):

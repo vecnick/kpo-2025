@@ -20,8 +20,8 @@ public class OrderController {
     }
 
     @Operation(summary = "Создать заказ")
-    @PutMapping(value = "/orders/create/{userId}{amount}{description}")
-    public ResponseEntity<Order> createOrder(int userId, int amount, @RequestParam(required = false) String description) {
+    @PutMapping(value = "/orders/create/{userId}/{amount}/{description}")
+    public ResponseEntity<Order> createOrder(@PathVariable int userId, @PathVariable int amount, @RequestParam(required = false) String description) {
         try {
             Optional<Order> order = orderService.createOrder(userId, amount, description);
             return ResponseEntity.ok(order.get());
@@ -32,7 +32,7 @@ public class OrderController {
 
     @Operation(summary = "Удалить заказ")
     @DeleteMapping(value = "/orders/delete/{id}")
-    public ResponseEntity<Void> deleteOrder(int id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable int id) {
         return orderService.deleteOrder(id) ?
                 ResponseEntity.noContent().build() :
                 ResponseEntity.badRequest().build();
@@ -48,7 +48,7 @@ public class OrderController {
 
     @Operation(summary = "Получить заказ по его id")
     @GetMapping(value = "/orders/getById/{id}")
-    public ResponseEntity<Order> getOrder(int id) {
+    public ResponseEntity<Order> getOrder(@PathVariable int id) {
         return orderService.getOrder(id).map(
                 order -> ResponseEntity.ok(order))
                 .orElse(ResponseEntity.badRequest().build());
@@ -56,7 +56,7 @@ public class OrderController {
 
     @Operation(summary = "Получить все заказа пользователя по его id")
     @GetMapping(value = "/orders/getByUserId/{userId}")
-    public ResponseEntity<List<Order>> getOrdersByUserId(int userId) {
+    public ResponseEntity<List<Order>> getOrdersByUserId(@PathVariable int userId) {
         return orderService.getOrdersByUserId(userId).map(
                 orders -> ResponseEntity.ok(orders))
                 .orElse(ResponseEntity.badRequest().build());
@@ -64,7 +64,7 @@ public class OrderController {
 
     @Operation(summary = "Получить статус заказа по его id")
     @GetMapping(value = "/orders/getStatus/{id}")
-    public ResponseEntity<OrderStatus> getStatusById(int id) {
+    public ResponseEntity<OrderStatus> getStatusById(@PathVariable int id) {
         return orderService.getStatusById(id).map(
                 status -> ResponseEntity.ok(status))
                 .orElse(ResponseEntity.badRequest().build());
@@ -72,15 +72,15 @@ public class OrderController {
 
     @Operation(summary = "Получить сумму заказа по его id")
     @GetMapping(value = "/orders/getAmount/{id}")
-    public ResponseEntity<Integer> getAmountById(int id) {
+    public ResponseEntity<Integer> getAmountById(@PathVariable int id) {
         return orderService.getAmountById(id).map(
                 amount -> ResponseEntity.ok(amount))
                 .orElse(ResponseEntity.badRequest().build());
     }
 
     @Operation(summary = "Изменить статус заказа по его id")
-    @PostMapping(value = "/orders/setStatus/{id}{status}")
-    public ResponseEntity<Order> setStatusById(int id, OrderStatus status) {
+    @PostMapping(value = "/orders/setStatus/{id}/{status}")
+    public ResponseEntity<Order> setStatusById(@PathVariable int id, @PathVariable OrderStatus status) {
         return orderService.setStatusById(id, status).map(
                 order -> ResponseEntity.ok(order))
                 .orElse(ResponseEntity.badRequest().build());

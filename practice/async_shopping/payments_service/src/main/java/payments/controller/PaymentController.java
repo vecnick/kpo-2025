@@ -23,7 +23,7 @@ public class PaymentController {
 
     @Operation(summary = "Добавить счёт для пользователя")
     @PutMapping(value = "/accounts/create/{userId}")
-    public ResponseEntity<BalanceAccount> createAccount(int userId) {
+    public ResponseEntity<BalanceAccount> createAccount(@PathVariable int userId) {
         return paymentService.createAccount(userId).map(
                 account -> ResponseEntity.ok(account))
                 .orElse(ResponseEntity.badRequest().build());
@@ -31,7 +31,7 @@ public class PaymentController {
 
     @Operation(summary = "Удалить счёт для пользователя")
     @DeleteMapping(value = "/accounts/delete/{userId}")
-    public ResponseEntity<Void> deleteAccount(int userId) {
+    public ResponseEntity<Void> deleteAccount(@PathVariable int userId) {
         return paymentService.deleteAccount(userId) ?
                 ResponseEntity.noContent().build() :
                 ResponseEntity.badRequest().build();
@@ -47,15 +47,15 @@ public class PaymentController {
 
     @Operation(summary = "Получить баланс счёта")
     @GetMapping(value = "/accounts/balance/{userId}")
-    public ResponseEntity<Integer> getBalanceByUserId(int userId) {
+    public ResponseEntity<Integer> getBalanceByUserId(@PathVariable int userId) {
         return paymentService.getBalanceByUserId(userId).map(
                 balance -> ResponseEntity.ok(balance))
                 .orElse(ResponseEntity.badRequest().build());
     }
 
     @Operation(summary = "Увеличить счёт для пользователя")
-    @PostMapping(value = "/accounts/balance/add/{userId}{value}")
-    public ResponseEntity<BalanceAccount> addBalanceByUserId(int userId, int value) {
+    @PostMapping(value = "/accounts/balance/add/{userId}/{value}")
+    public ResponseEntity<BalanceAccount> addBalanceByUserId(@PathVariable int userId, @PathVariable int value) {
         Pair<BalanceAccount, BalanceAccountRequestResult> accountResult = paymentService.addBalanceByUserId(userId, value);
         Optional<BalanceAccount> account =
                 (accountResult.getRight() == BalanceAccountRequestResult.SUCCESS)
@@ -68,8 +68,8 @@ public class PaymentController {
     }
 
     @Operation(summary = "Уменьшить счёт для пользователя")
-    @PostMapping(value = "/accounts/balance/sub/{userId}{value}")
-    public ResponseEntity<BalanceAccount> subBalanceByUserId(int userId, int value) {
+    @PostMapping(value = "/accounts/balance/sub/{userId}/{value}")
+    public ResponseEntity<BalanceAccount> subBalanceByUserId(@PathVariable int userId, @PathVariable int value) {
         Pair<BalanceAccount, BalanceAccountRequestResult> accountResult = paymentService.subBalanceByUserId(userId, value);
         Optional<BalanceAccount> account =
                 (accountResult.getRight() == BalanceAccountRequestResult.SUCCESS)

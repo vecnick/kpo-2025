@@ -11,30 +11,23 @@ spring:
         - id: orders-service
           uri: http://orders-service:8081
           predicates:
-            - Path=/api/orders/**
+            - Path=/orders/**
           filters:
-            - StripPrefix=2
+            - StripPrefix=1
 
         - id: payments-service
           uri: http://payments-service:8080
           predicates:
-            - Path=/api/payments/**
+            - Path=/payments/**
           filters:
-            - StripPrefix=2
-
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedMethods: "*"
-            allowedHeaders: "*"
+            - StripPrefix=1
 
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
     urls:
       - name: orders
-        url: /api/orders/v3/api-docs
+        url: /orders/v3/api-docs
       - name: payments
-        url: /api/payments/v3/api-docs
+        url: /payments/v3/api-docs
 
