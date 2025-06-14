@@ -106,7 +106,8 @@ Kafka:
 (ОСНОВНЫЕ процессы, транзации и архитектурные решения)
 
 
-![async_shopping drawio](https://github.com/user-attachments/assets/f24c409d-033b-4ac1-b3a0-a5896fb4640c)
+![async_shopping drawio](https://github.com/user-attachments/assets/605b692c-c632-4855-b34d-4e41622fd181)
+
 
 
 Транзакции (методы, которые имеют аннотацию @Transactional):
