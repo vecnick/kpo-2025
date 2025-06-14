@@ -115,3 +115,5 @@ Kafka:
 - order_service: OutboxTaskScheduler - метод sendTask (отправка запроса на списание баланса в Kafka + обозначить запрос отправленным)
 - payment_service: InboxTaskOrderScheduler - метод taskSubBalance (обозначить запрос отменённым + уменьшить баланс + обозначаем заказ в зависимости от результата списания средств + сохраняем запрос о статусе списания)
 - payment_service: OutboxTaskScheduler - метод sendTask (отправляем запрос со статусом потверждения списания в Kafka + обозначаем запрос отправленным)
+
+
