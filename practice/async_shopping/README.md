@@ -105,6 +105,10 @@ Kafka:
 
 (ОСНОВНЫЕ процессы, транзации и архитектурные решения)
 
+
+![async_shopping drawio](https://github.com/user-attachments/assets/c2683883-28e5-423b-8c8f-0a880114e577)
+
+
 Транзакции (методы, которые имеют аннотацию @Transactional):
 
 - order_service: OrderService - метод createOrder (сохранение заказа + сохранение запроса на списание баланса)
