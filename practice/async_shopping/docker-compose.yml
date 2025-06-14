@@ -81,6 +81,7 @@ services:
       - "8080:8080"
     depends_on:
       - payments_db
+      - kafka
     environment:
       # меняем localhost на имя контейнера в котором база развёрнута
       SPRING_DATASOURCE_URL: 'jdbc:postgresql://payments_db:5432/payments'
@@ -96,7 +97,8 @@ services:
     depends_on:
       - orders_db
       - payments_service
-    environment:
+      - kafka
+    environment:как запушить изменения из одной ветки в другую
       # меняем localhost на имя контейнера в котором база развёрнута
       SPRING_DATASOURCE_URL: 'jdbc:postgresql://orders_db:5432/orders'
     networks:
