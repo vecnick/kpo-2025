@@ -98,7 +98,7 @@ services:
       - orders_db
       - payments_service
       - kafka
-    environment:как запушить изменения из одной ветки в другую
+    environment:
       # меняем localhost на имя контейнера в котором база развёрнута
       SPRING_DATASOURCE_URL: 'jdbc:postgresql://orders_db:5432/orders'
     networks:
